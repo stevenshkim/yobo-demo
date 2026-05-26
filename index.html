@@ -933,6 +933,7 @@
   const FLOWS = {
     'win-back': {
       name: 'Win-Back',
+      klaviyoUrl: 'https://www.klaviyo.com/flow/Wq3y2K/reports',
       subtitle: 'Lapsed 60–120 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `Running since Dec · last month <b>$3,402</b> at <span class="roi">6.8× ROI</span>`,
       perfVerb: 'refining',
@@ -947,6 +948,7 @@
     },
     'abandoned-cart': {
       name: 'Abandoned Cart',
+      klaviyoUrl: 'https://www.klaviyo.com/flow/Vr5x4L/reports',
       subtitle: 'Cart abandoners, last 30 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `New flow · no history yet · <b>$2,180</b> projected at <span class="roi">4.2× ROI</span>`,
       perfVerb: 'calibrating',
@@ -961,6 +963,7 @@
     },
     'welcome-series': {
       name: 'Welcome Series',
+      klaviyoUrl: 'https://www.klaviyo.com/flow/Tm8w7N/reports',
       subtitle: 'First purchase in last 30 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `Running since Sept · last month <b>$580</b> at <span class="roi">3.2× ROI</span>`,
       perfVerb: 'softening',
@@ -1395,9 +1398,9 @@
     }
     const remaining = order.filter(id => !FLOWS[id].approved).length;
     const ariaMsg = nextFlowId
-      ? `Approved · ${flow.name}. ${remaining} flow${remaining === 1 ? '' : 's'} left to review.`
-      : `Approved · ${flow.name}. All flows locked — ready to ship. 🎉`;
-    setTimeout(() => pingAria(ariaMsg), 700);
+      ? `Approved · ${flow.name}. Synced to Klaviyo. ${remaining} flow${remaining === 1 ? '' : 's'} left to review.`
+      : `Approved · ${flow.name}. All flows synced to Klaviyo — ready to ship. 🎉`;
+    setTimeout(() => pingAriaWithKlaviyoLink(ariaMsg, currentFlowId), 700);
     renderFlow(currentFlowId);
     renderFlowApprovalChips();
     confetti();
@@ -1528,7 +1531,8 @@
     card.classList.add('approved');
     const btn = card.querySelector('[data-act="approve-camp"]');
     btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true;
-    pingAria(`Approved · ${name}. Locked for sync.`);
+    const flowId = FLOW_IDS_BY_INDEX[i] || null;
+    pingAriaWithKlaviyoLink(`Approved · ${name}. Synced to Klaviyo.`, flowId);
     confetti();
   }
   function nowStamp() {
@@ -1541,6 +1545,15 @@
     const thread = document.getElementById('thread');
     const msg = document.createElement('div'); msg.className = 'msg';
     msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${text}<div class="time">${nowStamp()}</div></div></div>`;
+    thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
+  }
+  function pingAriaWithKlaviyoLink(text, flowId, linkLabel) {
+    const thread = document.getElementById('thread');
+    const msg = document.createElement('div'); msg.className = 'msg';
+    const flow = FLOWS[flowId];
+    const url = (flow && flow.klaviyoUrl) || 'https://www.klaviyo.com/dashboard';
+    const label = linkLabel || `Open ${flow ? flow.name : 'in Klaviyo'} →`;
+    msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${text}<div class="inline-action"><a class="mc-link-btn" href="${url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-block;">${label}</a></div><div class="time">${nowStamp()}</div></div></div>`;
     thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
   }
   function openPop(region, anchorEl) {
@@ -1761,6 +1774,7 @@
         Targeting <b>3,423</b> customers<br>
         First sends tomorrow 9 AM<br>
         I'll track and check in.
+        <div class="inline-action"><a class="mc-link-btn" href="https://www.klaviyo.com/dashboard" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-block;">Open in Klaviyo →</a></div>
         <div class="time">9:14 AM</div>
       </div></div>`;
       thread.scrollTop = thread.scrollHeight;
