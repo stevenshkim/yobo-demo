@@ -1385,7 +1385,7 @@
         if (btn) { btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true; }
       }
     }
-    // Find next unapproved flow (loop in plan order, skip current)
+    // Find next unapproved flow
     const order = FLOW_IDS_BY_INDEX;
     const startIdx = order.indexOf(currentFlowId);
     let nextFlowId = null;
@@ -1393,21 +1393,40 @@
       const candidate = order[(startIdx + i) % order.length];
       if (!FLOWS[candidate].approved && candidate !== currentFlowId) { nextFlowId = candidate; break; }
     }
+    const remaining = order.filter(id => !FLOWS[id].approved).length;
     const ariaMsg = nextFlowId
-      ? `Approved · ${flow.name}. Loading ${FLOWS[nextFlowId].name} next…`
+      ? `Approved · ${flow.name}. ${remaining} flow${remaining === 1 ? '' : 's'} left to review.`
       : `Approved · ${flow.name}. All flows locked — ready to ship. 🎉`;
     setTimeout(() => pingAria(ariaMsg), 700);
     renderFlow(currentFlowId);
     renderFlowApprovalChips();
     confetti();
-    // After ~1.6s: auto-transition to next unapproved flow, or show "all done" state
-    setTimeout(() => {
-      if (nextFlowId) {
-        openCanvas(nextFlowId);
-      } else {
-        renderAllFlowsApproved();
-      }
-    }, 1600);
+    // Swap the canvas foot to a "what's next" choice
+    showApprovalNextStep(nextFlowId);
+  }
+
+  function showApprovalNextStep(nextFlowId) {
+    // Update the existing foot WITHOUT destroying its DOM (renderFlow needs the IDs to stay alive)
+    const status = document.getElementById('flowFootStatus');
+    const allBtn = document.getElementById('approveAllEmailsBtnFlow');
+    const ap = document.getElementById('approveCampaignBtn');
+    if (!status || !ap) return;
+    if (nextFlowId) {
+      const nextName = FLOWS[nextFlowId].name;
+      status.innerHTML = `<b style="color:#2A8A1A">✓ Approved.</b> Next up: ${nextName}.`;
+      if (allBtn) { allBtn.textContent = 'Back to plan'; allBtn.disabled = false; allBtn.onclick = () => closeCanvas(); allBtn.classList.remove('approved'); }
+      ap.textContent = `Continue to ${nextName} →`;
+      ap.disabled = false;
+      ap.classList.remove('approved');
+      ap.onclick = () => openCanvas(nextFlowId);
+    } else {
+      status.innerHTML = `<b style="color:#2A8A1A">✓ All flows approved.</b> Locked for Klaviyo sync.`;
+      if (allBtn) { allBtn.style.display = 'none'; }
+      ap.textContent = 'Back to plan';
+      ap.disabled = false;
+      ap.classList.remove('approved');
+      ap.onclick = () => closeCanvas();
+    }
   }
 
   // Shown in canvas when every flow is approved — encourages user to close or sync
@@ -1434,16 +1453,19 @@
     const flow = FLOWS[currentFlowId];
     if (!flow) return;
     const allApproved = flow.emails.every(e => e.approved);
-    // Flow view buttons
+    // Flow view buttons — reset to default unless approval-next-step has taken over
     const flowApproveAll = document.getElementById('approveAllEmailsBtnFlow');
     const approveCamp = document.getElementById('approveCampaignBtn');
     if (flowApproveAll) {
+      flowApproveAll.style.display = '';
       flowApproveAll.disabled = allApproved;
       flowApproveAll.textContent = allApproved ? '✓ Emails approved' : 'Approve all emails';
+      flowApproveAll.onclick = () => approveAllEmails(currentFlowId);
     }
     if (approveCamp) {
       approveCamp.disabled = flow.approved;
       approveCamp.textContent = flow.approved ? '✓ Campaign approved' : 'Approve campaign';
+      approveCamp.onclick = () => approveCampaignFromCanvas();
     }
     // Email view buttons
     const emailApproveAll = document.getElementById('approveAllEmailsBtnEmail');
