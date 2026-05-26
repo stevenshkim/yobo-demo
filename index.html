@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>YoboLabs · Aria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://rsms.me">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  @import url('https://rsms.me/inter/inter.css');
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --bg: #000000;
+    --surface: #0E0F11;
+    --surface-elevated: #16181B;
+    --border: #1F2226;
+    --border-strong: #2A2D33;
+    --text: #FFFFFF;
+    --text-dim: #A1A6AD;
+    --text-faint: #6B7079;
+    --green: #6FED45;
+    --green-tint: rgba(111,237,69,0.12);
+    --green-line: rgba(111,237,69,0.30);
+    --amber: #F59E0B;
+    --amber-tint: rgba(245,158,11,0.14);
+    --blue: #60A5FA;
+    --blue-tint: rgba(96,165,250,0.14);
+    --user-bubble: #1A2330;
+    --user-text: #C8DCFF;
+    --canvas-bg: #FAFAF7;
+    --canvas-card: #FFFFFF;
+    --canvas-border: #E5E5E0;
+    --canvas-text: #111111;
+    --canvas-muted: #4A4F57;
+    --canvas-dim: #6B7079;
+    --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  html, body { height: 100%; }
+  html, body, button, input, textarea, select {
+    font-family: var(--font-ui);
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body { background: var(--bg); color: var(--text); margin: 0; }
+
+  /* === TYPOGRAPHY TOKENS (6 sizes, 3 weights, locked spacing/leading) === */
+  .t-micro    { font-size: 10px; line-height: 1.4; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .t-caption  { font-size: 11px; line-height: 1.4; font-weight: 400; }
+  .t-label    { font-size: 13px; line-height: 1.4; font-weight: 500; }
+  .t-body     { font-size: 15px; line-height: 1.5; font-weight: 400; }
+  .t-title    { font-size: 17px; line-height: 1.3; font-weight: 600; }
+  .t-display  { font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+
+  /* Canvas page title — only serif usage in app */
+  .canvas-h1 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; color: var(--canvas-text); }
+
+  /* Tabular numbers contexts */
+  .flow-card, .summary, .kpi, .canvas-stat, .stat, .num-hero, .num-tab { font-variant-numeric: tabular-nums; }
+  .num-green { color: var(--green); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* === APP SHELL === */
+  .app { display: grid; grid-template-columns: 200px 1fr; height: 100vh; background: var(--bg); position: relative; overflow: hidden; }
+  .app.canvas-shown { grid-template-columns: 200px minmax(0, 2fr) minmax(0, 3fr); }
+  .canvas { display: none; }
+  .app.canvas-shown .canvas { display: block; }
+
+  /* === RAIL === */
+  .rail { background: var(--surface); border-right: 1px solid var(--border); padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; }
+  .rail .logo { font-size: 13px; font-weight: 600; color: var(--green); padding: 4px 8px 14px; letter-spacing: -0.01em; }
+  .rail .store { background: var(--surface-elevated); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 500; color: var(--text-dim); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-item { padding: 8px 10px; font-size: 13px; font-weight: 500; color: var(--text-dim); border-radius: 6px; display: flex; align-items: center; gap: 8px; cursor: pointer; background: transparent; border: none; text-align: left; width: 100%; font-family: inherit; }
+  .nav-item:hover { background: var(--surface-elevated); color: var(--text); }
+  .nav-item.active { background: var(--surface-elevated); color: var(--text); }
+  .nav-item .dot { width: 4px; height: 4px; border-radius: 50%; background: transparent; }
+  .nav-item.active .dot { background: var(--green); }
+  .nav-section { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); padding: 12px 10px 4px; }
+  .rail-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+
+  /* === CHAT PANEL === */
+  .chat { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: relative; min-height: 0; overflow: hidden; transition: transform .32s var(--ease-ios), opacity .32s var(--ease-ios); }
+  .chat-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .chat-head-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .chat-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .chat-title .small { font-size: 11px; font-weight: 400; color: var(--text-faint); display: block; margin-top: 2px; }
+  .chat-back { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 500; color: var(--text-dim); cursor: pointer; background: transparent; border: none; padding: 0; font-family: inherit; }
+  .chat-back:hover { color: var(--text); }
+
+  /* === THREAD + MESSAGES === */
+  .thread { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 20px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+  .thread.hidden { display: none; }
+  .msg { display: flex; gap: 10px; align-items: flex-start; }
+  .msg.user { flex-direction: row-reverse; }
+  .msg.user .body { text-align: right; }
+  .av { width: 28px; height: 28px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #000; flex-shrink: 0; margin-top: 2px; }
+  .av.user { background: var(--border-strong); color: var(--text); }
+  .body { flex: 1; min-width: 0; }
+  .name { font-size: 11px; font-weight: 500; color: var(--text-faint); margin-bottom: 6px; }
+  .name b { color: var(--text-dim); font-weight: 500; }
+  .bubble { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 16px; padding: 16px; font-size: 15px; line-height: 1.5; font-weight: 400; color: var(--text); }
+  .bubble.user { background: var(--user-bubble); color: var(--user-text); border: 1px solid var(--border); display: inline-block; text-align: left; max-width: 88%; }
+  .bubble b, .bubble strong { font-weight: 600; color: var(--text); }
+  .bubble .prefix { font-weight: 600; color: var(--text); }
+  .bubble ul { margin: 8px 0 0; padding-left: 20px; }
+  .bubble ul li { margin: 4px 0; font-size: 15px; line-height: 1.5; }
+  .bubble .seemore { font-size: 13px; font-weight: 500; color: var(--text-dim); margin-top: 8px; cursor: pointer; display: inline-block; text-decoration: underline; text-decoration-color: var(--border-strong); }
+  .bubble .seemore:hover { color: var(--text); }
+  .bubble .time { font-size: 11px; font-weight: 400; color: var(--text-faint); text-align: right; margin-top: 8px; }
+  .bubble.user .time { color: rgba(200,220,255,0.5); }
+
+  /* Insights (numbered list) */
+  .insights { font-size: 15px; line-height: 1.5; color: var(--text-dim); margin-top: 4px; }
+  .insights > div { display: flex; gap: 8px; align-items: flex-start; padding: 2px 0; }
+  .insights .num { color: var(--text-faint); font-weight: 500; flex-shrink: 0; min-width: 16px; }
+
+  /* === PLAN CARD (nested in one bubble) === */
+  .plan-head { margin-bottom: 12px; }
+  .plan-title { font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--text); margin-bottom: 4px; }
+  .plan-sub { font-size: 15px; line-height: 1.5; color: var(--text-dim); font-weight: 400; }
+  .flow-list { display: flex; flex-direction: column; gap: 10px; }
+  .flow-card { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; transition: border-color .15s; font-variant-numeric: tabular-nums; }
+  .flow-card:hover { border-color: var(--border-strong); }
+  .flow-card.open { border-color: var(--green); }
+  .flow-card.approved { border-color: var(--green-line); }
+  .fc-row1 { display: flex; align-items: center; gap: 8px; }
+  .fc-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .fc-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; padding: 3px 5px; border-radius: 4px; flex-shrink: 0; }
+  .fc-pill.new { background: var(--amber-tint); color: var(--amber); }
+  .fc-pill.running { background: var(--green-tint); color: var(--green); }
+  .fc-pill.improving { background: var(--blue-tint); color: var(--blue); }
+  .fc-est { font-size: 13px; font-weight: 600; color: var(--green); font-variant-numeric: tabular-nums; margin-left: auto; }
+  .fc-last { font-size: 11px; line-height: 1.4; color: var(--text-dim); margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .fc-last.new { color: var(--amber); font-weight: 500; }
+  .fc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+  .fc-actions .mini-btn { width: 100%; padding: 9px 8px; }
+
+  /* Buttons */
+  .mini-btn { font-size: 13px; font-weight: 500; line-height: 1.2; padding: 9px 12px; border-radius: 8px; border: none; cursor: pointer; transition: all .12s; font-family: inherit; }
+  .mini-btn.primary { background: var(--green); color: #000; font-weight: 600; }
+  .mini-btn.primary:hover { filter: brightness(1.08); }
+  .mini-btn.secondary { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
+  .mini-btn.secondary:hover { border-color: var(--text-faint); }
+  .mini-btn.approved { background: var(--green-tint); color: var(--green); border: 1px solid var(--green-line); cursor: default; }
+  .mini-btn:disabled { cursor: not-allowed; }
+
+  /* Summary bar (revenue · customers · ROI) */
+  .summary { display: grid; grid-template-columns: 1fr 1fr 1fr; background: var(--green-tint); border: 1px solid var(--green-line); border-radius: 12px; padding: 10px 12px; margin-top: 12px; font-variant-numeric: tabular-nums; }
+  .summary-col { padding: 0 6px; border-right: 1px solid var(--green-line); }
+  .summary-col:last-child { border-right: none; }
+  .summary-col .k { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px; }
+  .summary-col .v { font-size: 13px; font-weight: 600; color: var(--green); font-variant-numeric: tabular-nums; line-height: 1.3; }
+
+  .plan-actions { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .plan-actions .mini-btn { flex: 1; min-width: 0; }
+  .level-future { padding: 12px; background: transparent; border: 1px dashed var(--border); border-radius: 12px; margin-top: 12px; font-size: 13px; line-height: 1.4; color: var(--text-dim); }
+  .level-future b { color: var(--text); font-weight: 600; }
+
+  /* Typing indicator */
+  .typing { display: inline-flex; gap: 4px; padding: 12px 14px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 16px; }
+  .typing span { width: 5px; height: 5px; background: var(--text-faint); border-radius: 50%; opacity: 0.4; animation: bob 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bob { 0%, 60%, 100% { opacity: 0.25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+  /* Hero number in recap */
+  .hero-num { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 12px 0; padding: 14px 0; text-align: center; }
+  .hn-value { font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; color: var(--green); font-variant-numeric: tabular-nums; }
+  .hn-sub { font-size: 11px; line-height: 1.4; color: var(--text-faint); margin-top: 4px; }
+
+  /* MC link button + inline actions */
+  .inline-action { margin-top: 12px; }
+  .mc-link-btn { font-size: 13px; font-weight: 500; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-strong); background: transparent; color: var(--text); cursor: pointer; font-family: inherit; }
+  .mc-link-btn:hover { border-color: var(--green); color: var(--green); }
+  .next-cta { padding: 14px; background: linear-gradient(135deg, rgba(111,237,69,0.12), rgba(111,237,69,0.04)); border: 1px solid var(--green-line); border-radius: 12px; margin-top: 4px; }
+  .next-cta .nc-body { font-size: 15px; line-height: 1.5; color: var(--text); }
+  .next-cta .nc-body b { color: var(--text); font-weight: 600; }
+  .next-cta button { background: var(--green); color: #000; font-size: 13px; padding: 9px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; margin-top: 10px; font-family: inherit; }
+  .next-cta button:hover { filter: brightness(1.08); }
+
+  /* === COMPOSER === */
+  .chat-input-area { border-top: 1px solid var(--border); padding: 12px 16px 14px; padding-bottom: max(14px, env(safe-area-inset-bottom)); background: var(--surface); }
+  .input-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .mode-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; line-height: 1.2; color: var(--text-dim); padding: 6px 10px; border: 1px solid var(--border-strong); border-radius: 999px; background: transparent; cursor: pointer; font-family: inherit; }
+  .mode-btn:hover { border-color: var(--text-faint); }
+  .mode-btn b { color: var(--text); font-weight: 500; }
+  .mode-btn .chev { font-size: 10px; color: var(--text-faint); }
+  .channels-btn { display: inline-flex; align-items: center; gap: 7px; padding: 6px 10px; border: 1px solid var(--border-strong); border-radius: 999px; background: transparent; cursor: pointer; font-family: inherit; }
+  .channels-btn:hover { border-color: var(--text-faint); }
+  .channels-btn .ch-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .channels-btn .ch-dot.wa { background: #25D366; }
+  .channels-btn .ch-dot.im { background: #34C759; }
+  .channels-btn .ch-dot.sl { background: #ECB22E; }
+  .channels-btn .ch-dot.tg { background: #229ED9; }
+  .channels-btn .channels-label { font-size: 11px; color: var(--text-dim); font-weight: 500; margin-left: 2px; }
+
+  .input-box { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 16px; padding: 12px 16px; font-size: 15px; line-height: 1.5; color: var(--text-faint); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .input-box .send { background: var(--green); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 600; font-size: 15px; flex-shrink: 0; }
+
+  /* === CHAT LIST === */
+  .chat-list { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: none; flex-direction: column; gap: 8px; }
+  .chat-list.active { display: flex; }
+  .cl-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 12px; }
+  .cl-header h4 { font-size: 17px; font-weight: 600; color: var(--text); }
+  .cl-new { background: var(--green); color: #000; font-size: 13px; padding: 8px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; }
+  .cl-row { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; transition: border-color .15s; text-align: left; }
+  .cl-row:hover { border-color: var(--border-strong); }
+  .cl-row.current { border-color: var(--green); background: rgba(111,237,69,0.04); }
+  .cl-row .r1 { display: flex; align-items: baseline; gap: 8px; }
+  .cl-row .nm { font-size: 15px; color: var(--text); font-weight: 500; }
+  .cl-row .dt { font-size: 11px; color: var(--text-faint); margin-left: auto; }
+  .cl-row .status { font-size: 10px; padding: 3px 5px; border-radius: 4px; line-height: 1.2; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .cl-row .status.live { background: var(--green-tint); color: var(--green); }
+  .cl-row .status.done { background: var(--surface); color: var(--text-faint); border: 1px solid var(--border); }
+  .cl-row .status.draft { background: var(--amber-tint); color: var(--amber); }
+  .cl-row .r2 { font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+  .cl-row .r2 b { color: var(--text); font-weight: 500; }
+
+  /* === MODE POPOVER === */
+  .mode-pop { position: absolute; bottom: 100px; left: 16px; width: 300px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 12px; padding: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.5); z-index: 50; opacity: 0; pointer-events: none; transform: translateY(4px); transition: opacity .15s var(--ease-ios), transform .15s var(--ease-ios); }
+  .mode-pop.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .mode-row { display: flex; gap: 10px; padding: 10px; border-radius: 8px; cursor: pointer; align-items: flex-start; }
+  .mode-row:hover { background: var(--surface-elevated); }
+  .mode-row.selected { background: rgba(111,237,69,0.06); }
+  .mode-radio { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--border-strong); flex-shrink: 0; margin-top: 2px; position: relative; }
+  .mode-row.selected .mode-radio { border-color: var(--green); }
+  .mode-row.selected .mode-radio::after { content: ''; position: absolute; inset: 2px; background: var(--green); border-radius: 50%; }
+  .mode-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .mode-desc { font-size: 11px; line-height: 1.4; color: var(--text-dim); margin-top: 3px; }
+  .mode-divider { height: 1px; background: var(--border); margin: 4px 0; }
+  .mode-foot { font-size: 11px; color: var(--text-faint); padding: 8px 10px 4px; line-height: 1.4; }
+
+  /* === CANVAS (light page) === */
+  .canvas { background: var(--canvas-bg); color: var(--canvas-text); overflow-y: auto; overflow-x: hidden; position: relative; padding: 24px 32px 32px; min-width: 0; transition: transform .32s var(--ease-ios); }
+  .canvas-page { padding: 0; }
+  .canvas-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .canvas-eyebrow .x { margin-left: auto; cursor: pointer; font-size: 17px; color: var(--canvas-dim); }
+  .canvas-eyebrow .x:hover { color: var(--canvas-text); }
+  .canvas h2.canvas-h1 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; color: var(--canvas-text); margin-bottom: 6px; }
+  .canvas .meta { font-size: 15px; line-height: 1.5; color: var(--canvas-muted); margin-bottom: 20px; }
+
+  /* Performance bar / status callout */
+  .perf-bar { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; line-height: 1.4; color: var(--canvas-text); font-variant-numeric: tabular-nums; }
+  .perf-bar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .perf-bar b { font-weight: 600; }
+  .perf-bar .roi { color: #2A8A1A; font-weight: 600; }
+  .perf-bar .sep { color: var(--canvas-border); }
+  .perf-bar .focus { color: var(--canvas-muted); flex: 1; }
+  .perf-bar .focus i { color: var(--blue); font-style: normal; font-weight: 500; }
+
+  /* KPI strip */
+  .kpi-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; font-variant-numeric: tabular-nums; }
+  .kpi { padding: 14px 16px; border-right: 1px solid var(--canvas-border); cursor: pointer; transition: background .15s; position: relative; background: transparent; border-top: none; border-bottom: none; border-left: none; text-align: left; font-family: inherit; min-width: 0; }
+  .kpi:last-child { border-right: none; }
+  .kpi:hover { background: #F4F4EF; }
+  .kpi.editing { background: rgba(111,237,69,0.07); }
+  .kpi .k { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 6px; }
+  .kpi .v { font-size: 17px; font-weight: 600; color: var(--canvas-text); line-height: 1.3; }
+  .kpi .s { font-size: 11px; color: var(--canvas-muted); margin-top: 2px; line-height: 1.4; }
+  .kpi.estrev .v { color: #2A8A1A; }
+  .kpi .pencil { position: absolute; top: 12px; right: 14px; opacity: 0; font-size: 11px; color: var(--canvas-dim); transition: opacity .15s; }
+  .kpi:hover .pencil { opacity: 1; }
+
+  /* Flow visualization */
+  .flow-section h3 { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .flow-section h3 .pill { background: var(--canvas-card); color: var(--canvas-muted); font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 4px; letter-spacing: 0.08em; text-transform: none; border: 1px solid var(--canvas-border); }
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 4px 0; }
+  .step { width: 100%; max-width: 540px; }
+  .step .card { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: border-color .15s, box-shadow .15s; box-shadow: 0 1px 2px rgba(0,0,0,0.02); font-variant-numeric: tabular-nums; }
+  .step .card:hover { border-color: #C8C8C4; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+  .step .card.approved-step { background: #F5FDF2; border-color: rgba(42,138,26,0.4); }
+  .step.trigger .card { background: #F4F4EF; }
+  .step .num { width: 32px; height: 32px; border-radius: 50%; background: var(--canvas-text); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .step.trigger .num { background: var(--canvas-card); color: var(--canvas-text); border: 1px solid #C8C8C4; }
+  .step .body { flex: 1; min-width: 0; }
+  .step .ttl { font-size: 13px; font-weight: 500; color: var(--canvas-text); line-height: 1.4; }
+  .step .sub { font-size: 11px; color: var(--canvas-muted); margin-top: 3px; line-height: 1.4; }
+  .step.trigger .body .ttl { font-weight: 500; }
+  .step .right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .step .when { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); }
+  .step .status { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); }
+  .step .status.approved { color: #2A8A1A; }
+
+  .wait-line { display: flex; flex-direction: column; align-items: center; padding: 6px 0; }
+  .wait-line::before { content: ''; width: 1px; height: 16px; background: #C8C8C4; display: block; }
+  .wait-line .wait-lbl { font-size: 11px; font-weight: 500; color: var(--canvas-dim); padding: 5px 12px; background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 999px; margin: 4px 0; }
+  .wait-line::after { content: ''; width: 1px; height: 16px; background: #C8C8C4; display: block; }
+
+  /* Email frame */
+  .email-frame { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; max-width: 540px; margin: 0 auto; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
+  .edit-region { position: relative; cursor: pointer; transition: outline-color .15s, background .15s; outline: 2px solid transparent; outline-offset: -2px; }
+  .edit-region:hover { outline-color: rgba(111,237,69,0.5); background: rgba(111,237,69,0.04); }
+  .edit-region.editing { outline-color: var(--green); outline-style: dashed; background: rgba(111,237,69,0.07); }
+  .edit-region .ptag { position: absolute; top: 6px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 4px; opacity: 0; text-transform: uppercase; pointer-events: none; }
+  .edit-region:hover .ptag { opacity: 1; }
+  .edit-region.editing .ptag { background: var(--green); color: #000; opacity: 1; }
+  .em-logo { padding: 18px 24px 0; text-align: center; }
+  .em-logo b { font-size: 13px; font-weight: 600; color: var(--canvas-text); letter-spacing: 0.08em; text-transform: uppercase; }
+  .em-hero { aspect-ratio: 16/9; position: relative; margin: 16px 24px 0; border-radius: 8px; overflow: hidden; }
+  .em-hero::after { content: attr(data-label); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.7); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .em-headline { padding: 22px 28px 8px; }
+  .em-headline h3 { font-size: 17px; font-weight: 600; color: var(--canvas-text); line-height: 1.3; }
+  .em-body { padding: 8px 28px 16px; }
+  .em-body p { font-size: 15px; color: var(--canvas-muted); line-height: 1.5; margin-bottom: 10px; }
+  .em-cta { padding: 6px 28px 22px; text-align: center; }
+  .cta-btn { background: var(--canvas-text); color: #fff; font-size: 15px; font-weight: 600; padding: 12px 24px; border-radius: 8px; display: inline-block; }
+  .em-footer { padding: 14px 28px 22px; border-top: 1px solid #E5E0D8; margin-top: 4px; text-align: center; }
+  .em-footer p { font-size: 11px; color: var(--canvas-dim); line-height: 1.4; }
+  .em-footer a { color: var(--canvas-text); text-decoration: underline; }
+
+  /* Email step nav */
+  .step-meta { display: grid; grid-template-columns: 1.4fr 1.4fr 1fr; gap: 8px; margin-bottom: 20px; background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; overflow: hidden; }
+  .step-meta .em { padding: 12px 16px; border-right: 1px solid var(--canvas-border); cursor: pointer; transition: background .15s; position: relative; background: transparent; border-top: none; border-bottom: none; border-left: none; text-align: left; font-family: inherit; }
+  .step-meta .em:last-child { border-right: none; }
+  .step-meta .em:hover { background: #F4F4EF; }
+  .step-meta .em.editing { background: rgba(111,237,69,0.08); }
+  .step-meta .em .k { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 4px; }
+  .step-meta .em .v { font-size: 13px; font-weight: 500; color: var(--canvas-text); line-height: 1.4; }
+  .step-meta .em .pencil { position: absolute; top: 10px; right: 12px; opacity: 0; font-size: 11px; color: var(--canvas-dim); }
+  .step-meta .em:hover .pencil { opacity: 1; }
+
+  .email-stepper { display: flex; gap: 8px; margin-bottom: 20px; align-items: stretch; flex-wrap: wrap; }
+  .step-pill { display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; cursor: pointer; transition: all .15s; flex: 1; min-width: 120px; text-align: left; font-family: inherit; }
+  .step-pill:hover { border-color: #C8C8C4; }
+  .step-pill.active { background: #F5FDF2; border-color: var(--green); box-shadow: 0 0 0 1px rgba(111,237,69,0.3) inset; }
+  .step-pill .sp-num { width: 28px; height: 28px; border-radius: 50%; background: var(--canvas-border); color: var(--canvas-muted); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .step-pill.active .sp-num { background: var(--canvas-text); color: #fff; }
+  .step-pill .sp-body { display: flex; flex-direction: column; min-width: 0; }
+  .step-pill .sp-nm { font-size: 13px; font-weight: 500; color: var(--canvas-text); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .step-pill .sp-when { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-top: 2px; }
+  .step-pill.active .sp-when { color: #2A8A1A; }
+
+  .back-to-flow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--canvas-muted); cursor: pointer; margin-bottom: 14px; background: transparent; border: none; padding: 0; font-family: inherit; }
+  .back-to-flow:hover { color: var(--canvas-text); }
+
+  .canvas-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 28px; border-top: 1px solid var(--canvas-border); }
+  .canvas-foot .status-txt { font-size: 13px; color: var(--canvas-muted); }
+  .btn { background: var(--canvas-text); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 8px; cursor: pointer; border: none; font-family: inherit; }
+  .btn:hover { filter: brightness(1.1); }
+  .btn-ghost { background: var(--canvas-card); color: var(--canvas-text); border: 1px solid #D8D8D4; font-weight: 500; }
+  .btn-ghost:hover { border-color: var(--canvas-dim); background: #F4F4EF; filter: none; }
+  .btn:disabled { cursor: not-allowed; opacity: 0.7; }
+
+  /* === MISSION CONTROL view === */
+  .mc-hero { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+  .mc-hero-value { font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; color: #2A8A1A; font-variant-numeric: tabular-nums; }
+  .mc-hero-sub { font-size: 13px; color: var(--canvas-muted); margin-top: 6px; }
+  .mc-metrics { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; font-variant-numeric: tabular-nums; }
+  .mc-card { padding: 14px 16px; border-right: 1px solid var(--canvas-border); }
+  .mc-card:last-child { border-right: none; }
+  .mc-card .k { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 6px; }
+  .mc-card .v { font-size: 17px; font-weight: 600; color: var(--canvas-text); line-height: 1.3; }
+  .mc-section-h { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 12px; }
+  .mc-flows { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .mc-flow { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 10px; padding: 14px; font-size: 13px; color: var(--canvas-muted); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .mc-flow b { color: var(--canvas-text); font-weight: 600; font-size: 13px; }
+  .mc-note { padding: 14px; background: #F4F4EF; border: 1px dashed #D8D8D4; border-radius: 8px; font-size: 11px; color: var(--canvas-dim); line-height: 1.5; }
+
+  /* View toggling */
+  #flowView, #emailView, #mcView { display: none; }
+  #flowView.active, #emailView.active, #mcView.active { display: block; }
+
+  /* === EDIT POPOVER === */
+  .popover { position: fixed; width: 320px; background: var(--canvas-card); border: 1px solid var(--green); border-radius: 12px; padding: 16px; box-shadow: 0 16px 40px rgba(0,0,0,0.15); z-index: 100; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .15s var(--ease-ios), transform .15s var(--ease-ios); }
+  .popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .pop-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .pop-head .lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #2A8A1A; }
+  .pop-head .x { margin-left: auto; color: var(--canvas-dim); cursor: pointer; font-size: 15px; padding: 2px 6px; }
+  .pop-head .x:hover { color: var(--canvas-text); }
+  .pop-current { font-size: 13px; color: var(--canvas-muted); margin-bottom: 14px; line-height: 1.4; padding: 10px 12px; background: #F4F4EF; border-radius: 8px; border-left: 2px solid var(--green); }
+  .pop-section-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-dim); margin-bottom: 8px; }
+  .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .chip { background: var(--canvas-card); border: 1px solid #D8D8D4; padding: 7px 11px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--canvas-text); cursor: pointer; transition: all .15s; font-family: inherit; }
+  .chip:hover { border-color: var(--green); background: rgba(111,237,69,0.08); }
+  .pop-input { background: var(--canvas-card); border: 1px solid #D8D8D4; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.4; color: var(--canvas-text); min-height: 60px; width: 100%; resize: vertical; font-family: inherit; outline: none; }
+  .pop-input:focus { border-color: var(--green); }
+  .pop-input::placeholder { color: #B0B0B0; }
+  .pop-actions { display: flex; gap: 6px; margin-top: 12px; justify-content: flex-end; }
+
+  /* === WELCOME MODAL === */
+  .welcome-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 24px; animation: welcomeFadeIn .4s var(--ease-ios); }
+  .welcome-modal.hidden { display: none; }
+  .welcome-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px 28px; max-width: 440px; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,0.6); animation: welcomeSlideUp .4s var(--ease-ios); }
+  .welcome-emoji { font-size: 28px; margin-bottom: 14px; }
+  .welcome-card h2 { font-size: 28px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--text); margin-bottom: 14px; }
+  .welcome-card p { font-size: 15px; line-height: 1.5; color: var(--text-dim); margin-bottom: 8px; }
+  .welcome-card p b { color: var(--green); font-weight: 600; }
+  .welcome-sub { color: var(--text-faint) !important; font-size: 13px !important; margin-top: 12px !important; }
+  .welcome-actions { margin-top: 22px; }
+  .welcome-actions button { background: var(--green); color: #000; font-size: 15px; padding: 12px 24px; border-radius: 12px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; }
+  .welcome-actions button:hover { filter: brightness(1.08); }
+  .welcome-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-top: 18px; }
+  @keyframes welcomeFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes welcomeSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* === CHANNELS MODAL === */
+  .channels-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 5500; display: flex; align-items: center; justify-content: center; padding: 24px; animation: welcomeFadeIn .3s var(--ease-ios); }
+  .channels-modal.hidden { display: none; }
+  .channels-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; max-width: 460px; width: 100%; max-height: calc(100vh - 48px); overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.6); animation: welcomeSlideUp .35s var(--ease-ios); }
+  .channels-card h2 { font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--text); margin-bottom: 6px; }
+  .channels-card .lede { font-size: 13px; line-height: 1.4; color: var(--text-dim); margin-bottom: 18px; }
+  .channels-list { display: flex; flex-direction: column; gap: 8px; }
+  .channel-row { display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; }
+  .channel-row.connected { border-color: var(--green-line); background: rgba(111,237,69,0.04); }
+  .channel-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 17px; font-weight: 600; color: #fff; }
+  .channel-icon.wa { background: #25D366; }
+  .channel-icon.im { background: linear-gradient(135deg, #34C759, #00BFFF); }
+  .channel-icon.sl { background: #4A154B; }
+  .channel-icon.tg { background: #229ED9; }
+  .channel-body { flex: 1; min-width: 0; }
+  .channel-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .channel-desc { font-size: 13px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; }
+  .channel-connect { font-size: 13px; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; border: none; background: var(--green); color: #000; flex-shrink: 0; font-family: inherit; }
+  .channel-connect:hover { filter: brightness(1.08); }
+  .channel-connect.connected { background: var(--green-tint); color: var(--green); border: 1px solid var(--green-line); cursor: default; }
+  .channels-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .channels-foot .note { font-size: 11px; color: var(--text-faint); line-height: 1.4; }
+  .channels-foot button { font-size: 13px; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; border: 1px solid var(--border-strong); background: transparent; color: var(--text-dim); font-family: inherit; }
+  .channels-foot button:hover { border-color: var(--text-faint); color: var(--text); }
+
+  /* === CONFETTI === */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 9000; overflow: hidden; }
+  .confetti-piece { position: absolute; width: 8px; height: 14px; top: -30px; opacity: 0.95; animation: confettiFall linear forwards; border-radius: 2px; }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-30px) translateX(0) rotate(0deg); }
+    100% { transform: translateY(110vh) translateX(var(--drift, 0px)) rotate(720deg); }
+  }
+
+  /* === HAMBURGER + BACKDROP (mobile rail toggle) === */
+  .hamburger { display: none; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border-strong); cursor: pointer; padding: 0; }
+  .hamburger:hover { background: var(--surface-elevated); }
+  .hamburger span { display: block; width: 14px; height: 1.5px; background: var(--text-dim); margin: 2px 0; border-radius: 1px; }
+  .backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 250; }
+  .backdrop.open { display: block; }
+  .canvas-back-mobile { display: none; font-size: 15px; font-weight: 500; color: var(--canvas-text); align-items: center; gap: 6px; padding: 14px 16px; background: var(--canvas-bg); border: none; cursor: pointer; font-family: inherit; }
+  .canvas-back-mobile::before { content: '‹'; font-size: 28px; line-height: 1.2; color: var(--canvas-text); font-weight: 400; }
+
+  /* === CANVAS-AS-PAGE (mobile + tablet) — slide in from right === */
+  @media (max-width: 1023px) {
+    .app { display: block; }
+    .app.canvas-shown { grid-template-columns: none; }
+    .rail { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; z-index: 300; transform: translateX(-100%); transition: transform .32s var(--ease-ios); }
+    .rail.open { transform: translateX(0); }
+    .hamburger { display: inline-flex; }
+    .chat { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100dvh; height: 100svh; display: flex; flex-direction: column; border-right: none; min-height: 0; }
+    .app.canvas-shown .chat { transform: translateX(-15%); opacity: 0.4; pointer-events: none; }
+    .canvas { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100vh; height: 100dvh; height: 100svh; z-index: 200; transform: translateX(100%); transition: transform .32s var(--ease-ios); padding-top: 60px; box-shadow: -8px 0 24px rgba(0,0,0,0.4); }
+    .canvas.open-mobile, .app.canvas-shown .canvas { transform: translateX(0); }
+    .canvas-back-mobile { display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 250; border-bottom: 1px solid var(--canvas-border); }
+    .canvas .canvas-eyebrow .x { display: none; }
+  }
+
+  /* === DESKTOP split-view tuning === */
+  @media (min-width: 1024px) {
+    .canvas { transition: none; }
+    .app.canvas-shown .chat { transform: none; opacity: 1; }
+  }
+  @media (min-width: 1440px) {
+    .app.canvas-shown .canvas-page-inner { max-width: 720px; margin: 0 auto; }
+  }
+
+  /* Mobile narrow tweaks (NO font-size overrides — typography tokens are responsive by spec) */
+  @media (max-width: 600px) {
+    .step-meta { grid-template-columns: 1fr; }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .kpi { border-bottom: 1px solid var(--canvas-border); }
+    .kpi:nth-last-child(-n+2) { border-bottom: none; }
+    .kpi:nth-child(2n) { border-right: none; }
+    .mc-metrics { grid-template-columns: repeat(2, 1fr); }
+    .mc-card { border-bottom: 1px solid var(--canvas-border); }
+    .mc-card:nth-last-child(-n+2) { border-bottom: none; }
+    .mc-card:nth-child(2n) { border-right: none; }
+    .email-frame { max-width: 100%; }
+    .canvas { padding: 16px 20px 24px; padding-top: 60px; }
+  }
+</style></head>
+<body>
+
+  <!-- Channels modal: connect Aria to WhatsApp / iMessage / Slack / Telegram -->
+  <div class="channels-modal hidden" id="channelsModal" onclick="if(event.target===this)closeChannelsModal()">
+    <div class="channels-card">
+      <h2>Connect Aria to your channels</h2>
+      <div class="lede">Same Aria, everywhere you work. Daily updates, weekly recaps, and one-tap approvals — delivered to the channel of your choice.</div>
+      <div class="channels-list">
+        <div class="channel-row" data-channel="wa">
+          <div class="channel-icon wa">W</div>
+          <div class="channel-body">
+            <div class="channel-name">WhatsApp</div>
+            <div class="channel-desc">Get daily updates + approve flows from your phone.</div>
+          </div>
+          <button class="channel-connect" onclick="connectChannel('wa', 'WhatsApp', this)">Connect</button>
+        </div>
+        <div class="channel-row" data-channel="im">
+          <div class="channel-icon im">i</div>
+          <div class="channel-body">
+            <div class="channel-name">iMessage</div>
+            <div class="channel-desc">Same Aria, in your iMessage thread.</div>
+          </div>
+          <button class="channel-connect" onclick="connectChannel('im', 'iMessage', this)">Connect</button>
+        </div>
+        <div class="channel-row" data-channel="sl">
+          <div class="channel-icon sl">S</div>
+          <div class="channel-body">
+            <div class="channel-name">Slack</div>
+            <div class="channel-desc">For teams running growth out of Slack.</div>
+          </div>
+          <button class="channel-connect" onclick="connectChannel('sl', 'Slack', this)">Connect</button>
+        </div>
+        <div class="channel-row" data-channel="tg">
+          <div class="channel-icon tg">T</div>
+          <div class="channel-body">
+            <div class="channel-name">Telegram</div>
+            <div class="channel-desc">For when your team's on Telegram.</div>
+          </div>
+          <button class="channel-connect" onclick="connectChannel('tg', 'Telegram', this)">Connect</button>
+        </div>
+      </div>
+      <div class="channels-foot">
+        <div class="note">Everything Aria sends here also reaches your connected channels.</div>
+        <button onclick="closeChannelsModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome modal: shown on load, dismiss to start the demo intro -->
+  <div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-card">
+      <div class="welcome-emoji">👋</div>
+      <h2>Good morning, Steven.</h2>
+      <p>While you were out, your growth manager <b>Aria</b> ran the numbers, scanned your store, and put together <b>three new flows for January</b>.</p>
+      <p>$6,253 projected at 6.0× ROI.</p>
+      <p class="welcome-sub">Want a quick walk-through?</p>
+      <div class="welcome-actions"><button onclick="dismissWelcome()">See my plan →</button></div>
+      <div class="welcome-tag">Demo · January 2026</div>
+    </div>
+  </div>
+
+  <div class="backdrop" id="backdrop" onclick="closeRail()"></div>
+  <div class="app" id="app">
+    <aside class="rail" id="rail">
+      <div class="logo">⏵ YoboLabs</div>
+      <div class="store">demo-shop-6 <span style="color:#6a7280">›</span></div>
+      <div class="nav-item"><span class="dot"></span>Mission Control</div>
+      <div class="nav-item active"><span class="dot"></span>Chat</div>
+      <div class="nav-section">Planning</div>
+      <div class="nav-item">Monthly Plans</div>
+      <div class="nav-item">Calendar</div>
+      <div class="nav-item">To-Do List</div>
+      <div class="nav-item">Brand DNA</div>
+      <div class="nav-section">Growth</div>
+      <div class="nav-item">Campaigns</div>
+      <div class="nav-item">Offers</div>
+      <div class="nav-item">Segments</div>
+      <div class="rail-foot">
+        <div class="nav-item">Settings</div>
+      </div>
+    </aside>
+
+    <section class="chat">
+      <div class="chat-head">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="hamburger" id="hamburger" onclick="toggleRail()" aria-label="Menu"><span></span><span></span><span></span></button>
+          <span class="chat-back" id="backBtn" onclick="showChatList()">← Chats</span>
+          <div class="chat-title" id="chatTitle">January 2026 Plan<span class="small">Today · 8:42 AM</span></div>
+        </div>
+      </div>
+
+      <!-- Approval mode popover -->
+      <div class="mode-pop" id="modePop">
+        <div class="mode-row selected" data-mode="manual" onclick="selectMode('manual', 'Manual')">
+          <span class="mode-radio"></span>
+          <div class="mode-body">
+            <div class="mode-name">Manual</div>
+            <div class="mode-desc">I approve every send. Aria pauses until I do.</div>
+          </div>
+        </div>
+        <div class="mode-row" data-mode="window" onclick="selectMode('window', '24h window')">
+          <span class="mode-radio"></span>
+          <div class="mode-body">
+            <div class="mode-name">24-hour edit window</div>
+            <div class="mode-desc">Aria proposes. I have 24 hours to edit or pause. Then it ships.</div>
+          </div>
+        </div>
+        <div class="mode-row" data-mode="proven" onclick="selectMode('proven', 'Auto · proven')">
+          <span class="mode-radio"></span>
+          <div class="mode-body">
+            <div class="mode-name">Auto for proven flows</div>
+            <div class="mode-desc">Aria auto-ships flows with a track record. Manual for new ones.</div>
+          </div>
+        </div>
+        <div class="mode-row" data-mode="full" onclick="selectMode('full', 'Full autopilot')">
+          <span class="mode-radio"></span>
+          <div class="mode-body">
+            <div class="mode-name">Full autopilot</div>
+            <div class="mode-desc">Aria runs everything. Weekly recap only.</div>
+          </div>
+        </div>
+        <div class="mode-divider"></div>
+        <div class="mode-foot">Change anytime. Aria respects the mode for all flows in this store.</div>
+      </div>
+
+      <div class="chat-list" id="chatList">
+        <div class="cl-header">
+          <h4>All chats</h4>
+          <button class="cl-new" onclick="openThread('current')">+ New chat</button>
+        </div>
+        <div class="cl-row current" onclick="openThread('current')">
+          <div class="r1"><span class="nm">January 2026 Plan</span><span class="status draft">In review</span><span class="dt">Today</span></div>
+          <div class="r2">3 flows · Level 1 · <b>$6,253</b> projected</div>
+        </div>
+        <div class="cl-row" onclick="openThread('dec25')">
+          <div class="r1"><span class="nm">December 2025 Plan</span><span class="status live">Live</span><span class="dt">Apr 28</span></div>
+          <div class="r2">4 flows · <b>$8,402</b> generated · <b>6.8×</b> ROI</div>
+        </div>
+        <div class="cl-row" onclick="openThread('nov25')">
+          <div class="r1"><span class="nm">November 2025 Plan</span><span class="status done">Closed</span><span class="dt">Mar 31</span></div>
+          <div class="r2">3 flows · <b>$7,120</b> generated · <b>5.9×</b> ROI</div>
+        </div>
+        <div class="cl-row" onclick="openThread('oct25')">
+          <div class="r1"><span class="nm">October 2025 Plan</span><span class="status done">Closed</span><span class="dt">Feb 28</span></div>
+          <div class="r2">3 flows · <b>$5,400</b> generated · <b>4.8×</b> ROI</div>
+        </div>
+      </div>
+
+      <div class="thread" id="thread">
+
+        <!-- DAILY UPDATE — proactive cadence -->
+        <div class="msg">
+          <div class="av">A</div>
+          <div class="body">
+            <div class="name"><b>Aria</b></div>
+            <div class="bubble">
+              <span class="prefix">Yesterday's update.</span><br>
+              December's Win-Back: <b>6.2× ROI</b> on send 3.<br>
+              Folding that subject pattern into this month.
+              <div class="inline-action"><button class="mc-link-btn" onclick="renderMissionControl('daily-prev')">View daily report →</button></div>
+              <div class="time">8:38 AM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESEARCH / INSIGHTS -->
+        <div class="msg" id="introInsights" style="display:none">
+          <div class="av">A</div>
+          <div class="body">
+            <div class="bubble">
+              <span class="prefix">Your January plan is ready.</span><br>
+              Three signals stood out:
+              <div class="insights">
+                <div><span class="num">1.</span> 1,847 lapsed buyers, cold 60+ days</div>
+                <div><span class="num">2.</span> 47% cart abandonment · no flow live</div>
+                <div><span class="num">3.</span> 612 Q4 first-timers, none returned</div>
+              </div>
+              <a class="seemore">See research →</a>
+              <div class="time">8:42 AM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLAN -->
+        <div class="msg" id="introPlan" style="display:none">
+          <div class="av">A</div>
+          <div class="body">
+            <div class="bubble">
+              <div class="plan">
+                <div class="plan-head">
+                  <div class="plan-title">Your January flows</div>
+                  <div class="plan-sub">3 picked from Klaviyo's 40+ templates · in the order I'd run them</div>
+                </div>
+
+                <div class="flow-list">
+
+                  <div class="flow-card" data-flow="0">
+                    <div class="fc-row1">
+                      <span class="fc-name">Win-Back</span>
+                      <span class="fc-pill improving">Improving</span>
+                      <span class="fc-est">$3,420</span>
+                    </div>
+                    <div class="fc-last">Last month: <b>$3,402</b> at <b>6.8× ROI</b></div>
+                    <div class="fc-actions">
+                      <button class="mini-btn primary" data-act="approve-camp" data-i="0">Approve</button>
+                      <button class="mini-btn secondary" data-act="open-camp" data-i="0">Open</button>
+                    </div>
+                  </div>
+
+                  <div class="flow-card" data-flow="1">
+                    <div class="fc-row1">
+                      <span class="fc-name">Abandoned Cart</span>
+                      <span class="fc-pill new">New</span>
+                      <span class="fc-est">$2,180</span>
+                    </div>
+                    <div class="fc-last new">First time running this flow</div>
+                    <div class="fc-actions">
+                      <button class="mini-btn primary" data-act="approve-camp" data-i="1">Approve</button>
+                      <button class="mini-btn secondary" data-act="open-camp" data-i="1">Open</button>
+                    </div>
+                  </div>
+
+                  <div class="flow-card" data-flow="2">
+                    <div class="fc-row1">
+                      <span class="fc-name">Welcome Series</span>
+                      <span class="fc-pill improving">Improving</span>
+                      <span class="fc-est">$653</span>
+                    </div>
+                    <div class="fc-last">Last month: <b>$580</b> at <b>3.2× ROI</b></div>
+                    <div class="fc-actions">
+                      <button class="mini-btn primary" data-act="approve-camp" data-i="2">Approve</button>
+                      <button class="mini-btn secondary" data-act="open-camp" data-i="2">Open</button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="summary">
+                  <div class="summary-col"><div class="k">Est. revenue</div><div class="v">$6,253</div></div>
+                  <div class="summary-col"><div class="k">Customers</div><div class="v">3,423</div></div>
+                  <div class="summary-col"><div class="k">Blended ROI</div><div class="v">6.0×</div></div>
+                </div>
+                <div class="plan-actions">
+                  <button class="mini-btn primary" id="approveAllBtn" onclick="approveAllCascade()">Approve all</button>
+                  <button class="mini-btn secondary">Customize</button>
+                  <button class="mini-btn secondary">Open full plan</button>
+                </div>
+              </div>
+              <div class="time">8:42 AM</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-meta-row">
+          <button class="mode-btn" id="modeBtn" onclick="toggleModePop(event)">Approval · <b id="modeLabel">Manual</b> <span class="chev">▾</span></button>
+          <button class="channels-btn" onclick="openChannelsModal()" title="Connect Aria to WhatsApp, iMessage, Slack, Telegram">
+            <span class="ch-dot wa"></span>
+            <span class="ch-dot im"></span>
+            <span class="ch-dot sl"></span>
+            <span class="ch-dot tg"></span>
+            <span class="channels-label">Channels</span>
+          </button>
+        </div>
+        <div class="input-box"><span>Ask about Win-Back…</span><span class="send">↑</span></div>
+      </div>
+    </section>
+
+    <!-- CANVAS -->
+    <section class="canvas">
+      <button class="canvas-back-mobile" onclick="closeCanvas()">Back to chat</button>
+
+
+      <div id="flowView" class="active">
+        <div class="crumb">
+          <a>CAMPAIGN FLOW</a><span>›</span><span id="flowCrumbName" style="color:#111">Win-Back</span>
+          <span class="x" onclick="closeCanvas()">✕</span>
+        </div>
+        <h2 id="flowTitle">Win-Back</h2>
+        <div class="meta" id="flowMeta">Lapsed 60–120 days · January 2026 · syncs to Klaviyo on approval</div>
+
+        <div class="perf-bar">
+          <span class="dot"></span>
+          <span id="perfText"></span>
+          <span class="sep">|</span>
+          <span class="focus">Aria's <span id="perfVerb">refining</span>: <i id="perfFocus"></i></span>
+        </div>
+
+        <div class="kpi-strip">
+          <div class="kpi" data-edit="goal">
+            <div class="k">Goal</div>
+            <div class="v" id="kpiGoal">—</div>
+            <div class="s" id="kpiGoalSub">—</div>
+            <div class="pencil">✎</div>
+          </div>
+          <div class="kpi" data-edit="customers">
+            <div class="k">Customers</div>
+            <div class="v" id="kpiCustomers">—</div>
+            <div class="s" id="kpiCustomersSub">—</div>
+            <div class="pencil">✎</div>
+          </div>
+          <div class="kpi" data-edit="offer">
+            <div class="k">Offer</div>
+            <div class="v" id="kpiOffer">—</div>
+            <div class="s" id="kpiOfferSub">—</div>
+            <div class="pencil">✎</div>
+          </div>
+          <div class="kpi estrev">
+            <div class="k">Est. Revenue</div>
+            <div class="v" id="kpiEstRev">—</div>
+            <div class="s" id="kpiEstRoi">—</div>
+          </div>
+        </div>
+
+        <div class="flow-section">
+          <h3>Flow <span class="pill"><span id="flowEmailCount">3</span> emails · auto-sync on approval</span></h3>
+          <div class="flow" id="flowList"></div>
+        </div>
+
+        <div class="canvas-foot">
+          <div class="status-txt" id="flowFootStatus">—</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost" id="approveAllEmailsBtnFlow" onclick="approveAllEmails(currentFlowId)">Approve all emails</button>
+            <button class="btn" id="approveCampaignBtn" onclick="approveCampaignFromCanvas()">Approve campaign</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL VIEW -->
+      <div id="emailView">
+        <div class="crumb">
+          <a>CAMPAIGN FLOW</a><span>›</span><a onclick="renderFlow(currentFlowId)">Win-Back</a><span>›</span><span style="color:#111" id="crumbEmail">Email 1</span>
+          <span class="x" onclick="closeCanvasMobile(); showFlow();">✕</span>
+        </div>
+        <span class="back-to-flow" onclick="renderFlow(currentFlowId)">← back to flow</span>
+        <h2 id="emailTitle">Soft re-intro</h2>
+        <div class="meta" id="emailMeta">Step 1 of 3 · sends at trigger · syncs to Klaviyo on approval</div>
+
+        <!-- EMAIL STEPPER (jump between 1/2/3 without going back to flow) -->
+        <div class="email-stepper" id="emailStepper">
+          <div class="step-pill active" data-jump="0">
+            <span class="sp-num">1</span>
+            <span class="sp-body"><span class="sp-nm">Soft re-intro</span><span class="sp-when">Day 0</span></span>
+          </div>
+          <div class="step-pill" data-jump="1">
+            <span class="sp-num">2</span>
+            <span class="sp-body"><span class="sp-nm">15% off your category</span><span class="sp-when">Day 3</span></span>
+          </div>
+          <div class="step-pill" data-jump="2">
+            <span class="sp-num">3</span>
+            <span class="sp-body"><span class="sp-nm">Last chance</span><span class="sp-when">Day 7</span></span>
+          </div>
+        </div>
+
+        <div class="step-meta">
+          <div class="em" data-edit="subject"><div class="k">Subject</div><div class="v" id="vSubject"></div><div class="pencil">✎</div></div>
+          <div class="em" data-edit="preview"><div class="k">Preview text</div><div class="v" id="vPreview"></div><div class="pencil">✎</div></div>
+          <div class="em" data-edit="tone"><div class="k">Tone</div><div class="v" id="vTone"></div><div class="pencil">✎</div></div>
+        </div>
+
+        <div class="email-frame" id="emailFrame">
+          <div class="em-logo"><b>DEMO SHOP</b></div>
+          <div class="em-hero edit-region" data-edit="hero" id="emHero"><span class="ptag">Click to edit</span></div>
+          <div class="em-headline edit-region" data-edit="headline"><span class="ptag">Click to edit</span><h3 id="vHeadline"></h3></div>
+          <div class="em-body edit-region" data-edit="body"><span class="ptag">Click to edit</span><div id="vBody"></div></div>
+          <div class="em-cta edit-region" data-edit="cta"><span class="ptag">Click to edit</span><span class="cta-btn" id="vCta"></span></div>
+          <div class="em-footer edit-region" data-edit="footer"><span class="ptag">Click to edit</span><p>Demo Shop · 123 Example St · You're getting this because you shopped with us before. <a>Unsubscribe</a></p></div>
+        </div>
+
+        <div class="canvas-foot">
+          <div class="status-txt" id="footStatus">Email 1 of 3 · approve to lock</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost" id="approveAllEmailsBtnEmail" onclick="approveAllEmails(currentFlowId)">Approve all emails</button>
+            <button class="btn" id="approveEmailBtn" onclick="approveCurrentEmail()">Approve email</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISSION CONTROL VIEW -->
+      <div id="mcView">
+        <div class="crumb">
+          <a>MISSION CONTROL</a><span>›</span><span id="mcCrumbName" style="color:#111">Daily report</span>
+          <span class="x" onclick="closeCanvas()">✕</span>
+        </div>
+        <h2 id="mcTitle">Daily report</h2>
+        <div class="meta" id="mcMeta">—</div>
+
+        <div class="mc-hero">
+          <div class="mc-hero-value" id="mcHeroValue">—</div>
+          <div class="mc-hero-sub" id="mcHeroSub">—</div>
+        </div>
+
+        <div class="mc-metrics" id="mcMetrics"></div>
+
+        <h3 class="mc-section-h">Per flow</h3>
+        <div class="mc-flows" id="mcFlows"></div>
+
+        <div class="mc-note">Full Mission Control dashboard ships in production. This is the slice for this period.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="popover" id="popover">
+    <div class="pop-head"><span class="lbl">Edit · <span id="popLabel"></span></span><span class="x" onclick="closePop()">✕</span></div>
+    <div class="pop-current" id="popCurrent"></div>
+    <div class="pop-section-lbl">Quick edits</div>
+    <div class="quick-chips" id="popChips"></div>
+    <div class="pop-section-lbl">Or describe the edit</div>
+    <textarea class="pop-input" id="popInput" placeholder="Type your edit…"></textarea>
+    <div class="pop-actions"><button class="btn btn-ghost" onclick="closePop()">Cancel</button><button class="btn" onclick="sendEdit()">Send to chat</button></div>
+  </div>
+
+
+<script>
+  const FLOWS = {
+    'win-back': {
+      name: 'Win-Back',
+      subtitle: 'Lapsed 60–120 days · January 2026 · syncs to Klaviyo on approval',
+      perfText: `Running since Dec · last month <b>$3,402</b> at <span class="roi">6.8× ROI</span>`,
+      perfVerb: 'refining',
+      perfFocus: 'shorter subject line, showing promise',
+      kpi: { goal: 'Win-Back', goalSub: 'Reactivate cold buyers', customers: '1,847', customersSub: 'Lapsed 60–120 days', offer: '15% off', offerSub: 'Last-viewed category', estRev: '$3,420', estRoi: '5.1× ROI' },
+      trigger: { ttl: 'When customer enters segment', sub: 'Lapsed 60–120 days · 1,847 customers' },
+      emails: [
+        { title: 'Soft re-intro', meta: 'Step 1 of 3 · sends at trigger · syncs to Klaviyo on approval', crumb: 'Email 1', subject: 'Steven, you left something behind', preview: 'A little nudge from us — no offers, just a hello.', tone: 'Warm · brand DNA', heroBg: 'linear-gradient(135deg, #d4b89e 0%, #b88e6e 60%, #8a5e3e 100%)', heroLabel: 'Skincare hero · warm tones', headline: 'We\'ve missed your glow, Steven.', body: '<p>It\'s been a minute since you last shopped with us, and we just wanted to say hi. No offer this time — just a quick note that your favorites are back in stock, and we\'ve added a few new things we think you\'ll love.</p><p>Take a look whenever you\'re ready. We\'ll be here.</p>', cta: 'Take a fresh look →', whenLabel: 'Day 0', waitAfter: 'Wait 3 days · branch on open', footStatus: 'Email 1 of 3 · approve to lock', stepTitle: 'Soft re-intro' },
+        { title: '15% off your category', meta: 'Step 2 of 3 · sends 3 days after trigger if not opened', crumb: 'Email 2', subject: 'A little something to bring you back', preview: '15% off your category — for the next 7 days.', tone: 'Inviting · soft urgency', heroBg: 'linear-gradient(135deg, #f0d4b5 0%, #e6a875 50%, #c97f48 100%)', heroLabel: 'Product showcase · 15% callout', headline: '15% off, just for you.', body: '<p>We pulled together a few things from your last-viewed category — and we\'re taking 15% off so you can finish what you started.</p><p>Use code <b>HELLO15</b> at checkout. Valid for the next 7 days.</p>', cta: 'Claim your 15% →', whenLabel: 'Day 3', waitAfter: 'Wait 4 days', footStatus: 'Email 2 of 3 · approve to lock', stepTitle: '15% off your category' },
+        { title: 'Last chance', meta: 'Step 3 of 3 · sends 7 days after trigger · final send', crumb: 'Email 3', subject: 'This is your last chance, Steven', preview: 'Your 15% off expires in 24 hours.', tone: 'Urgent · social proof', heroBg: 'linear-gradient(135deg, #c97f48 0%, #8a4a28 60%, #5a2f1a 100%)', heroLabel: 'Urgency · countdown feel', headline: 'Don\'t miss out, Steven.', body: '<p>Your 15% off expires in <b>24 hours</b>. Hundreds of returning customers have already used theirs this month.</p><p>One last chance to grab what you\'ve been eyeing — and we\'ll throw in free shipping over $40.</p>', cta: 'Shop now — 24h left →', whenLabel: 'Day 7', waitAfter: null, footStatus: 'Email 3 of 3 · approve to lock', stepTitle: 'Last chance' },
+      ],
+    },
+    'abandoned-cart': {
+      name: 'Abandoned Cart',
+      subtitle: 'Cart abandoners, last 30 days · January 2026 · syncs to Klaviyo on approval',
+      perfText: `New flow · no history yet · <b>$2,180</b> projected at <span class="roi">4.2× ROI</span>`,
+      perfVerb: 'calibrating',
+      perfFocus: 'first time running — watching for first send signals',
+      kpi: { goal: 'Abandoned Cart', goalSub: 'Recover lost intent', customers: '940', customersSub: 'Cart abandoners, 30d', offer: 'Free shipping', offerSub: 'Over $40', estRev: '$2,180', estRoi: '4.2× ROI' },
+      trigger: { ttl: 'When customer abandons cart', sub: 'Cart sits idle for 1 hour · ~940/month' },
+      emails: [
+        { title: 'Did you forget something?', meta: 'Step 1 of 3 · sends 1 hour after abandonment', crumb: 'Email 1', subject: 'You left these in your cart, Steven', preview: 'We saved them for you — no rush.', tone: 'Helpful · low pressure', heroBg: 'linear-gradient(135deg, #b8c8d4 0%, #7a96a8 60%, #4a6678 100%)', heroLabel: 'Cart contents · saved-for-you', headline: 'Still thinking it over?', body: '<p>We saved your cart for you. No pressure — but here\'s what you were looking at.</p><p>Pick up where you left off whenever you\'re ready.</p>', cta: 'Complete your order →', whenLabel: '1 hr', waitAfter: 'Wait 24 hours', footStatus: 'Email 1 of 3 · approve to lock', stepTitle: 'Did you forget something?' },
+        { title: 'Still on your mind?', meta: 'Step 2 of 3 · sends 24 hours after abandonment if not converted', crumb: 'Email 2', subject: 'Your cart is still here', preview: 'A friendly reminder — your picks are waiting.', tone: 'Friendly · gentle nudge', heroBg: 'linear-gradient(135deg, #d4c8b8 0%, #b8a890 50%, #8a7868 100%)', heroLabel: 'Product collage · warm wood tones', headline: 'Just a friendly nudge.', body: '<p>Your cart is still here, ready when you are. We even threw in some reviews from happy customers in case it helps.</p>', cta: 'Pick up where you left off →', whenLabel: 'Day 1', waitAfter: 'Wait 2 days', footStatus: 'Email 2 of 3 · approve to lock', stepTitle: 'Still on your mind?' },
+        { title: 'Free shipping unlocked', meta: 'Step 3 of 3 · sends 3 days after abandonment · final send', crumb: 'Email 3', subject: 'One more thing — free shipping unlocked', preview: 'Free shipping if you finish today.', tone: 'Generous · urgency', heroBg: 'linear-gradient(135deg, #c8d4b8 0%, #98b078 50%, #6a8050 100%)', heroLabel: 'Shipping unlock · green energy', headline: 'Free shipping, on us.', body: '<p>You\'ve been on the fence — let\'s make it easy. Free shipping if you finish your order today.</p><p>No code needed, it\'s already applied.</p>', cta: 'Finish the order →', whenLabel: 'Day 3', waitAfter: null, footStatus: 'Email 3 of 3 · approve to lock', stepTitle: 'Free shipping unlocked' },
+      ],
+    },
+    'welcome-series': {
+      name: 'Welcome Series',
+      subtitle: 'First purchase in last 30 days · January 2026 · syncs to Klaviyo on approval',
+      perfText: `Running since Sept · last month <b>$580</b> at <span class="roi">3.2× ROI</span>`,
+      perfVerb: 'softening',
+      perfFocus: 'email 2 — high unsub last batch, drafting a gentler version',
+      kpi: { goal: 'Welcome Series', goalSub: 'Convert first-timers to repeat', customers: '636', customersSub: 'First purchase, last 30d', offer: '10% off', offerSub: 'Second purchase', estRev: '$653', estRoi: '3.6× ROI' },
+      trigger: { ttl: 'When customer completes first purchase', sub: 'Order placed · ~636/month' },
+      emails: [
+        { title: 'Welcome to the family', meta: 'Step 1 of 3 · sends at trigger', crumb: 'Email 1', subject: 'Welcome to the family, Steven', preview: 'A quick hello and a few favorites to start with.', tone: 'Warm · familiar', heroBg: 'linear-gradient(135deg, #f0e0c8 0%, #d4b894 50%, #a88a64 100%)', heroLabel: 'Brand warmth · welcoming tones', headline: 'Glad you\'re here.', body: '<p>Thanks for picking us — we don\'t take that lightly. Here\'s a little intro to who we are and a few things we think you\'ll love.</p><p>If you ever want to chat, just hit reply.</p>', cta: 'See your top picks →', whenLabel: 'Day 0', waitAfter: 'Wait 7 days', footStatus: 'Email 1 of 3 · approve to lock', stepTitle: 'Welcome to the family' },
+        { title: 'Picks for you', meta: 'Step 2 of 3 · sends 7 days after first purchase', crumb: 'Email 2', subject: 'A few things you might love', preview: 'Hand-picked based on what you bought.', tone: 'Helpful · low pressure', heroBg: 'linear-gradient(135deg, #d8c8e4 0%, #b094c8 50%, #7864a8 100%)', heroLabel: 'Curated picks · soft purple', headline: 'Hand-picked for you.', body: '<p>Based on what you bought, here are a few things we think you\'ll like. No discount this time — just our actual recommendations.</p>', cta: 'Shop your picks →', whenLabel: 'Day 7', waitAfter: 'Wait 14 days', footStatus: 'Email 2 of 3 · approve to lock', stepTitle: 'Picks for you' },
+        { title: '10% off your next', meta: 'Step 3 of 3 · sends 21 days after first purchase', crumb: 'Email 3', subject: 'A little thanks — 10% off your next', preview: 'A small thank-you for being part of this.', tone: 'Generous · appreciative', heroBg: 'linear-gradient(135deg, #e8d4b8 0%, #c8a474 50%, #9c7848 100%)', heroLabel: 'Thank-you · golden hour', headline: 'A thank-you, just for you.', body: '<p>Three weeks in — we wanted to say thanks for being part of this. Here\'s 10% off your next order, good for 30 days.</p><p>Use code <b>THANKS10</b> at checkout.</p>', cta: 'Use my 10% →', whenLabel: 'Day 21', waitAfter: null, footStatus: 'Email 3 of 3 · approve to lock', stepTitle: '10% off your next' },
+      ],
+    },
+  };
+  let currentFlowId = 'win-back';
+  const CHIPS = {
+    goal: ["Reactivate dormant", "Win lapsed VIPs", "Cross-sell to lapsed"],
+    customers: ["Tighten to 90+ days", "Add VIP filter", "Exclude unsubscribed"],
+    offer: ["Bump to 20%", "Free shipping instead", "Add 48h urgency", "Make it $-off"],
+    subject: ["Shorter", "Add urgency", "Drop the name", "Test a question"],
+    preview: ["More mystery", "Add emoji", "Tighter", "Lead with offer"],
+    tone: ["Punchier", "More formal", "More casual", "Add humor"],
+    hero: ["Warmer tones", "More product-focused", "Lifestyle shot", "Different background"],
+    headline: ["Shorter", "Drop the name", "More emotional", "Lead with benefit"],
+    body: ["Shorter", "Add social proof", "Less formal", "Lead with story"],
+    cta: ["Try 'Come back'", "More urgent", "Add arrow", "Test 'Shop now'"],
+    footer: ["Shorter footer", "Add address", "Minimal footer"]
+  };
+  const LABELS = { goal: "Goal", customers: "Customers", offer: "Offer", subject: "Subject", preview: "Preview text", tone: "Tone", hero: "Hero image", headline: "Headline", body: "Body copy", cta: "CTA button", footer: "Footer" };
+
+  // Chip → change mappings. Picking a chip in the edit popover applies these to the current flow/email.
+  // FLOW-LEVEL fields go to FLOWS[currentFlowId].kpi (goal/customers/offer).
+  // EMAIL-LEVEL fields go to FLOWS[currentFlowId].emails[currentEmail] (subject/preview/tone/hero/headline/body/cta).
+  const EDIT_ACTIONS = {
+    goal: {
+      'Reactivate dormant': { goal: 'Win-Back', goalSub: 'Reactivate dormant (90+ days)' },
+      'Win lapsed VIPs': { goal: 'Win-Back · VIP', goalSub: 'Lapsed VIPs only' },
+      'Cross-sell to lapsed': { goal: 'Cross-sell', goalSub: 'Lapsed buyers · complement category' },
+    },
+    customers: {
+      'Tighten to 90+ days': { customers: '1,232', customersSub: 'Lapsed 90–120 days' },
+      'Add VIP filter': { customers: '412', customersSub: 'VIP · lapsed 60–120d' },
+      'Exclude unsubscribed': { customers: '1,791', customersSub: 'Lapsed 60–120d · subscribed' },
+    },
+    offer: {
+      'Bump to 20%': { offer: '20% off', offerSub: 'Last-viewed category', estRev: '$4,560', estRoi: '6.0× ROI' },
+      'Free shipping instead': { offer: 'Free shipping', offerSub: 'Over $40', estRev: '$2,840', estRoi: '4.3× ROI' },
+      'Add 48h urgency': { offer: '15% off · 48h', offerSub: 'Last-viewed · expires in 48h', estRev: '$3,920', estRoi: '5.8× ROI' },
+      'Make it $-off': { offer: '$10 off', offerSub: 'Min $50 order', estRev: '$3,180', estRoi: '4.8× ROI' },
+    },
+    subject: {
+      'Shorter': { subject: 'Steven, come back.' },
+      'Add urgency': { subject: '24 hours, Steven.' },
+      'Drop the name': { subject: 'You left something behind' },
+      'Test a question': { subject: 'Did you forget us?' },
+    },
+    preview: {
+      'More mystery': { preview: 'A little something inside…' },
+      'Add emoji': { preview: '🌿 A nudge from us — no offers, just a hello.' },
+      'Tighter': { preview: 'A hello. No offers.' },
+      'Lead with offer': { preview: '15% off your category — for 7 days.' },
+    },
+    tone: {
+      'Punchier': { tone: 'Punchy · brand DNA' },
+      'More formal': { tone: 'Formal · respectful' },
+      'More casual': { tone: 'Casual · friendly' },
+      'Add humor': { tone: 'Warm · with a smile' },
+    },
+    hero: {
+      'Warmer tones': { heroBg: 'linear-gradient(135deg, #e8c8a0 0%, #d49664 60%, #a86434 100%)', heroLabel: 'Skincare hero · warmer golden' },
+      'More product-focused': { heroLabel: 'Product still life · 4-piece arrangement' },
+      'Lifestyle shot': { heroLabel: 'Lifestyle · model holding product' },
+      'Different background': { heroBg: 'linear-gradient(135deg, #b8c8d4 0%, #7a96a8 60%, #4a6678 100%)', heroLabel: 'Cool studio · soft blue' },
+    },
+    headline: {
+      'Shorter': { headline: 'Missed you, Steven.' },
+      'Drop the name': { headline: 'We\'ve missed you.' },
+      'More emotional': { headline: 'It hasn\'t been the same without you.' },
+      'Lead with benefit': { headline: 'Your favorites are back in stock.' },
+    },
+    body: {
+      'Shorter': { body: '<p>We\'ve missed you. Your favorites are back, and a few new things we think you\'ll love.</p>' },
+      'Add social proof': { body: '<p>It\'s been a minute. Hundreds of customers like you came back this month — and we just wanted to let you know your favorites are restocked.</p>' },
+      'Less formal': { body: '<p>Hey, you. Just a quick hello from your favorites. They\'re restocked and there\'s some new stuff we think you\'ll like.</p>' },
+      'Lead with story': { body: '<p>This year we re-formulated our hero product after 200+ customer interviews. We thought of you, who started with us a few months ago.</p>' },
+    },
+    cta: {
+      'Try \'Come back\'': { cta: 'Come back →' },
+      'More urgent': { cta: 'Shop now — limited stock →' },
+      'Add arrow': { cta: '🌿 Take a fresh look →' },
+      'Test \'Shop now\'': { cta: 'Shop now →' },
+    },
+  };
+  // Quick chips → exact text users see. Map chip text (with optional trailing period) to its change.
+  function lookupEditAction(field, text) {
+    const actions = EDIT_ACTIONS[field];
+    if (!actions) return null;
+    const cleaned = text.replace(/\.$/, '').trim();
+    return actions[cleaned] || null;
+  }
+  function applyEditAction(field, change) {
+    if (!change) return false;
+    const isFlowKpi = ['goal', 'customers', 'offer'].includes(field);
+    if (isFlowKpi) {
+      const flow = FLOWS[currentFlowId];
+      Object.assign(flow.kpi, change);
+      // If currently in flow view, re-render
+      if (document.getElementById('flowView').classList.contains('active')) {
+        renderFlow(currentFlowId);
+      }
+    } else {
+      // Email-level change
+      const email = FLOWS[currentFlowId].emails[currentEmail];
+      Object.assign(email, change);
+      // Re-render email if in email view; flow view also re-renders step text
+      if (document.getElementById('emailView').classList.contains('active')) {
+        renderEmail(currentEmail);
+      } else {
+        renderFlow(currentFlowId);
+      }
+    }
+    return true;
+  }
+
+  let currentEmail = 0, currentEdit = null;
+
+  function showFlow() { document.getElementById('flowView').classList.add('active'); document.getElementById('emailView').classList.remove('active'); document.getElementById('mcView').classList.remove('active'); closePop(); }
+  function showEmail(i) { document.getElementById('flowView').classList.remove('active'); document.getElementById('emailView').classList.add('active'); document.getElementById('mcView').classList.remove('active'); renderEmail(i); }
+  function showMcView() { document.getElementById('flowView').classList.remove('active'); document.getElementById('emailView').classList.remove('active'); document.getElementById('mcView').classList.add('active'); closePop(); }
+
+  const MC_DATA = {
+    'daily-prev': {
+      title: 'Daily report',
+      crumb: 'Daily · Yesterday',
+      period: 'Yesterday · Jan 8, 2026',
+      hero: { value: '6.2× ROI', sub: "December's Win-Back, send 3" },
+      metrics: [
+        { k: 'Sent', v: '1,847' },
+        { k: 'Open rate', v: '42%' },
+        { k: 'Click rate', v: '7.8%' },
+        { k: 'Revenue', v: '$612' },
+      ],
+      flows: [
+        { name: 'Win-Back (Dec)', detail: 'Send 3 · 1,847 sent · 42% open · 6.2× ROI · subject pattern winning' },
+      ],
+    },
+    'daily-3': {
+      title: 'Day 3 report',
+      crumb: 'Daily · Jan 9',
+      period: 'Day 3 · Jan 9, 2026',
+      hero: { value: '$312', sub: 'attributed today across all flows' },
+      metrics: [
+        { k: 'Sent today', v: '1,890' },
+        { k: 'Open rate', v: '38%' },
+        { k: 'Conversions', v: '14' },
+        { k: 'CTR', v: '6.2%' },
+      ],
+      flows: [
+        { name: 'Win-Back · send 1', detail: '1,847 sent · 38% open · $312 attributed' },
+        { name: 'Cart Recovery', detail: '14 conversions · 17% rate (above benchmark) · live since Day 1' },
+        { name: 'Welcome Series', detail: '43 first-timers · opens trending up vs last month' },
+      ],
+    },
+    'week-1': {
+      title: 'Week 1 recap',
+      crumb: 'Weekly · Week 1',
+      period: 'Week 1 · Jan 6–12, 2026',
+      hero: { value: '$890', sub: 'attributed · 4.2× ROI' },
+      metrics: [
+        { k: 'Total sent', v: '5,820' },
+        { k: 'Customers', v: '2,140' },
+        { k: 'Avg open', v: '34%' },
+        { k: 'Conversions', v: '156' },
+      ],
+      flows: [
+        { name: 'Win-Back', detail: '3 sends · $420 · 5.2× ROI · send 3 underperforming, swapping in Dec\'s winner' },
+        { name: 'Cart Recovery', detail: '180 customers · 32 conversions (18%) · $380 · breakout flow' },
+        { name: 'Welcome Series', detail: '212 first-timers · opens +22% vs last month · $90' },
+      ],
+    },
+    'week-2': {
+      title: 'Week 2 recap',
+      crumb: 'Weekly · Week 2',
+      period: 'Week 2 · Jan 13–19, 2026',
+      hero: { value: '$2,140', sub: 'cumulative · pacing to $6,800' },
+      metrics: [
+        { k: 'Total sent', v: '11,240' },
+        { k: 'Customers', v: '3,860' },
+        { k: 'Avg open', v: '36%' },
+        { k: 'Conversions', v: '342' },
+      ],
+      flows: [
+        { name: 'Win-Back', detail: 'Swap worked · send 3 up 2.4× · $1,120 cumulative' },
+        { name: 'Cart Recovery', detail: '$1,180 alone this week · considering VIP-only variant' },
+        { name: 'Welcome Series', detail: 'Email 2 high unsub · softer version drafting' },
+      ],
+    },
+  };
+  function renderMissionControl(period) {
+    const d = MC_DATA[period];
+    if (!d) return;
+    document.getElementById('mcCrumbName').textContent = d.crumb;
+    document.getElementById('mcTitle').textContent = d.title;
+    document.getElementById('mcMeta').textContent = d.period;
+    document.getElementById('mcHeroValue').textContent = d.hero.value;
+    document.getElementById('mcHeroSub').textContent = d.hero.sub;
+    document.getElementById('mcMetrics').innerHTML = d.metrics.map(m =>
+      `<div class="mc-card"><div class="k">${m.k}</div><div class="v">${m.v}</div></div>`
+    ).join('');
+    document.getElementById('mcFlows').innerHTML = d.flows.map(f =>
+      `<div class="mc-flow"><b>${f.name}</b><br>${f.detail}</div>`
+    ).join('');
+    showMcView();
+    document.getElementById('app').classList.add('canvas-shown');
+    openCanvasMobile();
+  }
+
+  function renderFlow(flowId) {
+    if (!FLOWS[flowId]) return;
+    currentFlowId = flowId;
+    const f = FLOWS[flowId];
+    document.getElementById('flowCrumbName').textContent = f.name;
+    document.getElementById('flowTitle').textContent = f.name;
+    document.getElementById('flowMeta').textContent = f.subtitle;
+    document.getElementById('perfText').innerHTML = f.perfText;
+    document.getElementById('perfVerb').textContent = f.perfVerb;
+    document.getElementById('perfFocus').textContent = f.perfFocus;
+    document.getElementById('kpiGoal').textContent = f.kpi.goal;
+    document.getElementById('kpiGoalSub').textContent = f.kpi.goalSub;
+    document.getElementById('kpiCustomers').textContent = f.kpi.customers;
+    document.getElementById('kpiCustomersSub').textContent = f.kpi.customersSub;
+    document.getElementById('kpiOffer').textContent = f.kpi.offer;
+    document.getElementById('kpiOfferSub').textContent = f.kpi.offerSub;
+    document.getElementById('kpiEstRev').textContent = f.kpi.estRev;
+    document.getElementById('kpiEstRoi').textContent = f.kpi.estRoi;
+    document.getElementById('flowEmailCount').textContent = f.emails.length;
+    document.getElementById('flowFootStatus').textContent = `${f.emails.length} emails ready · awaiting approval`;
+
+    // Render flow visualization
+    const list = document.getElementById('flowList');
+    list.innerHTML = '';
+    // Trigger card
+    const trig = document.createElement('div');
+    trig.className = 'step trigger';
+    trig.innerHTML = `<div class="card"><div class="num">⚡</div><div class="body"><div class="ttl">${f.trigger.ttl}</div><div class="sub">${f.trigger.sub}</div></div></div>`;
+    list.appendChild(trig);
+    // First wait line (no label)
+    const w0 = document.createElement('div'); w0.className = 'wait-line';
+    list.appendChild(w0);
+    // Email steps with wait lines between
+    f.emails.forEach((email, idx) => {
+      const step = document.createElement('div');
+      step.className = 'step';
+      const approvedCls = email.approved ? ' approved-step' : '';
+      const statusText = email.approved
+        ? `<span class="status approved">✓ Approved</span>`
+        : `<span class="status">Draft ready</span>`;
+      step.innerHTML = `<div class="card${approvedCls}" data-open-email="${idx}"><div class="num">${idx + 1}</div><div class="body"><div class="ttl">${email.stepTitle}</div><div class="sub">"${email.subject}"</div></div><div class="right"><span class="when">${email.whenLabel}</span>${statusText}</div></div>`;
+      list.appendChild(step);
+      if (idx < f.emails.length - 1 && email.waitAfter) {
+        const w = document.createElement('div');
+        w.className = 'wait-line';
+        w.innerHTML = `<span class="wait-lbl">${email.waitAfter}</span>`;
+        list.appendChild(w);
+      }
+    });
+
+    // Re-wire dynamically created data-open-email cards
+    list.querySelectorAll('[data-open-email]').forEach((el) =>
+      el.addEventListener('click', (e) => { e.stopPropagation(); showEmail(parseInt(el.dataset.openEmail)); openCanvasMobile(); })
+    );
+
+    showFlow();
+    renderFlowApprovalChips();
+  }
+
+  function openCanvas(flowId) {
+    if (flowId) renderFlow(flowId);
+    document.getElementById('app').classList.add('canvas-shown');
+    // Highlight which flow card is currently open in chat
+    const idx = FLOW_IDS_BY_INDEX.indexOf(flowId);
+    document.querySelectorAll('.flow-card').forEach((c, i) => c.classList.toggle('open', i === idx));
+    openCanvasMobile();
+    // Push to browser history so iOS swipe-back / Android back closes the canvas
+    if (!window.history.state || !window.history.state.canvasOpen) {
+      try { window.history.pushState({ canvasOpen: true, flowId }, '', '#canvas/' + (flowId || 'flow')); } catch (e) {}
+    }
+  }
+
+  // CANVAS APPROVAL ACTIONS
+  function approveCurrentEmail() {
+    const flow = FLOWS[currentFlowId];
+    const email = flow.emails[currentEmail];
+    if (email.approved) return;
+    email.approved = true;
+    postUserMessage(`Approve email ${currentEmail + 1} · ${flow.name}`);
+    const remaining = flow.emails.filter(e => !e.approved).length;
+    setTimeout(() => {
+      pingAria(remaining === 0
+        ? `${flow.name} · all ${flow.emails.length} emails locked. Ready for campaign approval.`
+        : `Email ${currentEmail + 1} locked. ${remaining} to go.`);
+    }, 700);
+    // Re-render to reflect approved state
+    if (document.getElementById('emailView').classList.contains('active')) renderEmail(currentEmail);
+    renderFlowApprovalChips();
+  }
+  function approveAllEmails(flowId) {
+    const flow = FLOWS[flowId];
+    const wereApproved = flow.emails.every(e => e.approved);
+    if (wereApproved) return;
+    flow.emails.forEach(e => e.approved = true);
+    postUserMessage(`Approve all emails · ${flow.name}`);
+    setTimeout(() => pingAria(`${flow.name} · all ${flow.emails.length} emails locked. Ready for campaign approval.`), 700);
+    // Re-render whichever view is active
+    if (document.getElementById('emailView').classList.contains('active')) renderEmail(currentEmail);
+    else renderFlow(flowId);
+    renderFlowApprovalChips();
+  }
+  function approveCampaignFromCanvas() {
+    const flow = FLOWS[currentFlowId];
+    flow.emails.forEach(e => e.approved = true);
+    flow.approved = true;
+    postUserMessage(`Approve ${flow.name}`);
+    // Mirror to chat plan card
+    const idx = FLOW_IDS_BY_INDEX.indexOf(currentFlowId);
+    if (idx >= 0) {
+      const card = document.querySelectorAll('.flow-card')[idx];
+      if (card) {
+        card.classList.add('approved');
+        const btn = card.querySelector('[data-act="approve-camp"]');
+        if (btn) { btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true; }
+      }
+    }
+    setTimeout(() => pingAria(`Approved · ${flow.name}. All emails locked for sync.`), 700);
+    renderFlow(currentFlowId);
+    renderFlowApprovalChips();
+    confetti();
+  }
+  // Update the footer button labels based on approval state
+  function renderFlowApprovalChips() {
+    const flow = FLOWS[currentFlowId];
+    if (!flow) return;
+    const allApproved = flow.emails.every(e => e.approved);
+    // Flow view buttons
+    const flowApproveAll = document.getElementById('approveAllEmailsBtnFlow');
+    const approveCamp = document.getElementById('approveCampaignBtn');
+    if (flowApproveAll) {
+      flowApproveAll.disabled = allApproved;
+      flowApproveAll.textContent = allApproved ? '✓ Emails approved' : 'Approve all emails';
+    }
+    if (approveCamp) {
+      approveCamp.disabled = flow.approved;
+      approveCamp.textContent = flow.approved ? '✓ Campaign approved' : 'Approve campaign';
+    }
+    // Email view buttons
+    const emailApproveAll = document.getElementById('approveAllEmailsBtnEmail');
+    const approveEmail = document.getElementById('approveEmailBtn');
+    const currEmail = flow.emails[currentEmail];
+    if (emailApproveAll) {
+      emailApproveAll.disabled = allApproved;
+      emailApproveAll.textContent = allApproved ? '✓ Emails approved' : 'Approve all emails';
+    }
+    if (approveEmail && currEmail) {
+      approveEmail.disabled = !!currEmail.approved;
+      approveEmail.textContent = currEmail.approved ? '✓ Email approved' : 'Approve email';
+    }
+  }
+  function closeCanvas(fromPop) {
+    document.getElementById('app').classList.remove('canvas-shown');
+    document.querySelectorAll('.flow-card').forEach(c => c.classList.remove('open'));
+    closeCanvasMobile();
+    if (!fromPop && window.history.state && window.history.state.canvasOpen) {
+      try { window.history.back(); } catch (e) {}
+    }
+  }
+
+  function renderEmail(i) {
+    const emails = FLOWS[currentFlowId].emails;
+    const e = emails[i]; currentEmail = i;
+    document.getElementById('emailTitle').textContent = e.title;
+    document.getElementById('emailMeta').textContent = e.meta;
+    document.getElementById('crumbEmail').textContent = e.crumb;
+    // Re-render stepper for current flow
+    const stepper = document.getElementById('emailStepper');
+    if (stepper) {
+      stepper.innerHTML = emails.map((em, idx) => `
+        <div class="step-pill${idx === i ? ' active' : ''}" data-jump="${idx}">
+          <span class="sp-num">${idx + 1}</span>
+          <span class="sp-body"><span class="sp-nm">${em.stepTitle}</span><span class="sp-when">${em.whenLabel}</span></span>
+        </div>
+      `).join('');
+      stepper.querySelectorAll('[data-jump]').forEach(el =>
+        el.addEventListener('click', (e) => { e.stopPropagation(); renderEmail(parseInt(el.dataset.jump)); })
+      );
+    }
+    document.getElementById('vSubject').textContent = e.subject;
+    document.getElementById('vPreview').textContent = e.preview;
+    document.getElementById('vTone').textContent = e.tone;
+    document.getElementById('vHeadline').textContent = e.headline;
+    document.getElementById('vBody').innerHTML = e.body;
+    document.getElementById('vCta').textContent = e.cta;
+    document.getElementById('footStatus').textContent = e.footStatus;
+    const hero = document.getElementById('emHero');
+    hero.style.background = e.heroBg;
+    hero.setAttribute('data-label', e.heroLabel);
+    closePop();
+    renderFlowApprovalChips();
+  }
+  function approveCampaign(i) {
+    const card = document.querySelectorAll('.flow-card')[i];
+    const name = card.querySelector('.fc-name').textContent;
+    postUserMessage(`Approve ${name}`);
+    card.classList.add('approved');
+    const btn = card.querySelector('[data-act="approve-camp"]');
+    btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true;
+    pingAria(`Approved · ${name}. Locked for sync.`);
+    confetti();
+  }
+  function nowStamp() {
+    const d = new Date();
+    let h = d.getHours(); const m = d.getMinutes().toString().padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+    return `${h}:${m} ${ampm}`;
+  }
+  function pingAria(text) {
+    const thread = document.getElementById('thread');
+    const msg = document.createElement('div'); msg.className = 'msg';
+    msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${text}<div class="time">${nowStamp()}</div></div></div>`;
+    thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
+  }
+  function openPop(region, anchorEl) {
+    currentEdit = region;
+    const pop = document.getElementById('popover');
+    document.getElementById('popLabel').textContent = LABELS[region];
+    document.getElementById('popCurrent').textContent = getCurrentValue(region);
+    const chipsEl = document.getElementById('popChips'); chipsEl.innerHTML = '';
+    (CHIPS[region] || []).forEach(c => {
+      const el = document.createElement('span'); el.className = 'chip'; el.textContent = c;
+      el.onclick = () => { document.getElementById('popInput').value = c + '.'; document.getElementById('popInput').focus(); };
+      chipsEl.appendChild(el);
+    });
+    document.getElementById('popInput').value = '';
+    const rect = anchorEl.getBoundingClientRect();
+    const popWidth = 320; const spaceRight = window.innerWidth - rect.right;
+    let left = spaceRight > popWidth + 20 ? rect.right + 12 : rect.left - popWidth - 12;
+    let top = Math.max(20, Math.min(rect.top, window.innerHeight - 380));
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    pop.classList.add('open');
+    document.querySelectorAll('.editing').forEach(el => el.classList.remove('editing'));
+    anchorEl.classList.add('editing');
+  }
+  function closePop() {
+    document.getElementById('popover').classList.remove('open');
+    document.querySelectorAll('.editing').forEach(el => el.classList.remove('editing'));
+    currentEdit = null;
+  }
+  function getCurrentValue(region) {
+    const flow = FLOWS[currentFlowId];
+    const e = flow && flow.emails ? flow.emails[currentEmail] : null;
+    const k = flow ? flow.kpi : null;
+    return ({
+      goal: k ? `${k.goal} · ${k.goalSub.toLowerCase()}` : '',
+      customers: k ? `${k.customersSub} · ${k.customers} customers` : '',
+      offer: k ? `${k.offer} ${k.offerSub.toLowerCase()}` : '',
+      subject: e ? e.subject : '',
+      preview: e ? e.preview : '',
+      tone: e ? e.tone : '',
+      hero: e ? `${e.heroLabel} · generated by brand DNA` : '',
+      headline: e ? e.headline : '',
+      body: e ? e.body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 140) + '…' : '',
+      cta: e ? e.cta : '',
+      footer: 'Standard footer · unsubscribe link',
+    })[region] || '';
+  }
+  function sendEdit() {
+    const text = document.getElementById('popInput').value.trim();
+    if (!text || !currentEdit) { closePop(); return; }
+    const field = currentEdit;
+    const thread = document.getElementById('thread');
+    const inEmailView = document.getElementById('emailView').classList.contains('active');
+    const flowName = FLOWS[currentFlowId] ? FLOWS[currentFlowId].name : 'Win-Back';
+    const loc = inEmailView ? `Email ${currentEmail + 1} · ${flowName}` : flowName;
+
+    const msgEl = document.createElement('div');
+    msgEl.className = 'msg user';
+    const stamp = nowStamp();
+    msgEl.innerHTML = `<div class="av user">S</div><div class="body"><div class="bubble user">${escapeHtml(text)} <span style="opacity:.6; font-size:10px;">· ${loc}</span><div class="time">${stamp}</div></div></div>`;
+    thread.appendChild(msgEl);
+    const typingEl = document.createElement('div');
+    typingEl.className = 'msg';
+    typingEl.innerHTML = `<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>`;
+    thread.appendChild(typingEl);
+    thread.scrollTop = thread.scrollHeight;
+    closePop();
+
+    // Apply the change (if a chip matched)
+    const change = lookupEditAction(field, text);
+    const applied = applyEditAction(field, change);
+
+    setTimeout(() => {
+      const fieldLabel = LABELS[field].toLowerCase();
+      const reply = applied
+        ? `Done. ${LABELS[field]} updated · re-rendered just now.`
+        : `Working on it — drafting an updated ${fieldLabel} for your review.`;
+      typingEl.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${reply}<div class="time">${nowStamp()}</div></div></div>`;
+      thread.scrollTop = thread.scrollHeight;
+    }, 1400);
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function showChatList() {
+    document.getElementById('chatList').classList.add('active');
+    document.getElementById('thread').classList.add('hidden');
+    document.getElementById('chatTitle').style.display = 'none';
+    document.getElementById('backBtn').style.display = 'none';
+  }
+  function openThread(id) {
+    document.getElementById('chatList').classList.remove('active');
+    document.getElementById('thread').classList.remove('hidden');
+    document.getElementById('chatTitle').style.display = 'block';
+    document.getElementById('backBtn').style.display = 'flex';
+    const titles = { 'current': 'January 2026 Plan', 'dec25': 'December 2025 Plan', 'nov25': 'November 2025 Plan', 'oct25': 'October 2025 Plan' };
+    const meta = { 'current': 'Today · 8:42 AM', 'dec25': 'Closed Apr 28 · Live', 'nov25': 'Closed Mar 31', 'oct25': 'Closed Feb 28' };
+    document.getElementById('chatTitle').innerHTML = `${titles[id] || titles.current}<span class="small">${meta[id] || meta.current}</span>`;
+  }
+
+  function isMobile() { return window.matchMedia('(max-width: 1024px)').matches; }
+  function openCanvasMobile() {
+    if (!isMobile()) return;
+    document.querySelector('.canvas').classList.add('open-mobile');
+  }
+  function closeCanvasMobile() {
+    document.querySelector('.canvas').classList.remove('open-mobile');
+  }
+  function toggleRail() {
+    const rail = document.getElementById('rail');
+    const bd = document.getElementById('backdrop');
+    const open = !rail.classList.contains('open');
+    rail.classList.toggle('open', open);
+    bd.classList.toggle('open', open);
+  }
+  function closeRail() {
+    document.getElementById('rail').classList.remove('open');
+    document.getElementById('backdrop').classList.remove('open');
+  }
+
+  const FLOW_IDS_BY_INDEX = ['win-back', 'abandoned-cart', 'welcome-series'];
+
+  // Event delegation — handles dynamically rendered + hidden elements
+  document.addEventListener('click', (e) => {
+    const editEl = e.target.closest('[data-edit]');
+    if (editEl) { e.stopPropagation(); openPop(editEl.dataset.edit, editEl); return; }
+
+    const openEmailEl = e.target.closest('[data-open-email]');
+    if (openEmailEl) { e.stopPropagation(); showEmail(parseInt(openEmailEl.dataset.openEmail)); openCanvasMobile(); return; }
+
+    const jumpEl = e.target.closest('[data-jump]');
+    if (jumpEl) { e.stopPropagation(); renderEmail(parseInt(jumpEl.dataset.jump)); return; }
+
+    // Approve button must be checked BEFORE the flow-card catch-all
+    const approveCampBtn = e.target.closest('[data-act="approve-camp"]');
+    if (approveCampBtn) { e.stopPropagation(); approveCampaign(parseInt(approveCampBtn.dataset.i)); return; }
+
+    // Clicking anywhere on a flow card OR its explicit Open button opens the canvas
+    const flowCard = e.target.closest('.flow-card');
+    if (flowCard) {
+      e.stopPropagation();
+      const i = parseInt(flowCard.dataset.flow);
+      openCanvas(FLOW_IDS_BY_INDEX[i] || 'win-back');
+      return;
+    }
+  });
+
+  // Make flow cards visually clickable on hover
+  const flowCardStyle = document.createElement('style');
+  flowCardStyle.textContent = '.flow-card { cursor: pointer; }';
+  document.head.appendChild(flowCardStyle);
+  document.addEventListener('click', (e) => {
+    const pop = document.getElementById('popover');
+    if (pop.classList.contains('open') && !pop.contains(e.target) && !e.target.closest('[data-edit]')) closePop();
+  });
+  function postUserMessage(text, time) {
+    const thread = document.getElementById('thread');
+    const m = document.createElement('div');
+    m.className = 'msg user';
+    const t = time || '9:14 AM';
+    m.innerHTML = `<div class="av user">S</div><div class="body"><div class="bubble user">${text}<div class="time">${t}</div></div></div>`;
+    thread.appendChild(m);
+    thread.scrollTop = thread.scrollHeight;
+  }
+
+  function approveAllCascade() {
+    // 0. Post user message first (audit trail) + big confetti for deployment
+    postUserMessage('Approve all');
+    confetti('big');
+
+    const thread = document.getElementById('thread');
+    // 1. Flip all 3 flow cards to approved
+    document.querySelectorAll('.flow-card').forEach((card, i) => {
+      card.classList.add('approved');
+      const btn = card.querySelector('[data-act="approve-camp"]');
+      if (btn && !btn.classList.contains('approved')) {
+        btn.classList.remove('primary');
+        btn.classList.add('approved');
+        btn.innerHTML = '✓';
+        btn.disabled = true;
+      }
+    });
+    // 2. Lock Approve all button
+    const aab = document.getElementById('approveAllBtn');
+    aab.classList.remove('primary');
+    aab.classList.add('approved');
+    aab.innerHTML = '✓ Approved';
+    aab.disabled = true;
+    aab.onclick = null;
+
+    // 3. Update Win-Back canvas data → Live state; re-render if currently showing
+    FLOWS['win-back'].perfText = 'Live since today · early send open rate <b>41%</b>';
+    FLOWS['win-back'].perfVerb = 'watching';
+    FLOWS['win-back'].perfFocus = 'tracking 12% ahead of projection';
+    if (currentFlowId === 'win-back') renderFlow('win-back');
+    // Also flip chat plan card pill from Improving → Live
+    const wbCard = document.querySelector('.flow-card[data-flow="0"]');
+    const wbPill = wbCard ? wbCard.querySelector('.fc-pill') : null;
+    if (wbPill) { wbPill.classList.remove('improving'); wbPill.classList.add('running'); wbPill.textContent = 'Live'; }
+    const perf = document.querySelector('.perf-bar');
+    if (perf && currentFlowId === 'win-back') {
+      perf.innerHTML = '<span class="dot"></span><span>Live since today · early send open rate <b>41%</b></span><span class="sep">|</span><span class="focus">Aria watching: <i>tracking 12% ahead of projection</i></span>';
+    }
+
+    // 4. Typing dots
+    setTimeout(() => {
+      const typingEl = document.createElement('div');
+      typingEl.className = 'msg'; typingEl.id = 'syncTyping';
+      typingEl.innerHTML = '<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>';
+      thread.appendChild(typingEl);
+      thread.scrollTop = thread.scrollHeight;
+    }, 300);
+
+    // 5. Klaviyo sync confirmation
+    setTimeout(() => {
+      const t = document.getElementById('syncTyping');
+      if (t) t.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+        <span class="prefix">✓ Synced to Klaviyo.</span><br>
+        3 flows · 9 emails scheduled<br>
+        Targeting <b>3,423</b> customers<br>
+        First sends tomorrow 9 AM<br>
+        I'll track and check in.
+        <div class="time">9:14 AM</div>
+      </div></div>`;
+      thread.scrollTop = thread.scrollHeight;
+    }, 1500);
+
+    // 6. Day 3 update
+    setTimeout(() => {
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+        <span class="prefix">Day 3 update.</span><br>
+        Win-Back send 1: <b>$312</b> · <b>38%</b> open<br>
+        Cart Recovery: <b>14 conversions</b> · <b>17%</b> (above benchmark)
+        <div class="inline-action"><button class="mc-link-btn" onclick="renderMissionControl('daily-3')">View daily report →</button></div>
+        <div class="time">Jan 9 · 10:23 AM</div>
+      </div></div>`;
+      thread.appendChild(msg);
+      thread.scrollTop = thread.scrollHeight;
+    }, 4500);
+
+    // 7. Week 1 recap
+    setTimeout(() => {
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+        <span class="prefix">Week 1 recap.</span>
+        <div class="hero-num">
+          <div class="hn-value">$890</div>
+          <div class="hn-sub">attributed · 4.2× ROI</div>
+        </div>
+        3 flows · <b>2,140</b> customers · <b>5,820</b> emails sent
+        <ul>
+          <li>Cart Recovery breakout — <b>18%</b> conversion, ahead of benchmark</li>
+          <li>Welcome Series opens <b>+22%</b> vs last month</li>
+          <li>Win-Back send 3 weak — swapping in Dec's winner</li>
+        </ul>
+        <div class="inline-action"><button class="mc-link-btn" onclick="renderMissionControl('week-1')">View weekly report →</button></div>
+        <div class="time">Jan 13 · 9:00 AM</div>
+      </div></div>`;
+      thread.appendChild(msg);
+      thread.scrollTop = thread.scrollHeight;
+    }, 7500);
+
+    // 8. Week 2 recap
+    setTimeout(() => {
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+        <span class="prefix">Week 2 recap.</span>
+        <div class="hero-num">
+          <div class="hn-value">$2,140</div>
+          <div class="hn-sub">cumulative · pacing to $6,800</div>
+        </div>
+        3 flows · <b>3,860</b> customers · <b>11,240</b> emails sent
+        <ul>
+          <li>Win-Back swap worked — send 3 up <b>2.4×</b></li>
+          <li>Cart Recovery hit <b>$1,180</b> alone</li>
+          <li>Welcome Series email 2 high unsub — softer version drafting</li>
+        </ul>
+        <div class="inline-action"><button class="mc-link-btn" onclick="renderMissionControl('week-2')">View weekly report →</button></div>
+        <div class="time">Jan 20 · 9:00 AM</div>
+      </div></div>`;
+      thread.appendChild(msg);
+      thread.scrollTop = thread.scrollHeight;
+    }, 11000);
+
+    // 9. New February chat notification
+    setTimeout(() => {
+      addFebruaryToChatList();
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+        <span class="prefix">February's draft is ready.</span><br>
+        New chat started.<br>
+        Replenishment · Browse Abandonment · refreshed Win-Back<br>
+        <b>$7,100</b> projected · no rush
+        <div class="inline-action"><button onclick="goToFebruary()">Open February</button></div>
+        <div class="time">Jan 27 · 8:15 AM</div>
+      </div></div>`;
+      thread.appendChild(msg);
+      thread.scrollTop = thread.scrollHeight;
+    }, 14500);
+  }
+
+  function addFebruaryToChatList() {
+    const list = document.getElementById('chatList');
+    if (document.getElementById('febRow')) return;
+    const row = document.createElement('div');
+    row.id = 'febRow';
+    row.className = 'cl-row';
+    row.onclick = () => goToFebruary();
+    row.innerHTML = `<div class="r1"><span class="nm">February 2026 Plan</span><span class="status draft">New draft</span><span class="dt">Just now</span></div><div class="r2">3 flows · Replenishment · Browse Abandonment · refreshed Win-Back · <b>$7,100</b> projected</div>`;
+    // Insert at the top, after the header
+    const header = list.querySelector('.cl-header');
+    if (header && header.nextSibling) list.insertBefore(row, header.nextSibling);
+    else list.appendChild(row);
+  }
+
+  function goToFebruary() {
+    showChatList();
+  }
+
+  function toggleModePop(e) { if (e) e.stopPropagation(); document.getElementById('modePop').classList.toggle('open'); }
+  function selectMode(mode, label) {
+    document.querySelectorAll('.mode-row').forEach(r => r.classList.toggle('selected', r.dataset.mode === mode));
+    document.getElementById('modeLabel').textContent = label;
+    document.getElementById('modePop').classList.remove('open');
+  }
+  document.addEventListener('click', (e) => {
+    const pop = document.getElementById('modePop');
+    if (pop.classList.contains('open') && !pop.contains(e.target) && !e.target.closest('#modeBtn')) pop.classList.remove('open');
+  });
+  renderFlow('win-back');
+
+  // CONFETTI — gamified reinforcement for approval/deployment moments
+  function confetti(intensity) {
+    const count = intensity === 'big' ? 90 : 45;
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+    const colors = ['#6FED45', '#6FED45', '#6FED45', '#6FB4FF', '#FFB547', '#E27CFF', '#FFFFFF'];
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.left = Math.random() * 100 + '%';
+      p.style.setProperty('--drift', (Math.random() * 240 - 120) + 'px');
+      p.style.animationDuration = (1.6 + Math.random() * 1.6) + 's';
+      p.style.animationDelay = (Math.random() * 0.4) + 's';
+      container.appendChild(p);
+    }
+    setTimeout(() => container.remove(), 3800);
+  }
+
+  // CHANNELS MODAL
+  function openChannelsModal() { document.getElementById('channelsModal').classList.remove('hidden'); }
+  function closeChannelsModal() { document.getElementById('channelsModal').classList.add('hidden'); }
+  function connectChannel(id, name, btn) {
+    const row = btn.closest('.channel-row');
+    row.classList.add('connected');
+    btn.classList.add('connected');
+    btn.textContent = '✓ Connected';
+    btn.disabled = true;
+    pingAria(`${name} connected. I'll send updates there too.`);
+  }
+
+  // WELCOME MODAL — gates the intro until user dismisses
+  let introStarted = false;
+  // Browser history → close canvas on back gesture (iOS swipe-back, Android back)
+  window.addEventListener('popstate', (e) => {
+    const appEl = document.getElementById('app');
+    if (appEl && appEl.classList.contains('canvas-shown')) {
+      closeCanvas(true);
+    }
+  });
+
+  function dismissWelcome() {
+    document.getElementById('welcomeModal').classList.add('hidden');
+    if (!introStarted) { introStarted = true; runIntro(); }
+  }
+
+  // INTRO: deliver insights + plan card live with typing dots
+  function runIntro() {
+    const thread = document.getElementById('thread');
+    const insights = document.getElementById('introInsights');
+    const plan = document.getElementById('introPlan');
+    if (!insights || !plan) return;
+
+    function insertTypingBefore(targetEl) {
+      const typing = document.createElement('div');
+      typing.className = 'msg intro-typing';
+      typing.innerHTML = '<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>';
+      thread.insertBefore(typing, targetEl);
+      thread.scrollTop = thread.scrollHeight;
+      return typing;
+    }
+
+    // Step 1: typing for insights
+    setTimeout(() => {
+      const t = insertTypingBefore(insights);
+      // Step 2: reveal insights, remove typing
+      setTimeout(() => {
+        t.remove();
+        insights.style.display = '';
+        thread.scrollTop = thread.scrollHeight;
+
+        // Step 3: typing for plan
+        setTimeout(() => {
+          const t2 = insertTypingBefore(plan);
+          // Step 4: reveal plan
+          setTimeout(() => {
+            t2.remove();
+            plan.style.display = '';
+            thread.scrollTop = thread.scrollHeight;
+          }, 1800);
+        }, 700);
+      }, 1400);
+    }, 800);
+  }
+  // runIntro is triggered by dismissWelcome — see above
+</script>
+</body></html>
