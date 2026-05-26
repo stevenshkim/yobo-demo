@@ -347,6 +347,20 @@
   .btn-ghost:hover { border-color: var(--canvas-dim); background: #F4F4EF; filter: none; }
   .btn:disabled { cursor: not-allowed; opacity: 0.7; }
 
+  /* === AI EDIT DOCK (email view) === */
+  .ai-dock { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 14px; margin-top: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+  .ai-dock-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .ai-dock-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-text); }
+  .ai-dock-sub { font-size: 11px; color: var(--canvas-dim); font-weight: 400; }
+  .ai-dock-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .ai-chip { font-size: 13px; font-weight: 500; padding: 7px 11px; border-radius: 999px; background: var(--canvas-card); border: 1px solid #D8D8D4; color: var(--canvas-text); cursor: pointer; font-family: inherit; transition: all .12s; }
+  .ai-chip:hover { border-color: var(--green); background: rgba(111,237,69,0.06); }
+  .ai-dock-input { display: flex; align-items: center; gap: 8px; background: var(--canvas-bg); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 8px 8px 8px 14px; }
+  .ai-dock-input input { flex: 1; border: none; background: transparent; font-size: 15px; line-height: 1.5; color: var(--canvas-text); outline: none; font-family: inherit; padding: 4px 0; }
+  .ai-dock-input input::placeholder { color: var(--canvas-dim); }
+  .ai-dock-send { background: var(--green); color: #000; width: 32px; height: 32px; border-radius: 8px; border: none; cursor: pointer; font-size: 15px; font-weight: 600; flex-shrink: 0; font-family: inherit; }
+  .ai-dock-send:hover { filter: brightness(1.08); }
+
   /* === MISSION CONTROL view === */
   .mc-hero { background: var(--canvas-card); border: 1px solid var(--canvas-border); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
   .mc-hero-value { font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; color: #2A8A1A; font-variant-numeric: tabular-nums; }
@@ -851,6 +865,26 @@
           <div class="em-footer edit-region" data-edit="footer"><span class="ptag">Click to edit</span><p>Demo Shop · 123 Example St · You're getting this because you shopped with us before. <a>Unsubscribe</a></p></div>
         </div>
 
+        <!-- AI EDIT DOCK — refines the whole email -->
+        <div class="ai-dock">
+          <div class="ai-dock-head">
+            <span class="ai-dock-label">Edit with AI</span>
+            <span class="ai-dock-sub">Refines the whole email — Aria handles the rest.</span>
+          </div>
+          <div class="ai-dock-chips">
+            <button class="ai-chip" data-email-edit="shorter">Make it shorter</button>
+            <button class="ai-chip" data-email-edit="punchier">Punchier</button>
+            <button class="ai-chip" data-email-edit="urgent">Add urgency</button>
+            <button class="ai-chip" data-email-edit="personal">More personal</button>
+            <button class="ai-chip" data-email-edit="social">Add social proof</button>
+            <button class="ai-chip" data-email-edit="rewrite">Try a different angle</button>
+          </div>
+          <div class="ai-dock-input">
+            <input id="emailAiInput" type="text" placeholder="Ask Aria to refine this email…" onkeydown="if(event.key==='Enter')submitEmailAi()" />
+            <button class="ai-dock-send" onclick="submitEmailAi()" aria-label="Send">↑</button>
+          </div>
+        </div>
+
         <div class="canvas-foot">
           <div class="status-txt" id="footStatus">Email 1 of 3 · approve to lock</div>
           <div style="display:flex;gap:8px">
@@ -1049,6 +1083,98 @@
     }
     return true;
   }
+
+  // === EMAIL-LEVEL EDITS (the AI dock) — refines headline + body + CTA together ===
+  const EMAIL_LEVEL_EDITS = {
+    shorter: {
+      label: 'Make it shorter',
+      transform: (e) => ({
+        ...e,
+        headline: e.headline.split(/[,\.]/)[0] + '.',
+        body: '<p>' + (e.body.replace(/<[^>]+>/g, ' ').match(/[^.!?]+[.!?]/) || [''])[0].trim() + '</p>',
+        cta: e.cta.split(' ').slice(0, 3).join(' ') + ' →',
+      }),
+    },
+    punchier: {
+      label: 'Punchier',
+      transform: (e) => ({
+        ...e,
+        headline: 'Back. In. Stock.',
+        body: '<p>Your favorites returned. They go fast.</p><p>Three clicks. Done.</p>',
+        cta: 'Grab them →',
+      }),
+    },
+    urgent: {
+      label: 'Add urgency',
+      transform: (e) => ({
+        ...e,
+        headline: 'Only 24 hours, Steven.',
+        body: '<p>The pieces you used to buy are restocked — but not for long. We\'ll hold them until tomorrow night.</p><p>After that, no promises.</p>',
+        cta: 'Claim now — 24h left →',
+      }),
+    },
+    personal: {
+      label: 'More personal',
+      transform: (e) => ({
+        ...e,
+        headline: 'Thought of you today, Steven.',
+        body: '<p>We were going through our restock notes and your name kept coming up. The pieces from your last order are back, and we kept a couple aside.</p><p>No pressure — just thought you\'d want to know first.</p>',
+        cta: 'See what we set aside →',
+      }),
+    },
+    social: {
+      label: 'Add social proof',
+      transform: (e) => ({
+        ...e,
+        headline: e.headline,
+        body: '<p><b>Over 800 customers came back this month.</b> Most said the same thing — they missed the routine.</p><p>Your favorites are restocked, and the new additions are early-batch only.</p>',
+        cta: 'Join them →',
+      }),
+    },
+    rewrite: {
+      label: 'Try a different angle',
+      transform: (e) => ({
+        ...e,
+        headline: 'A small thank-you.',
+        body: '<p>We don\'t do big "we miss you" emails. Just wanted to say — if you ever want to come back, here\'s 15% off your next.</p><p>Code: <b>HELLO15</b>. Good for 7 days.</p>',
+        cta: 'Use my 15% →',
+      }),
+    },
+  };
+
+  function applyEmailLevelEdit(key, userText) {
+    const action = EMAIL_LEVEL_EDITS[key];
+    const flow = FLOWS[currentFlowId];
+    const email = flow.emails[currentEmail];
+    const loc = `Email ${currentEmail + 1} · ${flow.name}`;
+    const msgText = action ? action.label : userText;
+    postUserMessage(`${msgText} · ${loc}`);
+    if (action) {
+      Object.assign(email, action.transform(email));
+      renderEmail(currentEmail);
+      setTimeout(() => pingAria(`Done. Refined the email — re-rendered just now.`), 800);
+    } else {
+      // Free text — Aria acknowledges, no canvas change for the prototype
+      setTimeout(() => pingAria(`Working on it — drafting a refined version for your review.`), 1000);
+    }
+  }
+
+  function submitEmailAi() {
+    const input = document.getElementById('emailAiInput');
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) return;
+    // Try to match a known chip's label first
+    const matched = Object.entries(EMAIL_LEVEL_EDITS).find(([k, a]) => a.label.toLowerCase() === text.toLowerCase());
+    applyEmailLevelEdit(matched ? matched[0] : null, text);
+    input.value = '';
+  }
+
+  // Wire AI chip clicks via event delegation (chips are inside #emailView, always present)
+  document.addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-email-edit]');
+    if (chip) { e.stopPropagation(); applyEmailLevelEdit(chip.dataset.emailEdit, null); }
+  });
 
   let currentEmail = 0, currentEdit = null;
 
