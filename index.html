@@ -1360,15 +1360,15 @@
   }
   function approveAllEmails(flowId) {
     const flow = FLOWS[flowId];
-    const wereApproved = flow.emails.every(e => e.approved);
-    if (wereApproved) return;
-    flow.emails.forEach(e => e.approved = true);
-    postUserMessage(`Approve all emails · ${flow.name}`);
-    setTimeout(() => pingAria(`${flow.name} · all ${flow.emails.length} emails locked. Ready for campaign approval.`), 700);
-    // Re-render whichever view is active
-    if (document.getElementById('emailView').classList.contains('active')) renderEmail(currentEmail);
-    else renderFlow(flowId);
-    renderFlowApprovalChips();
+    if (flow.approved) return;
+    // Make sure we're operating on the viewed flow + at flow view
+    if (flowId !== currentFlowId) renderFlow(flowId);
+    if (document.getElementById('emailView').classList.contains('active')) {
+      // From email view: switch to flow view first so the user sees the locked steps before the transition
+      renderFlow(flowId);
+    }
+    // Approving all emails IS approving the campaign — roll up
+    approveCampaignFromCanvas();
   }
   function approveCampaignFromCanvas() {
     const flow = FLOWS[currentFlowId];
@@ -1385,39 +1385,49 @@
         if (btn) { btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true; }
       }
     }
-    // Find remaining unapproved flows in chat plan card
-    const remaining = FLOW_IDS_BY_INDEX.filter(id => !FLOWS[id].approved && id !== currentFlowId).length;
-    const ariaMsg = remaining > 0
-      ? `Approved · ${flow.name}. ${remaining} flow${remaining === 1 ? '' : 's'} left to review.`
-      : `Approved · ${flow.name}. All flows locked — ready to ship.`;
+    // Find next unapproved flow (loop in plan order, skip current)
+    const order = FLOW_IDS_BY_INDEX;
+    const startIdx = order.indexOf(currentFlowId);
+    let nextFlowId = null;
+    for (let i = 1; i <= order.length; i++) {
+      const candidate = order[(startIdx + i) % order.length];
+      if (!FLOWS[candidate].approved && candidate !== currentFlowId) { nextFlowId = candidate; break; }
+    }
+    const ariaMsg = nextFlowId
+      ? `Approved · ${flow.name}. Loading ${FLOWS[nextFlowId].name} next…`
+      : `Approved · ${flow.name}. All flows locked — ready to ship. 🎉`;
     setTimeout(() => pingAria(ariaMsg), 700);
     renderFlow(currentFlowId);
     renderFlowApprovalChips();
     confetti();
-    // Auto-close canvas + scroll chat to plan card so user sees remaining flows
+    // After ~1.6s: auto-transition to next unapproved flow, or show "all done" state
     setTimeout(() => {
-      closeCanvas();
-      scrollChatToPlan();
+      if (nextFlowId) {
+        openCanvas(nextFlowId);
+      } else {
+        renderAllFlowsApproved();
+      }
     }, 1600);
   }
 
-  function scrollChatToPlan() {
-    // Wait for canvas slide-out transition (~320ms) before scrolling so the user sees it
-    setTimeout(() => {
-      // Make sure we're on the thread view, not the chat list
-      const chatList = document.getElementById('chatList');
-      const thread = document.getElementById('thread');
-      if (chatList) chatList.classList.remove('active');
-      if (thread) thread.classList.remove('hidden');
-      const planMsg = document.getElementById('introPlan');
-      if (planMsg) {
-        planMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Briefly highlight to draw the eye
-        planMsg.style.transition = 'box-shadow .4s ease-out';
-        planMsg.style.boxShadow = '0 0 0 3px rgba(111,237,69,0.4)';
-        setTimeout(() => { planMsg.style.boxShadow = ''; }, 1400);
-      }
-    }, 360);
+  // Shown in canvas when every flow is approved — encourages user to close or sync
+  function renderAllFlowsApproved() {
+    const list = document.getElementById('flowList');
+    document.getElementById('flowCrumbName').textContent = 'All flows approved';
+    document.getElementById('flowTitle').textContent = 'Ready to ship';
+    document.getElementById('flowMeta').textContent = `${FLOW_IDS_BY_INDEX.length} flows · ${FLOW_IDS_BY_INDEX.reduce((s, id) => s + FLOWS[id].emails.length, 0)} emails · locked & queued for Klaviyo sync`;
+    document.getElementById('perfText').innerHTML = `<b>All locked.</b> First sends tomorrow 9 AM.`;
+    document.getElementById('perfVerb').textContent = 'ready';
+    document.getElementById('perfFocus').textContent = 'syncing to Klaviyo on confirmation';
+    // Replace flow viz with a celebration block
+    list.innerHTML = `
+      <div style="background:var(--canvas-card); border:1px solid var(--canvas-border); border-radius:12px; padding:32px 24px; text-align:center; max-width:540px; width:100%;">
+        <div style="font-size:28px; line-height:1.2; font-weight:600; color:#2A8A1A; margin-bottom:8px;">✓ All flows approved</div>
+        <div style="font-size:15px; line-height:1.5; color:var(--canvas-muted); margin-bottom:20px;">
+          ${FLOW_IDS_BY_INDEX.map(id => `<div style="padding:4px 0;">✓ ${FLOWS[id].name}</div>`).join('')}
+        </div>
+        <button onclick="closeCanvas()" style="background:var(--canvas-text); color:#fff; font-size:13px; font-weight:600; padding:10px 18px; border-radius:8px; border:none; cursor:pointer; font-family:inherit;">Back to plan</button>
+      </div>`;
   }
   // Update the footer button labels based on approval state
   function renderFlowApprovalChips() {
