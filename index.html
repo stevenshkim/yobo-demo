@@ -771,8 +771,8 @@
 
       <div id="flowView" class="active">
         <div class="crumb">
-          <a>CAMPAIGN FLOW</a><span>›</span><span id="flowCrumbName" style="color:#111">Win-Back</span>
-          <span class="x" onclick="closeCanvas()">✕</span>
+          <a onclick="closeCanvas(); scrollChatToPlan();" style="cursor:pointer;">← Plan</a><span>›</span><span id="flowCrumbName" style="color:#111">Win-Back</span>
+          <span class="x" onclick="closeCanvas(); scrollChatToPlan();">✕</span>
         </div>
         <h2 id="flowTitle">Win-Back</h2>
         <div class="meta" id="flowMeta">Lapsed 60–120 days · January 2026 · syncs to Klaviyo on approval</div>
@@ -827,7 +827,7 @@
       <!-- EMAIL VIEW -->
       <div id="emailView">
         <div class="crumb">
-          <a>CAMPAIGN FLOW</a><span>›</span><a onclick="renderFlow(currentFlowId)">Win-Back</a><span>›</span><span style="color:#111" id="crumbEmail">Email 1</span>
+          <a onclick="closeCanvas(); scrollChatToPlan();" style="cursor:pointer;">← Plan</a><span>›</span><a onclick="renderFlow(currentFlowId)" style="cursor:pointer;">Win-Back</a><span>›</span><span style="color:#111" id="crumbEmail">Email 1</span>
           <span class="x" onclick="closeCanvasMobile(); showFlow();">✕</span>
         </div>
         <span class="back-to-flow" onclick="renderFlow(currentFlowId)">← back to flow</span>
@@ -1385,10 +1385,25 @@
         if (btn) { btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true; }
       }
     }
-    setTimeout(() => pingAria(`Approved · ${flow.name}. All emails locked for sync.`), 700);
+    // Find remaining unapproved flows in chat plan card
+    const remaining = FLOW_IDS_BY_INDEX.filter(id => !FLOWS[id].approved && id !== currentFlowId).length;
+    const ariaMsg = remaining > 0
+      ? `Approved · ${flow.name}. ${remaining} flow${remaining === 1 ? '' : 's'} left to review.`
+      : `Approved · ${flow.name}. All flows locked — ready to ship.`;
+    setTimeout(() => pingAria(ariaMsg), 700);
     renderFlow(currentFlowId);
     renderFlowApprovalChips();
     confetti();
+    // Auto-close canvas + scroll chat to plan card so user sees remaining flows
+    setTimeout(() => {
+      closeCanvas();
+      scrollChatToPlan();
+    }, 1600);
+  }
+
+  function scrollChatToPlan() {
+    const planMsg = document.getElementById('introPlan');
+    if (planMsg) planMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   // Update the footer button labels based on approval state
   function renderFlowApprovalChips() {
