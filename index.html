@@ -933,7 +933,7 @@
   const FLOWS = {
     'win-back': {
       name: 'Win-Back',
-      klaviyoUrl: 'https://www.klaviyo.com/flow/Wq3y2K/reports',
+      klaviyoUrl: '/klaviyo/?flow=win-back',
       subtitle: 'Lapsed 60–120 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `Running since Dec · last month <b>$3,402</b> at <span class="roi">6.8× ROI</span>`,
       perfVerb: 'refining',
@@ -948,7 +948,7 @@
     },
     'abandoned-cart': {
       name: 'Abandoned Cart',
-      klaviyoUrl: 'https://www.klaviyo.com/flow/Vr5x4L/reports',
+      klaviyoUrl: '/klaviyo/?flow=abandoned-cart',
       subtitle: 'Cart abandoners, last 30 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `New flow · no history yet · <b>$2,180</b> projected at <span class="roi">4.2× ROI</span>`,
       perfVerb: 'calibrating',
@@ -963,7 +963,7 @@
     },
     'welcome-series': {
       name: 'Welcome Series',
-      klaviyoUrl: 'https://www.klaviyo.com/flow/Tm8w7N/reports',
+      klaviyoUrl: '/klaviyo/?flow=welcome-series',
       subtitle: 'First purchase in last 30 days · January 2026 · syncs to Klaviyo on approval',
       perfText: `Running since Sept · last month <b>$580</b> at <span class="roi">3.2× ROI</span>`,
       perfVerb: 'softening',
@@ -1551,7 +1551,7 @@
     const thread = document.getElementById('thread');
     const msg = document.createElement('div'); msg.className = 'msg';
     const flow = FLOWS[flowId];
-    const url = (flow && flow.klaviyoUrl) || 'https://www.klaviyo.com/dashboard';
+    const url = (flow && flow.klaviyoUrl) || '/klaviyo/';
     const label = linkLabel || `Open ${flow ? flow.name : 'in Klaviyo'} →`;
     msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${text}<div class="inline-action"><a class="mc-link-btn" href="${url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-block;">${label}</a></div><div class="time">${nowStamp()}</div></div></div>`;
     thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
@@ -1774,7 +1774,7 @@
         Targeting <b>3,423</b> customers<br>
         First sends tomorrow 9 AM<br>
         I'll track and check in.
-        <div class="inline-action"><a class="mc-link-btn" href="https://www.klaviyo.com/dashboard" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-block;">Open in Klaviyo →</a></div>
+        <div class="inline-action"><a class="mc-link-btn" href="/klaviyo/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-block;">Open in Klaviyo →</a></div>
         <div class="time">9:14 AM</div>
       </div></div>`;
       thread.scrollTop = thread.scrollHeight;

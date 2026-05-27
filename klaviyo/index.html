@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Klaviyo · Flows</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://rsms.me">
+<style>
+  @import url('https://rsms.me/inter/inter.css');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F5F0;
+    --surface: #FFFFFF;
+    --border: #E5E5E0;
+    --text: #1A1A1A;
+    --text-dim: #4A4F57;
+    --text-faint: #6B7079;
+    --klaviyo-green: #71B58F;
+    --klaviyo-green-tint: rgba(113,181,143,0.14);
+    --live-green: #10B981;
+    --warn: #F59E0B;
+    --blue: #3B82F6;
+  }
+  html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; font-feature-settings: 'cv11', 'ss01', 'ss03'; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+  a { color: var(--text); text-decoration: none; }
+
+  .top { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 6px; background: var(--klaviyo-green); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; }
+  .top-nav { display: flex; gap: 22px; margin-left: 28px; }
+  .top-nav a { font-size: 14px; color: var(--text-dim); font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .top-nav a.active { color: var(--text); border-bottom-color: var(--text); }
+  .top-right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+  .back-yobo { font-size: 13px; color: var(--klaviyo-green); font-weight: 600; padding: 6px 12px; border: 1px solid var(--klaviyo-green); border-radius: 6px; }
+  .back-yobo:hover { background: var(--klaviyo-green-tint); }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: #DDD; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; color: var(--text); }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 57px); }
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 12px; }
+  .side-section { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); padding: 8px 12px; margin-top: 16px; }
+  .side-section:first-child { margin-top: 0; }
+  .side-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-size: 14px; font-weight: 500; color: var(--text-dim); border-radius: 6px; cursor: pointer; }
+  .side-item:hover { background: var(--bg); color: var(--text); }
+  .side-item.active { background: var(--bg); color: var(--text); }
+  .side-icon { width: 16px; height: 16px; opacity: 0.7; }
+
+  .main { padding: 32px 40px; max-width: 1200px; }
+  .page-eyebrow { font-size: 12px; color: var(--text-faint); margin-bottom: 6px; }
+  .page-eyebrow a { color: var(--text-faint); text-decoration: none; }
+  .page-eyebrow a:hover { color: var(--text-dim); }
+  h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin-bottom: 4px; }
+  .h-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .live-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16,185,129,0.12); color: var(--live-green); border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .live-dot { width: 7px; height: 7px; background: var(--live-green); border-radius: 50%; }
+  .h-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 28px; }
+
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-variant-numeric: tabular-nums; }
+  .stat .k { font-size: 12px; color: var(--text-faint); font-weight: 500; margin-bottom: 6px; }
+  .stat .v { font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+  .stat .delta { font-size: 12px; color: var(--live-green); font-weight: 600; margin-top: 4px; }
+  .stat.revenue .v { color: var(--klaviyo-green); }
+
+  .section-h { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 12px; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; }
+  .section-h .tabs { display: flex; gap: 4px; font-size: 13px; }
+  .section-h .tab { padding: 4px 10px; color: var(--text-faint); cursor: pointer; border-radius: 6px; font-weight: 500; }
+  .section-h .tab.active { background: var(--bg); color: var(--text); }
+
+  .flow-canvas { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 32px 24px; margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .node { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; width: 100%; max-width: 480px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+  .node.trigger { background: #FAFAF7; }
+  .node-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--klaviyo-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .node.trigger .node-icon { background: var(--text); }
+  .node-body { flex: 1; min-width: 0; }
+  .node-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .node-sub { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .node-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+  .node-stat { font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+  .node-stat b { color: var(--text); font-weight: 600; }
+  .wait { padding: 8px 0; display: flex; flex-direction: column; align-items: center; }
+  .wait .line { width: 1px; height: 18px; background: #C8C8C4; }
+  .wait .lbl { font-size: 11px; color: var(--text-faint); padding: 4px 10px; background: var(--bg); border-radius: 999px; margin: 4px 0; font-weight: 500; }
+
+  /* Flows list page */
+  .flows-table { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .flows-th { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 0.5fr; gap: 12px; padding: 12px 20px; font-size: 12px; color: var(--text-faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; background: #FAFAF7; border-bottom: 1px solid var(--border); }
+  .flows-tr { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 0.5fr; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border); align-items: center; font-variant-numeric: tabular-nums; }
+  .flows-tr:last-child { border-bottom: none; }
+  .flows-tr:hover { background: #FAFAF7; }
+  .flows-tr .name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .flows-tr .name a { color: inherit; }
+  .flows-tr .name a:hover { color: var(--klaviyo-green); }
+  .flows-tr .sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+  .flows-tr .cell { font-size: 14px; color: var(--text-dim); }
+  .flows-tr .cell b { color: var(--text); font-weight: 600; }
+  .flows-tr .chev { color: var(--text-faint); font-size: 16px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .top-nav { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .main { padding: 20px; }
+    .flows-th, .flows-tr { grid-template-columns: 1.5fr 1fr 1fr; }
+    .flows-th .col-hide, .flows-tr .col-hide { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="logo"><div class="logo-mark">k</div>Klaviyo</div>
+  <nav class="top-nav">
+    <a class="active">Dashboard</a>
+    <a>Audience</a>
+    <a>Campaigns</a>
+    <a>Flows</a>
+    <a>Sign-up forms</a>
+    <a>Reviews</a>
+    <a>Analytics</a>
+  </nav>
+  <div class="top-right">
+    <a href="/" class="back-yobo">← Back to YoboLabs</a>
+    <div class="avatar">SK</div>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-section">Marketing</div>
+    <div class="side-item">📧 Campaigns</div>
+    <div class="side-item active">⚡ Flows</div>
+    <div class="side-item">📋 Sign-up forms</div>
+    <div class="side-section">Audience</div>
+    <div class="side-item">👤 Profiles</div>
+    <div class="side-item">📊 Segments</div>
+    <div class="side-item">🏷️ Lists</div>
+    <div class="side-section">Analytics</div>
+    <div class="side-item">📈 Reports</div>
+    <div class="side-item">🔍 Insights</div>
+  </aside>
+
+  <main class="main" id="mainContent">
+    <!-- Rendered by JS -->
+  </main>
+</div>
+
+<script>
+  const FLOWS = {
+    'win-back': {
+      name: 'Win-Back',
+      status: 'Live',
+      trigger: 'Customer enters segment · Lapsed 60–120 days',
+      audience: '1,847 customers',
+      since: 'Live since today · syncing every 6 hours',
+      stats: { sent: '1,847', open: '38%', click: '7.8%', conv: '14', revenue: '$312' },
+      delta: { sent: '+1,847 today', open: '+4% vs last run', click: '+1.2%', conv: '+14', revenue: '+$312' },
+      emails: [
+        { num: 1, name: 'Soft re-intro', subject: 'Steven, you left something behind', when: 'Send at trigger', sent: '1,847', open: '42%', click: '8.1%' },
+        { num: 2, name: '15% off your category', subject: 'A little something to bring you back', when: 'Wait 3 days · branch on open', sent: '—', open: '—', click: '—' },
+        { num: 3, name: 'Last chance', subject: 'This is your last chance, Steven', when: 'Wait 4 days', sent: '—', open: '—', click: '—' },
+      ],
+    },
+    'abandoned-cart': {
+      name: 'Abandoned Cart',
+      status: 'Live',
+      trigger: 'Cart abandoned for 1 hour',
+      audience: '~940 customers/month',
+      since: 'Live since today · auto-trigger',
+      stats: { sent: '212', open: '47%', click: '14.2%', conv: '14', revenue: '$87' },
+      delta: { sent: '+212 today', open: '+11% vs benchmark', click: '+3.4%', conv: '+14', revenue: '+$87' },
+      emails: [
+        { num: 1, name: 'Did you forget something?', subject: 'You left these in your cart, Steven', when: '1 hour after abandonment', sent: '212', open: '47%', click: '14.2%' },
+        { num: 2, name: 'Still on your mind?', subject: 'Your cart is still here', when: 'Wait 24 hours', sent: '—', open: '—', click: '—' },
+        { num: 3, name: 'Free shipping unlocked', subject: 'One more thing — free shipping unlocked', when: 'Wait 2 days', sent: '—', open: '—', click: '—' },
+      ],
+    },
+    'welcome-series': {
+      name: 'Welcome Series',
+      status: 'Live',
+      trigger: 'Customer completes first purchase',
+      audience: '~636 customers/month',
+      since: 'Live since today · improved variant',
+      stats: { sent: '43', open: '54%', click: '11.6%', conv: '2', revenue: '$48' },
+      delta: { sent: '+43 today', open: '+22% vs last batch', click: '+2.8%', conv: '+2', revenue: '+$48' },
+      emails: [
+        { num: 1, name: 'Welcome to the family', subject: 'Welcome to the family, Steven', when: 'Send at trigger', sent: '43', open: '54%', click: '11.6%' },
+        { num: 2, name: 'Picks for you', subject: 'A few things you might love', when: 'Wait 7 days', sent: '—', open: '—', click: '—' },
+        { num: 3, name: '10% off your next', subject: 'A little thanks — 10% off your next', when: 'Wait 14 days', sent: '—', open: '—', click: '—' },
+      ],
+    },
+  };
+
+  function renderFlow(flowId) {
+    const f = FLOWS[flowId];
+    if (!f) return renderDashboard();
+    document.title = `Klaviyo · ${f.name}`;
+    const html = `
+      <div class="page-eyebrow"><a href="?">All flows</a> / Flows / ${f.name}</div>
+      <div class="h-row">
+        <h1>${f.name}</h1>
+        <span class="live-pill"><span class="live-dot"></span>${f.status}</span>
+      </div>
+      <div class="h-sub">${f.trigger} · ${f.audience}</div>
+      <div class="h-sub" style="margin-top:-20px; font-size:12px; color:var(--text-faint);">${f.since}</div>
+
+      <div class="section-h" style="margin-top:16px;">
+        Performance
+        <div class="tabs"><span class="tab active">Today</span><span class="tab">7 days</span><span class="tab">30 days</span></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="k">Recipients</div><div class="v">${f.stats.sent}</div><div class="delta">${f.delta.sent}</div></div>
+        <div class="stat"><div class="k">Open rate</div><div class="v">${f.stats.open}</div><div class="delta">${f.delta.open}</div></div>
+        <div class="stat"><div class="k">Click rate</div><div class="v">${f.stats.click}</div><div class="delta">${f.delta.click}</div></div>
+        <div class="stat"><div class="k">Conversions</div><div class="v">${f.stats.conv}</div><div class="delta">${f.delta.conv}</div></div>
+        <div class="stat revenue"><div class="k">Revenue</div><div class="v">${f.stats.revenue}</div><div class="delta">${f.delta.revenue}</div></div>
+      </div>
+
+      <div class="section-h">Flow</div>
+      <div class="flow-canvas">
+        <div class="node trigger">
+          <div class="node-icon">⚡</div>
+          <div class="node-body">
+            <div class="node-title">Trigger</div>
+            <div class="node-sub">${f.trigger}</div>
+          </div>
+          <div class="node-right"><span class="node-stat"><b>${f.audience}</b> active</span></div>
+        </div>
+        ${f.emails.map((e, i) => `
+          <div class="wait">
+            <div class="line"></div>
+            ${e.when && i > 0 ? `<div class="lbl">${e.when}</div>` : '<div class="lbl">' + (i === 0 ? 'Immediately' : e.when) + '</div>'}
+            <div class="line"></div>
+          </div>
+          <div class="node">
+            <div class="node-icon">✉</div>
+            <div class="node-body">
+              <div class="node-title">${e.num}. ${e.name}</div>
+              <div class="node-sub">"${e.subject}"</div>
+            </div>
+            <div class="node-right">
+              <span class="node-stat">Sent <b>${e.sent}</b></span>
+              <span class="node-stat">Opened <b>${e.open}</b></span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    document.getElementById('mainContent').innerHTML = html;
+  }
+
+  function renderDashboard() {
+    document.title = 'Klaviyo · Flows';
+    const flowEntries = Object.entries(FLOWS);
+    const html = `
+      <div class="h-row" style="margin-bottom:24px;">
+        <h1>Flows</h1>
+      </div>
+      <div class="section-h">Active flows</div>
+      <div class="flows-table">
+        <div class="flows-th">
+          <div>Name</div>
+          <div>Status</div>
+          <div class="col-hide">Recipients</div>
+          <div>Open rate</div>
+          <div class="col-hide">Revenue (today)</div>
+          <div></div>
+        </div>
+        ${flowEntries.map(([id, f]) => `
+          <div class="flows-tr">
+            <div class="name">
+              <a href="?flow=${id}">${f.name}</a>
+              <div class="sub">${f.trigger}</div>
+            </div>
+            <div class="cell"><span class="live-pill"><span class="live-dot"></span>${f.status}</span></div>
+            <div class="cell col-hide"><b>${f.stats.sent}</b></div>
+            <div class="cell"><b>${f.stats.open}</b></div>
+            <div class="cell col-hide"><b style="color:var(--klaviyo-green);">${f.stats.revenue}</b></div>
+            <div class="cell chev">›</div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:24px; padding:16px; background:var(--klaviyo-green-tint); border:1px solid var(--klaviyo-green); border-radius:10px; font-size:13px; color:var(--text);">
+        <b>3 flows synced from YoboLabs · Aria</b> · First sends tomorrow 9 AM. Projected $6,253 at 6.0× ROI for January.
+      </div>
+    `;
+    document.getElementById('mainContent').innerHTML = html;
+  }
+
+  // Route based on ?flow= param
+  const params = new URLSearchParams(window.location.search);
+  const flowId = params.get('flow');
+  if (flowId) renderFlow(flowId);
+  else renderDashboard();
+</script>
+</body></html>
