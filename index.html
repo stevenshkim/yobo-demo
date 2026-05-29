@@ -1981,86 +1981,76 @@
   updateWelcomeForAb();
   document.querySelectorAll('.ab-pill').forEach(p => p.classList.toggle('active', p.dataset.ab === abVariant));
 
-  // Hide non-Win-Back flow cards in variant B until they're revealed
+  // In variant B, the original plan card holds only Win-Back. The next two flows arrive as fresh chat bubbles.
   function applyAbToPlan() {
     if (abVariant !== 'B') return;
-    const allCards = document.querySelectorAll('.flow-card');
+    const allCards = document.querySelectorAll('#introPlan .flow-card');
     allCards.forEach((card, i) => {
       if (i > 0) card.style.display = 'none';
     });
-    // Hide "Approve all" + "Customize" + "Open full plan" buttons in B (one-by-one mode)
-    const planActions = document.querySelectorAll('.plan-actions .mini-btn');
+    // Hide plan-level "Approve all / Customize / Open full plan" buttons in B
+    const planActions = document.querySelectorAll('#introPlan .plan-actions .mini-btn');
     planActions.forEach(b => b.style.display = 'none');
-    // Hide the level-future block in B (we'll show our own "Up next" instead)
-    // Inject a "pending flows" block after the plan-actions
-    const planEl = document.querySelector('#introPlan .plan');
-    if (planEl && !document.getElementById('pendingFlows')) {
-      const pending = document.createElement('div');
-      pending.id = 'pendingFlows';
-      pending.className = 'pending-flows';
-      pending.innerHTML = `
-        <div class="pending-h">Up next this month</div>
-        <div class="pending-row"><span class="pn-num">2.</span><span class="pn-name">Abandoned Cart</span><span class="pn-tag">After Win-Back</span></div>
-        <div class="pending-row"><span class="pn-num">3.</span><span class="pn-name">Welcome Series</span><span class="pn-tag">After Cart</span></div>`;
-      planEl.appendChild(pending);
-    }
+    // Hide the summary bar in B — totals reveal as flows are approved
+    const summary = document.querySelector('#introPlan .summary');
+    if (summary) summary.style.display = 'none';
+    // Tweak plan card title + subtitle for B mode
+    const title = document.querySelector('#introPlan .plan-title');
+    const sub = document.querySelector('#introPlan .plan-sub');
+    if (title) title.textContent = 'Win-Back · first';
+    if (sub) sub.innerHTML = 'Walking through January one flow at a time. Two more after this.';
   }
 
-  // After approving a flow in B variant, reveal the next one with typing + intro message
+  // After approving a flow in B variant, post the next flow as a NEW chat bubble
   function revealNextFlowB(approvedFlowId) {
     if (abVariant !== 'B') return;
     const order = FLOW_IDS_BY_INDEX;
     const justIdx = order.indexOf(approvedFlowId);
     const nextIdx = justIdx + 1;
     if (nextIdx >= order.length) {
-      // All done — remove pending block
-      const p = document.getElementById('pendingFlows');
-      if (p) p.remove();
       setTimeout(() => pingAria(`All three flows synced. January is live. 🎉`), 1000);
       return;
     }
     const nextId = order[nextIdx];
     const nextFlow = FLOWS[nextId];
-    const nextCard = document.querySelectorAll('.flow-card')[nextIdx];
-    // Update "Up next" pending block first
-    const pendingBlock = document.getElementById('pendingFlows');
-    if (pendingBlock) {
-      const remaining = order.slice(nextIdx + 1);
-      if (remaining.length === 0) { pendingBlock.remove(); }
-      else {
-        pendingBlock.innerHTML = `
-          <div class="pending-h">Up next this month</div>
-          ${remaining.map((id, i) => `<div class="pending-row"><span class="pn-num">${nextIdx + 2 + i}.</span><span class="pn-name">${FLOWS[id].name}</span><span class="pn-tag">After ${nextFlow.name}</span></div>`).join('')}`;
-      }
-    }
-    // Aria types + posts a transition message after a beat
+
     setTimeout(() => {
       const thread = document.getElementById('thread');
-      const typingId = 'abTyping-' + Date.now();
+      // Typing indicator
       const t = document.createElement('div');
-      t.className = 'msg'; t.id = typingId;
+      t.className = 'msg';
       t.innerHTML = `<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>`;
       thread.appendChild(t);
       thread.scrollTop = thread.scrollHeight;
+
       setTimeout(() => {
         const intro = nextIdx === 1
-          ? `Win-Back synced. Next leak: <b>${nextFlow.name.toLowerCase()}</b>.<br>Most stores lose ~30% of would-be revenue here. Pulled the flow — take a look.`
+          ? `Win-Back synced. Next leak: <b>${nextFlow.name.toLowerCase()}</b>.<br>Most stores lose ~30% of would-be revenue here.`
           : `${FLOWS[approvedFlowId].name} locked. Last one: <b>${nextFlow.name}</b>.<br>Quick win to round out January.`;
-        t.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${intro}<div class="time">${nowStamp()}</div></div></div>`;
+        // Replace typing with a new Aria bubble containing the next flow card
+        t.innerHTML = `
+          <div class="av">A</div>
+          <div class="body">
+            <div class="bubble">
+              ${intro}
+              <div class="flow-list b-next-flow" style="margin-top:12px;">
+                <div class="flow-card" data-flow="${nextIdx}" data-b-next="${nextId}">
+                  <div class="fc-row1">
+                    <span class="fc-name">${nextFlow.name}</span>
+                    <span class="fc-pill ${nextFlow.status}">${({new:'New',running:'Running',improving:'Improving',live:'Live',approved:'Approved'})[nextFlow.status] || nextFlow.status}</span>
+                    <span class="fc-est">${nextFlow.kpi.estRev}</span>
+                  </div>
+                  <div class="fc-last${nextFlow.lastMonth ? '' : ' new'}">${nextFlow.lastMonth ? `Last month: <b>$${nextFlow.lastMonth.revenue.toLocaleString()}</b> at <b>${nextFlow.lastMonth.roi}× ROI</b>` : 'First time running this flow'}</div>
+                  <div class="fc-actions">
+                    <button class="mini-btn primary" data-act="approve-camp" data-i="${nextIdx}">Approve</button>
+                    <button class="mini-btn secondary" data-act="open-camp" data-i="${nextIdx}">Open</button>
+                  </div>
+                </div>
+              </div>
+              <div class="time">${nowStamp()}</div>
+            </div>
+          </div>`;
         thread.scrollTop = thread.scrollHeight;
-        // Reveal the next flow card with a soft fade
-        if (nextCard) {
-          nextCard.style.display = '';
-          nextCard.style.opacity = '0';
-          nextCard.style.transform = 'translateY(8px)';
-          nextCard.style.transition = 'opacity .35s var(--ease-ios), transform .35s var(--ease-ios)';
-          requestAnimationFrame(() => {
-            nextCard.style.opacity = '1';
-            nextCard.style.transform = 'translateY(0)';
-          });
-          // Scroll plan into view
-          setTimeout(() => nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
-        }
       }, 1400);
     }, 1500);
   }
