@@ -582,7 +582,7 @@
       <div class="nav-item"><span class="dot"></span>Mission Control</div>
       <div class="nav-item active"><span class="dot"></span>Chat</div>
       <div class="nav-section">Planning</div>
-      <div class="nav-item">Monthly Plans</div>
+      <a class="nav-item" href="/plan/" style="text-decoration:none;">Monthly Plans</a>
       <div class="nav-item">Calendar</div>
       <div class="nav-item">To-Do List</div>
       <div class="nav-item">Brand DNA</div>
@@ -758,7 +758,7 @@
                 <div class="plan-actions">
                   <button class="mini-btn primary" id="approveAllBtn" onclick="approveAllCascade()">Approve all</button>
                   <button class="mini-btn secondary">Customize</button>
-                  <button class="mini-btn secondary">Open full plan</button>
+                  <button class="mini-btn secondary" onclick="window.open('/plan/', '_blank')">Open full plan</button>
                 </div>
               </div>
               <div class="time">8:42 AM</div>
@@ -2039,7 +2039,7 @@
     if (sub) sub.innerHTML = 'Walking through January one flow at a time. Two more after this.';
   }
 
-  // After approving a flow in B variant, post the next flow as a NEW chat bubble
+  // After approving a flow in B variant, post a cumulative bubble showing all flows so far + the next
   function revealNextFlowB(approvedFlowId) {
     if (abVariant !== 'B') return;
     const order = FLOW_IDS_BY_INDEX;
@@ -2052,9 +2052,11 @@
     const nextId = order[nextIdx];
     const nextFlow = FLOWS[nextId];
 
+    // Build the cumulative flow list: every approved flow (✓ approved card) + the new one (active)
+    const cumulativeIds = order.slice(0, nextIdx + 1);
+
     setTimeout(() => {
       const thread = document.getElementById('thread');
-      // Typing indicator
       const t = document.createElement('div');
       t.className = 'msg';
       t.innerHTML = `<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>`;
@@ -2063,27 +2065,50 @@
 
       setTimeout(() => {
         const intro = nextIdx === 1
-          ? `Win-Back synced. Next leak: <b>${nextFlow.name.toLowerCase()}</b>.<br>Most stores lose ~30% of would-be revenue here.`
-          : `${FLOWS[approvedFlowId].name} locked. Last one: <b>${nextFlow.name}</b>.<br>Quick win to round out January.`;
-        // Replace typing with a new Aria bubble containing the next flow card
+          ? `Win-Back synced. Adding the next leak — <b>${nextFlow.name.toLowerCase()}</b>.<br>Most stores lose ~30% of would-be revenue here.`
+          : `${FLOWS[approvedFlowId].name} locked. Last one — <b>${nextFlow.name}</b>.<br>Quick win to round out January.`;
+
+        // Cumulative running totals across approved + the new flow
+        const totalRev = cumulativeIds.reduce((s, id) => s + (FLOWS[id].estRevenue || 0), 0);
+        const totalCust = cumulativeIds.reduce((s, id) => s + (FLOWS[id].kpi.customers ? parseInt(FLOWS[id].kpi.customers.replace(/,/g, ''), 10) || 0 : 0), 0);
+        const blendedRoi = (cumulativeIds.reduce((s, id) => s + ((FLOWS[id].estRoi || parseFloat(FLOWS[id].kpi.estRoi) || 0)), 0) / cumulativeIds.length).toFixed(1);
+
+        const cardsHtml = cumulativeIds.map((id, i) => {
+          const f = FLOWS[id];
+          const isApproved = !!f.approved;
+          const isNewArrival = i === cumulativeIds.length - 1 && !isApproved;
+          const pillClass = isApproved ? 'running' : f.status;
+          const pillLabel = isApproved ? 'Approved' : ({new:'New',running:'Running',improving:'Improving',live:'Live'})[f.status] || f.status;
+          const lastLine = f.lastMonth
+            ? `Last month: <b>$${f.lastMonth.revenue.toLocaleString()}</b> at <b>${f.lastMonth.roi}× ROI</b>`
+            : 'First time running this flow';
+          const actions = isApproved
+            ? `<button class="mini-btn approved" disabled>✓ Approved</button><button class="mini-btn secondary" data-act="open-camp" data-i="${i}">Open</button>`
+            : `<button class="mini-btn primary" data-act="approve-camp" data-i="${i}">Approve</button><button class="mini-btn secondary" data-act="open-camp" data-i="${i}">Open</button>`;
+          return `
+            <div class="flow-card ${isApproved ? 'approved' : ''}" data-flow="${i}">
+              <div class="fc-row1">
+                <span class="fc-name">${f.name}</span>
+                <span class="fc-pill ${pillClass}">${pillLabel}</span>
+                <span class="fc-est">${f.kpi.estRev}</span>
+              </div>
+              <div class="fc-last${(!f.lastMonth && !isApproved) ? ' new' : ''}">${lastLine}</div>
+              <div class="fc-actions">${actions}</div>
+            </div>`;
+        }).join('');
+
         t.innerHTML = `
           <div class="av">A</div>
           <div class="body">
             <div class="bubble">
               ${intro}
               <div class="flow-list b-next-flow" style="margin-top:12px;">
-                <div class="flow-card" data-flow="${nextIdx}" data-b-next="${nextId}">
-                  <div class="fc-row1">
-                    <span class="fc-name">${nextFlow.name}</span>
-                    <span class="fc-pill ${nextFlow.status}">${({new:'New',running:'Running',improving:'Improving',live:'Live',approved:'Approved'})[nextFlow.status] || nextFlow.status}</span>
-                    <span class="fc-est">${nextFlow.kpi.estRev}</span>
-                  </div>
-                  <div class="fc-last${nextFlow.lastMonth ? '' : ' new'}">${nextFlow.lastMonth ? `Last month: <b>$${nextFlow.lastMonth.revenue.toLocaleString()}</b> at <b>${nextFlow.lastMonth.roi}× ROI</b>` : 'First time running this flow'}</div>
-                  <div class="fc-actions">
-                    <button class="mini-btn primary" data-act="approve-camp" data-i="${nextIdx}">Approve</button>
-                    <button class="mini-btn secondary" data-act="open-camp" data-i="${nextIdx}">Open</button>
-                  </div>
-                </div>
+                ${cardsHtml}
+              </div>
+              <div class="summary" style="margin-top:12px;">
+                <div class="summary-col"><div class="k">Est. revenue</div><div class="v">$${totalRev.toLocaleString()}</div></div>
+                <div class="summary-col"><div class="k">Customers</div><div class="v">${totalCust.toLocaleString()}</div></div>
+                <div class="summary-col"><div class="k">Blended ROI</div><div class="v">${blendedRoi}×</div></div>
               </div>
               <div class="time">${nowStamp()}</div>
             </div>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>YoboLabs · January 2026 Plan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://rsms.me">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  @import url('https://rsms.me/inter/inter.css');
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --border: #E5E5E0;
+    --border-strong: #D8D8D4;
+    --text: #111111;
+    --muted: #4A4F57;
+    --dim: #6B7079;
+    --faint: #8A8F97;
+    --green: #6FED45;
+    --green-deep: #2A8A1A;
+    --green-tint: rgba(111,237,69,0.10);
+    --green-line: rgba(111,237,69,0.30);
+    --amber: #F59E0B;
+    --amber-tint: rgba(245,158,11,0.14);
+    --blue: #60A5FA;
+    --blue-tint: rgba(96,165,250,0.14);
+  }
+
+  html, body, button { font-family: var(--font-ui); font-feature-settings: 'cv11', 'ss01', 'ss03'; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; }
+
+  /* Header */
+  .top { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 6px; background: var(--green); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 800; font-size: 14px; }
+  .back-link { color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; }
+  .back-link:hover { border-color: var(--border-strong); color: var(--text); }
+  .top-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .print-btn { background: var(--text); color: #fff; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer; font-family: inherit; }
+  .print-btn:hover { filter: brightness(1.15); }
+  .share-btn { background: transparent; color: var(--text); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-strong); cursor: pointer; font-family: inherit; }
+  .share-btn:hover { background: var(--surface); }
+
+  /* Print-only header that doesn't show on screen */
+  .print-header { display: none; }
+
+  /* Page */
+  .page { max-width: 820px; margin: 0 auto; padding: 48px 32px 80px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+  h1 { font-family: var(--font-serif); font-weight: 400; font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px; }
+  .lede { font-size: 17px; line-height: 1.5; color: var(--muted); max-width: 620px; margin-bottom: 32px; }
+
+  /* Headline summary band */
+  .summary-band { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 56px; }
+  .summary-cell { padding: 22px 24px; border-right: 1px solid var(--border); }
+  .summary-cell:last-child { border-right: none; }
+  .summary-cell .k { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+  .summary-cell .v { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--text); }
+  .summary-cell.green .v { color: var(--green-deep); }
+  .summary-cell .v small { font-size: 17px; font-weight: 500; color: var(--muted); margin-left: 4px; letter-spacing: 0; }
+
+  /* Section */
+  .section { margin-bottom: 56px; }
+  .section-title { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.15; letter-spacing: -0.01em; color: var(--text); margin-bottom: 6px; }
+  .section-sub { font-size: 15px; line-height: 1.5; color: var(--muted); margin-bottom: 20px; max-width: 620px; }
+
+  /* Insights */
+  .insights-list { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 8px 22px; }
+  .insight-row { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .insight-row:last-child { border-bottom: none; }
+  .insight-num { font-size: 13px; font-weight: 600; color: var(--dim); font-variant-numeric: tabular-nums; min-width: 22px; }
+  .insight-body { flex: 1; }
+  .insight-headline { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+  .insight-detail { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  /* Flow cards */
+  .flow-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 26px; margin-bottom: 14px; }
+  .fc-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .fc-num { font-family: var(--font-serif); font-size: 28px; font-weight: 400; color: var(--text); line-height: 1; min-width: 22px; }
+  .fc-name { font-size: 21px; font-weight: 600; color: var(--text); letter-spacing: -0.005em; }
+  .fc-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 6px; border-radius: 4px; line-height: 1.2; }
+  .fc-pill.new { background: var(--amber-tint); color: var(--amber); }
+  .fc-pill.improving { background: var(--blue-tint); color: var(--blue); }
+  .fc-pill.running { background: var(--green-tint); color: var(--green-deep); }
+  .fc-week { font-size: 12px; color: var(--dim); margin-left: auto; font-weight: 500; }
+
+  .fc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 14px 0 16px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 16px; font-variant-numeric: tabular-nums; }
+  .fc-cell .k { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+  .fc-cell .v { font-size: 15px; font-weight: 600; color: var(--text); }
+  .fc-cell.est .v { color: var(--green-deep); }
+
+  .fc-why { font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 16px; }
+  .fc-why b { color: var(--text); font-weight: 600; }
+
+  /* Email sequence inside flow */
+  .seq-h { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+  .seq-row { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); align-items: baseline; font-variant-numeric: tabular-nums; }
+  .seq-row:first-of-type { border-top: none; }
+  .seq-num { width: 22px; height: 22px; border-radius: 50%; background: var(--text); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+  .seq-body { flex: 1; min-width: 0; }
+  .seq-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .seq-subject { font-size: 13px; color: var(--muted); margin-top: 2px; font-style: italic; }
+  .seq-when { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+
+  /* Calendar week strip */
+  .cal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .cal-row { display: grid; grid-template-columns: 80px 1fr; border-bottom: 1px solid var(--border); }
+  .cal-row:last-child { border-bottom: none; }
+  .cal-week { padding: 16px 18px; background: #F5F5F0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); border-right: 1px solid var(--border); }
+  .cal-content { padding: 16px 18px; }
+  .cal-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; color: var(--text); margin-right: 6px; margin-bottom: 4px; background: var(--bg); border: 1px solid var(--border); }
+  .cal-tag.win { background: var(--blue-tint); color: var(--blue); border-color: transparent; }
+  .cal-tag.cart { background: var(--amber-tint); color: var(--amber); border-color: transparent; }
+  .cal-tag.welcome { background: var(--green-tint); color: var(--green-deep); border-color: transparent; }
+
+  /* Footer */
+  .foot { margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; }
+  .foot p { font-size: 13px; color: var(--dim); margin: 4px 0; }
+  .foot p b { color: var(--text); font-weight: 600; }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; }
+    .top, .top-right, .back-link, .print-btn, .share-btn { display: none !important; }
+    .print-header { display: block; padding: 0 0 24px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .print-header .pl-logo { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .print-header .pl-sub { font-size: 11px; color: var(--dim); }
+    .page { padding: 0 24px 32px; max-width: 100%; }
+    h1 { font-size: 40px; margin-bottom: 8px; }
+    .lede { font-size: 14px; margin-bottom: 24px; }
+    .summary-band { margin-bottom: 32px; page-break-inside: avoid; }
+    .section { margin-bottom: 32px; page-break-inside: avoid; }
+    .flow-card { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 32px 20px 60px; }
+    h1 { font-size: 38px; }
+    .summary-band { grid-template-columns: 1fr; }
+    .summary-cell { border-right: none; border-bottom: 1px solid var(--border); }
+    .summary-cell:last-child { border-bottom: none; }
+    .fc-grid { grid-template-columns: repeat(2, 1fr); }
+    .top { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a href="/" class="logo"><div class="logo-mark">⏵</div>YoboLabs</a>
+  <a href="/" class="back-link">← Back to chat</a>
+  <div class="top-right">
+    <button class="share-btn" onclick="shareLink()">Copy link</button>
+    <button class="print-btn" onclick="window.print()">Download PDF</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="print-header">
+    <div class="pl-logo">YoboLabs · Aria</div>
+    <div class="pl-sub">Monthly Plan · demo-shop-6</div>
+  </div>
+
+  <div class="eyebrow">Monthly Plan · January 2026</div>
+  <h1>January, sequenced.</h1>
+  <p class="lede">Three flows picked from Klaviyo's 40+ templates, sequenced in the order that compounds best. Win-Back first to surface what's recoverable, Abandoned Cart to plug the largest active leak, Welcome Series to set up February's repeat-rate.</p>
+
+  <div class="summary-band">
+    <div class="summary-cell green">
+      <div class="k">Est. revenue</div>
+      <div class="v">$6,253</div>
+    </div>
+    <div class="summary-cell">
+      <div class="k">Customers reached</div>
+      <div class="v">3,423</div>
+    </div>
+    <div class="summary-cell">
+      <div class="k">Blended ROI</div>
+      <div class="v">6.0<small>×</small></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Why this month</h2>
+    <p class="section-sub">Three signals from your store's last 90 days that shape the plan.</p>
+    <div class="insights-list">
+      <div class="insight-row">
+        <div class="insight-num">1</div>
+        <div class="insight-body">
+          <div class="insight-headline">1,847 buyers lapsed for 60+ days.</div>
+          <div class="insight-detail">Largest single revenue pool sitting cold. Last December's Win-Back ran at 6.8× ROI on a similar cohort — strong baseline to start from.</div>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-num">2</div>
+        <div class="insight-body">
+          <div class="insight-headline">47% of sessions abandon at cart.</div>
+          <div class="insight-detail">No cart flow live. Industry benchmark for recovery via a 3-email sequence is ~17% conversion. Largest active leak.</div>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-num">3</div>
+        <div class="insight-body">
+          <div class="insight-headline">612 first-time buyers haven't returned.</div>
+          <div class="insight-detail">Q4 brought a wave of new customers; the existing welcome series under-performed (3.2× ROI). Refreshed version drafted to lift repeat-rate.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">The three flows</h2>
+    <p class="section-sub">Each runs on auto-trigger once approved and synced to Klaviyo.</p>
+
+    <div class="flow-card">
+      <div class="fc-top">
+        <span class="fc-num">1</span>
+        <span class="fc-name">Win-Back</span>
+        <span class="fc-pill improving">Improving</span>
+        <span class="fc-week">Week 1 launch</span>
+      </div>
+      <div class="fc-grid">
+        <div class="fc-cell"><div class="k">Goal</div><div class="v">Reactivate cold buyers</div></div>
+        <div class="fc-cell"><div class="k">Customers</div><div class="v">1,847</div></div>
+        <div class="fc-cell"><div class="k">Offer</div><div class="v">15% off last-viewed</div></div>
+        <div class="fc-cell est"><div class="k">Est. revenue</div><div class="v">$3,420</div></div>
+      </div>
+      <p class="fc-why">Iterating on December's winning subject pattern (6.8× ROI). Send 3 was the weak link last run — testing a shorter, more urgent variant. Personalised to each customer's last-viewed category, sent 60 days after their last order.</p>
+      <div class="seq-h">Sequence</div>
+      <div class="seq-row">
+        <div class="seq-num">1</div>
+        <div class="seq-body">
+          <div class="seq-name">Soft re-intro</div>
+          <div class="seq-subject">"Steven, you left something behind"</div>
+        </div>
+        <div class="seq-when">Day 0</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">2</div>
+        <div class="seq-body">
+          <div class="seq-name">15% off your category</div>
+          <div class="seq-subject">"A little something to bring you back"</div>
+        </div>
+        <div class="seq-when">Day 3 · if not opened</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">3</div>
+        <div class="seq-body">
+          <div class="seq-name">Last chance</div>
+          <div class="seq-subject">"This is your last chance, Steven"</div>
+        </div>
+        <div class="seq-when">Day 7</div>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="fc-top">
+        <span class="fc-num">2</span>
+        <span class="fc-name">Abandoned Cart</span>
+        <span class="fc-pill new">New</span>
+        <span class="fc-week">Week 2 launch</span>
+      </div>
+      <div class="fc-grid">
+        <div class="fc-cell"><div class="k">Goal</div><div class="v">Recover lost intent</div></div>
+        <div class="fc-cell"><div class="k">Customers</div><div class="v">~940/mo</div></div>
+        <div class="fc-cell"><div class="k">Offer</div><div class="v">Free shipping >$40</div></div>
+        <div class="fc-cell est"><div class="k">Est. revenue</div><div class="v">$2,180</div></div>
+      </div>
+      <p class="fc-why">First time live for this store. Largest active leak today. Sequence escalates from no-offer (low-cost recovery) to free shipping (only triggers if first two miss). Klaviyo benchmark is 18% conversion on send 1.</p>
+      <div class="seq-h">Sequence</div>
+      <div class="seq-row">
+        <div class="seq-num">1</div>
+        <div class="seq-body">
+          <div class="seq-name">Did you forget something?</div>
+          <div class="seq-subject">"You left these in your cart, Steven"</div>
+        </div>
+        <div class="seq-when">1 hr after cart</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">2</div>
+        <div class="seq-body">
+          <div class="seq-name">Still on your mind?</div>
+          <div class="seq-subject">"Your cart is still here"</div>
+        </div>
+        <div class="seq-when">Day 1</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">3</div>
+        <div class="seq-body">
+          <div class="seq-name">Free shipping unlocked</div>
+          <div class="seq-subject">"One more thing — free shipping unlocked"</div>
+        </div>
+        <div class="seq-when">Day 3</div>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="fc-top">
+        <span class="fc-num">3</span>
+        <span class="fc-name">Welcome Series</span>
+        <span class="fc-pill improving">Improving</span>
+        <span class="fc-week">Week 3 launch</span>
+      </div>
+      <div class="fc-grid">
+        <div class="fc-cell"><div class="k">Goal</div><div class="v">Convert first-timers to repeat</div></div>
+        <div class="fc-cell"><div class="k">Customers</div><div class="v">~636/mo</div></div>
+        <div class="fc-cell"><div class="k">Offer</div><div class="v">10% off second order</div></div>
+        <div class="fc-cell est"><div class="k">Est. revenue</div><div class="v">$653</div></div>
+      </div>
+      <p class="fc-why">Existing welcome series under-performed last month (3.2× ROI, high unsub on send 2). Softer version drafted — email 2 leads with picks-for-you instead of a discount, discount moved to email 3.</p>
+      <div class="seq-h">Sequence</div>
+      <div class="seq-row">
+        <div class="seq-num">1</div>
+        <div class="seq-body">
+          <div class="seq-name">Welcome to the family</div>
+          <div class="seq-subject">"Welcome to the family, Steven"</div>
+        </div>
+        <div class="seq-when">Day 0</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">2</div>
+        <div class="seq-body">
+          <div class="seq-name">Picks for you</div>
+          <div class="seq-subject">"A few things you might love"</div>
+        </div>
+        <div class="seq-when">Day 7</div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num">3</div>
+        <div class="seq-body">
+          <div class="seq-name">10% off your next</div>
+          <div class="seq-subject">"A little thanks — 10% off your next"</div>
+        </div>
+        <div class="seq-when">Day 21</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Calendar</h2>
+    <p class="section-sub">When each flow goes live + the first-send window for the existing customer cohort.</p>
+    <div class="cal">
+      <div class="cal-row">
+        <div class="cal-week">Week 1<br><span style="font-weight:400; color:var(--faint); font-size:11px;">Jan 6–12</span></div>
+        <div class="cal-content"><span class="cal-tag win">Win-Back goes live</span><br><small style="color:var(--muted); font-size:13px;">First batch of 1,847 lapsed buyers triggered into the flow over Mon–Wed.</small></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-week">Week 2<br><span style="font-weight:400; color:var(--faint); font-size:11px;">Jan 13–19</span></div>
+        <div class="cal-content"><span class="cal-tag cart">Abandoned Cart live</span><span class="cal-tag win">Win-Back send 3</span><br><small style="color:var(--muted); font-size:13px;">Cart flow begins auto-triggering as new abandons happen. Win-Back last sends arrive for non-openers.</small></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-week">Week 3<br><span style="font-weight:400; color:var(--faint); font-size:11px;">Jan 20–26</span></div>
+        <div class="cal-content"><span class="cal-tag welcome">Welcome Series live</span><br><small style="color:var(--muted); font-size:13px;">Refreshed version starts on all new first-time buyers. Two prior versions paused.</small></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-week">Week 4<br><span style="font-weight:400; color:var(--faint); font-size:11px;">Jan 27–Feb 2</span></div>
+        <div class="cal-content"><span class="cal-tag" style="background:#F5F5F0; color:var(--muted); border-color:transparent;">Recap + February proposal</span><br><small style="color:var(--muted); font-size:13px;">Aria sends weekly recap on Mon. February draft proposed by Friday.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Approval mode</h2>
+    <p class="section-sub">How Aria runs the month. Switch anytime in chat settings.</p>
+    <div class="insights-list">
+      <div class="insight-row">
+        <div class="insight-num">●</div>
+        <div class="insight-body">
+          <div class="insight-headline">Manual <span style="font-weight:400; color:var(--dim); font-size:13px;">— current default</span></div>
+          <div class="insight-detail">Aria pauses for explicit approval on every flow change + every new month's plan.</div>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-num">○</div>
+        <div class="insight-body">
+          <div class="insight-headline">24-hour edit window</div>
+          <div class="insight-detail">Aria proposes, ships if no edit within 24 hours.</div>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-num">○</div>
+        <div class="insight-body">
+          <div class="insight-headline">Auto for proven flows</div>
+          <div class="insight-detail">Aria auto-ships flows that already have a 30+ day track record at 3×+ ROI. New ones still need approval.</div>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-num">○</div>
+        <div class="insight-body">
+          <div class="insight-headline">Full autopilot</div>
+          <div class="insight-detail">Aria runs everything. Weekly recap is the only check-in.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p><b>YoboLabs · Aria</b></p>
+    <p>Plan generated Jan 5, 2026 · demo-shop-6</p>
+    <p>This is a working draft — chat with Aria to make any changes.</p>
+  </div>
+</div>
+
+<script>
+  function shareLink() {
+    const url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.querySelector('.share-btn');
+        const original = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+  }
+</script>
+</body></html>
