@@ -95,11 +95,36 @@
   .flows-tr .cell b { color: var(--text); font-weight: 600; }
   .flows-tr .chev { color: var(--text-faint); font-size: 16px; }
 
+  /* Email detail view */
+  .email-meta-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 24px; }
+  .em-cell .k { font-size: 11px; color: var(--text-faint); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+  .em-cell .v { font-size: 13px; color: var(--text); font-weight: 500; }
+  .em-cell .v.tab { font-variant-numeric: tabular-nums; }
+  .email-frame { background: #fff; border: 1px solid var(--border); border-radius: 12px; max-width: 540px; margin: 0 auto; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
+  .em-logo { padding: 18px 24px 0; text-align: center; }
+  .em-logo b { font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0.08em; text-transform: uppercase; }
+  .em-hero { aspect-ratio: 16/9; position: relative; margin: 16px 24px 0; border-radius: 8px; overflow: hidden; }
+  .em-hero::after { content: attr(data-label); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.7); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .em-headline { padding: 22px 28px 8px; }
+  .em-headline h3 { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.3; letter-spacing: -0.005em; }
+  .em-body { padding: 8px 28px 16px; }
+  .em-body p { font-size: 14px; color: var(--text-dim); line-height: 1.5; margin-bottom: 10px; }
+  .em-cta { padding: 6px 28px 22px; text-align: center; }
+  .cta-btn { background: var(--text); color: #fff; font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 8px; display: inline-block; }
+  .em-footer { padding: 14px 28px 22px; border-top: 1px solid #E5E0D8; margin-top: 4px; text-align: center; }
+  .em-footer p { font-size: 11px; color: var(--text-faint); line-height: 1.4; }
+  .em-footer a { color: var(--text); text-decoration: underline; }
+  .email-perf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .email-perf .stat { padding: 12px; }
+  .email-perf .stat .k { font-size: 11px; }
+  .email-perf .stat .v { font-size: 18px; }
+
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
     .sidebar { display: none; }
     .top-nav { display: none; }
     .stats { grid-template-columns: repeat(2, 1fr); }
+    .email-meta-strip { grid-template-columns: 1fr 1fr; }
     .main { padding: 20px; }
     .flows-th, .flows-tr { grid-template-columns: 1.5fr 1fr 1fr; }
     .flows-th .col-hide, .flows-tr .col-hide { display: none; }
@@ -156,9 +181,9 @@
       stats: { sent: '1,847', open: '38%', click: '7.8%', conv: '14', revenue: '$312' },
       delta: { sent: '+1,847 today', open: '+4% vs last run', click: '+1.2%', conv: '+14', revenue: '+$312' },
       emails: [
-        { num: 1, name: 'Soft re-intro', subject: 'Steven, you left something behind', when: 'Send at trigger', sent: '1,847', open: '42%', click: '8.1%' },
-        { num: 2, name: '15% off your category', subject: 'A little something to bring you back', when: 'Wait 3 days · branch on open', sent: '—', open: '—', click: '—' },
-        { num: 3, name: 'Last chance', subject: 'This is your last chance, Steven', when: 'Wait 4 days', sent: '—', open: '—', click: '—' },
+        { num: 1, name: 'Soft re-intro', subject: 'Steven, you left something behind', preview: 'A little nudge from us — no offers, just a hello.', when: 'Send at trigger', sent: '1,847', open: '42%', click: '8.1%', heroBg: 'linear-gradient(135deg, #d4b89e 0%, #b88e6e 60%, #8a5e3e 100%)', heroLabel: 'Skincare hero · warm tones', headline: "We've missed your glow, Steven.", body: "<p>It's been a minute since you last shopped with us, and we just wanted to say hi. No offer this time — just a quick note that your favorites are back in stock, and we've added a few new things we think you'll love.</p><p>Take a look whenever you're ready. We'll be here.</p>", cta: 'Take a fresh look →' },
+        { num: 2, name: '15% off your category', subject: 'A little something to bring you back', preview: '15% off your category — for the next 7 days.', when: 'Wait 3 days · branch on open', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #f0d4b5 0%, #e6a875 50%, #c97f48 100%)', heroLabel: 'Product showcase · 15% callout', headline: '15% off, just for you.', body: "<p>We pulled together a few things from your last-viewed category — and we're taking 15% off so you can finish what you started.</p><p>Use code <b>HELLO15</b> at checkout. Valid for the next 7 days.</p>", cta: 'Claim your 15% →' },
+        { num: 3, name: 'Last chance', subject: 'This is your last chance, Steven', preview: 'Your 15% off expires in 24 hours.', when: 'Wait 4 days', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #c97f48 0%, #8a4a28 60%, #5a2f1a 100%)', heroLabel: 'Urgency · countdown feel', headline: "Don't miss out, Steven.", body: "<p>Your 15% off expires in <b>24 hours</b>. Hundreds of returning customers have already used theirs this month.</p><p>One last chance to grab what you've been eyeing — and we'll throw in free shipping over $40.</p>", cta: 'Shop now — 24h left →' },
       ],
     },
     'abandoned-cart': {
@@ -170,9 +195,9 @@
       stats: { sent: '212', open: '47%', click: '14.2%', conv: '14', revenue: '$87' },
       delta: { sent: '+212 today', open: '+11% vs benchmark', click: '+3.4%', conv: '+14', revenue: '+$87' },
       emails: [
-        { num: 1, name: 'Did you forget something?', subject: 'You left these in your cart, Steven', when: '1 hour after abandonment', sent: '212', open: '47%', click: '14.2%' },
-        { num: 2, name: 'Still on your mind?', subject: 'Your cart is still here', when: 'Wait 24 hours', sent: '—', open: '—', click: '—' },
-        { num: 3, name: 'Free shipping unlocked', subject: 'One more thing — free shipping unlocked', when: 'Wait 2 days', sent: '—', open: '—', click: '—' },
+        { num: 1, name: 'Did you forget something?', subject: 'You left these in your cart, Steven', preview: 'We saved them for you — no rush.', when: '1 hour after abandonment', sent: '212', open: '47%', click: '14.2%', heroBg: 'linear-gradient(135deg, #b8c8d4 0%, #7a96a8 60%, #4a6678 100%)', heroLabel: 'Cart contents · saved-for-you', headline: 'Still thinking it over?', body: "<p>We saved your cart for you. No pressure — but here's what you were looking at.</p><p>Pick up where you left off whenever you're ready.</p>", cta: 'Complete your order →' },
+        { num: 2, name: 'Still on your mind?', subject: 'Your cart is still here', preview: 'A friendly reminder — your picks are waiting.', when: 'Wait 24 hours', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #d4c8b8 0%, #b8a890 50%, #8a7868 100%)', heroLabel: 'Product collage · warm wood tones', headline: 'Just a friendly nudge.', body: "<p>Your cart is still here, ready when you are. We even threw in some reviews from happy customers in case it helps.</p>", cta: 'Pick up where you left off →' },
+        { num: 3, name: 'Free shipping unlocked', subject: 'One more thing — free shipping unlocked', preview: 'Free shipping if you finish today.', when: 'Wait 2 days', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #c8d4b8 0%, #98b078 50%, #6a8050 100%)', heroLabel: 'Shipping unlock · green energy', headline: 'Free shipping, on us.', body: "<p>You've been on the fence — let's make it easy. Free shipping if you finish your order today.</p><p>No code needed, it's already applied.</p>", cta: 'Finish the order →' },
       ],
     },
     'welcome-series': {
@@ -184,9 +209,9 @@
       stats: { sent: '43', open: '54%', click: '11.6%', conv: '2', revenue: '$48' },
       delta: { sent: '+43 today', open: '+22% vs last batch', click: '+2.8%', conv: '+2', revenue: '+$48' },
       emails: [
-        { num: 1, name: 'Welcome to the family', subject: 'Welcome to the family, Steven', when: 'Send at trigger', sent: '43', open: '54%', click: '11.6%' },
-        { num: 2, name: 'Picks for you', subject: 'A few things you might love', when: 'Wait 7 days', sent: '—', open: '—', click: '—' },
-        { num: 3, name: '10% off your next', subject: 'A little thanks — 10% off your next', when: 'Wait 14 days', sent: '—', open: '—', click: '—' },
+        { num: 1, name: 'Welcome to the family', subject: 'Welcome to the family, Steven', preview: 'A quick hello and a few favorites to start with.', when: 'Send at trigger', sent: '43', open: '54%', click: '11.6%', heroBg: 'linear-gradient(135deg, #f0e0c8 0%, #d4b894 50%, #a88a64 100%)', heroLabel: 'Brand warmth · welcoming tones', headline: "Glad you're here.", body: "<p>Thanks for picking us — we don't take that lightly. Here's a little intro to who we are and a few things we think you'll love.</p><p>If you ever want to chat, just hit reply.</p>", cta: 'See your top picks →' },
+        { num: 2, name: 'Picks for you', subject: 'A few things you might love', preview: 'Hand-picked based on what you bought.', when: 'Wait 7 days', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #d8c8e4 0%, #b094c8 50%, #7864a8 100%)', heroLabel: 'Curated picks · soft purple', headline: 'Hand-picked for you.', body: "<p>Based on what you bought, here are a few things we think you'll like. No discount this time — just our actual recommendations.</p>", cta: 'Shop your picks →' },
+        { num: 3, name: '10% off your next', subject: 'A little thanks — 10% off your next', preview: 'A small thank-you for being part of this.', when: 'Wait 14 days', sent: '—', open: '—', click: '—', heroBg: 'linear-gradient(135deg, #e8d4b8 0%, #c8a474 50%, #9c7848 100%)', heroLabel: 'Thank-you · golden hour', headline: 'A thank-you, just for you.', body: "<p>Three weeks in — we wanted to say thanks for being part of this. Here's 10% off your next order, good for 30 days.</p><p>Use code <b>THANKS10</b> at checkout.</p>", cta: 'Use my 10% →' },
       ],
     },
   };
@@ -232,7 +257,7 @@
             ${e.when && i > 0 ? `<div class="lbl">${e.when}</div>` : '<div class="lbl">' + (i === 0 ? 'Immediately' : e.when) + '</div>'}
             <div class="line"></div>
           </div>
-          <div class="node">
+          <a href="?flow=${flowId}&email=${i}" class="node" style="text-decoration:none; color:inherit; cursor:pointer;">
             <div class="node-icon">✉</div>
             <div class="node-body">
               <div class="node-title">${e.num}. ${e.name}</div>
@@ -242,7 +267,7 @@
               <span class="node-stat">Sent <b>${e.sent}</b></span>
               <span class="node-stat">Opened <b>${e.open}</b></span>
             </div>
-          </div>
+          </a>
         `).join('')}
       </div>
     `;
@@ -287,10 +312,53 @@
     document.getElementById('mainContent').innerHTML = html;
   }
 
-  // Route based on ?flow= param
+  function renderEmail(flowId, emailIdx) {
+    const f = FLOWS[flowId];
+    if (!f) return renderDashboard();
+    const e = f.emails[emailIdx];
+    if (!e) return renderFlow(flowId);
+    document.title = `Klaviyo · ${e.name}`;
+    const html = `
+      <div class="page-eyebrow"><a href="?">All flows</a> / <a href="?flow=${flowId}">${f.name}</a> / Email ${e.num}</div>
+      <div class="h-row">
+        <h1>${e.num}. ${e.name}</h1>
+        ${e.sent !== '—' ? '<span class="live-pill"><span class="live-dot"></span>Sending</span>' : '<span class="live-pill" style="background:rgba(245,158,11,0.14); color:#F59E0B;"><span class="live-dot" style="background:#F59E0B;"></span>Scheduled</span>'}
+      </div>
+      <div class="h-sub">${e.when} · Subject: <i>"${e.subject}"</i></div>
+
+      <div class="email-meta-strip">
+        <div class="em-cell"><div class="k">Subject</div><div class="v">${e.subject}</div></div>
+        <div class="em-cell"><div class="k">Preview text</div><div class="v">${e.preview || '—'}</div></div>
+        <div class="em-cell"><div class="k">From</div><div class="v">Demo Shop &lt;hi@demoshop.com&gt;</div></div>
+        <div class="em-cell"><div class="k">When</div><div class="v">${e.when}</div></div>
+      </div>
+
+      <div class="section-h">Preview</div>
+      <div class="email-frame">
+        <div class="em-logo"><b>DEMO SHOP</b></div>
+        <div class="em-hero" style="background: ${e.heroBg};" data-label="${e.heroLabel}"></div>
+        <div class="em-headline"><h3>${e.headline}</h3></div>
+        <div class="em-body">${e.body}</div>
+        <div class="em-cta"><span class="cta-btn">${e.cta}</span></div>
+        <div class="em-footer"><p>Demo Shop · 123 Example St · You're getting this because you shopped with us before. <a>Unsubscribe</a></p></div>
+      </div>
+
+      ${e.sent !== '—' ? `
+      <div class="email-perf">
+        <div class="stat"><div class="k">Sent</div><div class="v">${e.sent}</div></div>
+        <div class="stat"><div class="k">Open rate</div><div class="v">${e.open}</div></div>
+        <div class="stat"><div class="k">Click rate</div><div class="v">${e.click}</div></div>
+      </div>` : ''}
+    `;
+    document.getElementById('mainContent').innerHTML = html;
+  }
+
+  // Route based on URL params
   const params = new URLSearchParams(window.location.search);
   const flowId = params.get('flow');
-  if (flowId) renderFlow(flowId);
+  const emailIdx = params.get('email');
+  if (flowId && emailIdx !== null) renderEmail(flowId, parseInt(emailIdx, 10));
+  else if (flowId) renderFlow(flowId);
   else renderDashboard();
 </script>
 </body></html>
