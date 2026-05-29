@@ -410,6 +410,18 @@
   .welcome-actions button { background: var(--green); color: #000; font-size: 15px; padding: 12px 24px; border-radius: 12px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; }
   .welcome-actions button:hover { filter: brightness(1.08); }
   .welcome-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-top: 18px; }
+  .welcome-ab { display: flex; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); justify-content: center; }
+  .ab-pill { font-size: 11px; padding: 6px 11px; border-radius: 999px; background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); cursor: pointer; font-family: inherit; font-weight: 500; }
+  .ab-pill:hover { border-color: var(--text-faint); color: var(--text); }
+  .ab-pill.active { background: var(--green-tint); color: var(--green); border-color: var(--green-line); }
+
+  /* Variant B — pending flows footer (shown in plan card) */
+  .pending-flows { padding: 12px; background: transparent; border: 1px dashed var(--border); border-radius: 12px; margin-top: 12px; }
+  .pending-flows .pending-h { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+  .pending-flows .pending-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: var(--text-dim); }
+  .pending-flows .pending-row .pn-num { font-size: 11px; color: var(--text-faint); width: 18px; }
+  .pending-flows .pending-row .pn-name { font-weight: 500; color: var(--text-dim); }
+  .pending-flows .pending-row .pn-tag { margin-left: auto; font-size: 10px; color: var(--text-faint); letter-spacing: 0.08em; text-transform: uppercase; }
   @keyframes welcomeFadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes welcomeSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -546,11 +558,15 @@
   <div class="welcome-modal" id="welcomeModal">
     <div class="welcome-card">
       <div class="welcome-emoji">👋</div>
-      <h2>Good morning, Steven.</h2>
-      <p>While you were out, your growth manager <b>Aria</b> ran the numbers, scanned your store, and put together <b>three new flows for January</b>.</p>
-      <p>$6,253 projected at 6.0× ROI.</p>
-      <p class="welcome-sub">Want a quick walk-through?</p>
-      <div class="welcome-actions"><button onclick="dismissWelcome()">See my plan →</button></div>
+      <h2 id="welcomeTitle">Good morning, Steven.</h2>
+      <p id="welcomeP1">While you were out, your growth manager <b>Aria</b> ran the numbers, scanned your store, and put together <b>three new flows for January</b>.</p>
+      <p id="welcomeP2">$6,253 projected at 6.0× ROI.</p>
+      <p class="welcome-sub" id="welcomeP3">Want a quick walk-through?</p>
+      <div class="welcome-actions"><button onclick="dismissWelcome()" id="welcomeCta">See my plan →</button></div>
+      <div class="welcome-ab">
+        <button class="ab-pill" data-ab="A" onclick="setAbVariant('A')">A · Plan all at once</button>
+        <button class="ab-pill" data-ab="B" onclick="setAbVariant('B')">B · One flow at a time</button>
+      </div>
       <div class="welcome-tag">Demo · January 2026</div>
     </div>
   </div>
@@ -1406,6 +1422,8 @@
     confetti();
     // Swap the canvas foot to a "what's next" choice
     showApprovalNextStep(nextFlowId);
+    // Variant B: reveal the next flow card in chat after approval
+    revealNextFlowB(currentFlowId);
   }
 
   function showApprovalNextStep(nextFlowId) {
@@ -1532,8 +1550,11 @@
     const btn = card.querySelector('[data-act="approve-camp"]');
     btn.classList.remove('primary'); btn.classList.add('approved'); btn.innerHTML = '✓'; btn.disabled = true;
     const flowId = FLOW_IDS_BY_INDEX[i] || null;
+    FLOWS[flowId].approved = true;
     pingAriaWithKlaviyoLink(`Approved · ${name}. Synced to Klaviyo.`, flowId);
     confetti();
+    // Variant B: reveal next flow card after this one is approved
+    if (flowId) revealNextFlowB(flowId);
   }
   function nowStamp() {
     const d = new Date();
@@ -1921,6 +1942,129 @@
     pingAria(`${name} connected. I'll send updates there too.`);
   }
 
+  // === A/B VARIANT TOGGLE ===
+  // A (default): plan delivers all 3 flow cards at once (current behavior)
+  // B: plan delivers Win-Back first; next flows revealed after each approval
+  const urlAb = new URLSearchParams(location.search).get('ab');
+  let abVariant = (urlAb === 'B' || urlAb === 'A') ? urlAb : (localStorage.getItem('aria-ab') || 'A');
+
+  function setAbVariant(v) {
+    abVariant = v;
+    localStorage.setItem('aria-ab', v);
+    // Reflect in URL without reload
+    const u = new URL(location.href); u.searchParams.set('ab', v); history.replaceState(history.state, '', u);
+    // Update welcome copy + pill state
+    updateWelcomeForAb();
+    document.querySelectorAll('.ab-pill').forEach(p => p.classList.toggle('active', p.dataset.ab === v));
+  }
+
+  function updateWelcomeForAb() {
+    const t = document.getElementById('welcomeTitle');
+    const p1 = document.getElementById('welcomeP1');
+    const p2 = document.getElementById('welcomeP2');
+    const p3 = document.getElementById('welcomeP3');
+    const cta = document.getElementById('welcomeCta');
+    if (abVariant === 'B') {
+      if (p1) p1.innerHTML = "While you were out, your growth manager <b>Aria</b> ran the numbers and spotted your biggest leak. We'll start with <b>one flow</b>.";
+      if (p2) p2.innerHTML = "Win-Back first. Two more lined up after.";
+      if (p3) p3.textContent = "Walk through it?";
+      if (cta) cta.textContent = "Start with Win-Back →";
+    } else {
+      if (p1) p1.innerHTML = "While you were out, your growth manager <b>Aria</b> ran the numbers, scanned your store, and put together <b>three new flows for January</b>.";
+      if (p2) p2.innerHTML = "$6,253 projected at 6.0× ROI.";
+      if (p3) p3.textContent = "Want a quick walk-through?";
+      if (cta) cta.textContent = "See my plan →";
+    }
+  }
+
+  // Apply current variant to welcome immediately on load
+  updateWelcomeForAb();
+  document.querySelectorAll('.ab-pill').forEach(p => p.classList.toggle('active', p.dataset.ab === abVariant));
+
+  // Hide non-Win-Back flow cards in variant B until they're revealed
+  function applyAbToPlan() {
+    if (abVariant !== 'B') return;
+    const allCards = document.querySelectorAll('.flow-card');
+    allCards.forEach((card, i) => {
+      if (i > 0) card.style.display = 'none';
+    });
+    // Hide "Approve all" + "Customize" + "Open full plan" buttons in B (one-by-one mode)
+    const planActions = document.querySelectorAll('.plan-actions .mini-btn');
+    planActions.forEach(b => b.style.display = 'none');
+    // Hide the level-future block in B (we'll show our own "Up next" instead)
+    // Inject a "pending flows" block after the plan-actions
+    const planEl = document.querySelector('#introPlan .plan');
+    if (planEl && !document.getElementById('pendingFlows')) {
+      const pending = document.createElement('div');
+      pending.id = 'pendingFlows';
+      pending.className = 'pending-flows';
+      pending.innerHTML = `
+        <div class="pending-h">Up next this month</div>
+        <div class="pending-row"><span class="pn-num">2.</span><span class="pn-name">Abandoned Cart</span><span class="pn-tag">After Win-Back</span></div>
+        <div class="pending-row"><span class="pn-num">3.</span><span class="pn-name">Welcome Series</span><span class="pn-tag">After Cart</span></div>`;
+      planEl.appendChild(pending);
+    }
+  }
+
+  // After approving a flow in B variant, reveal the next one with typing + intro message
+  function revealNextFlowB(approvedFlowId) {
+    if (abVariant !== 'B') return;
+    const order = FLOW_IDS_BY_INDEX;
+    const justIdx = order.indexOf(approvedFlowId);
+    const nextIdx = justIdx + 1;
+    if (nextIdx >= order.length) {
+      // All done — remove pending block
+      const p = document.getElementById('pendingFlows');
+      if (p) p.remove();
+      setTimeout(() => pingAria(`All three flows synced. January is live. 🎉`), 1000);
+      return;
+    }
+    const nextId = order[nextIdx];
+    const nextFlow = FLOWS[nextId];
+    const nextCard = document.querySelectorAll('.flow-card')[nextIdx];
+    // Update "Up next" pending block first
+    const pendingBlock = document.getElementById('pendingFlows');
+    if (pendingBlock) {
+      const remaining = order.slice(nextIdx + 1);
+      if (remaining.length === 0) { pendingBlock.remove(); }
+      else {
+        pendingBlock.innerHTML = `
+          <div class="pending-h">Up next this month</div>
+          ${remaining.map((id, i) => `<div class="pending-row"><span class="pn-num">${nextIdx + 2 + i}.</span><span class="pn-name">${FLOWS[id].name}</span><span class="pn-tag">After ${nextFlow.name}</span></div>`).join('')}`;
+      }
+    }
+    // Aria types + posts a transition message after a beat
+    setTimeout(() => {
+      const thread = document.getElementById('thread');
+      const typingId = 'abTyping-' + Date.now();
+      const t = document.createElement('div');
+      t.className = 'msg'; t.id = typingId;
+      t.innerHTML = `<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>`;
+      thread.appendChild(t);
+      thread.scrollTop = thread.scrollHeight;
+      setTimeout(() => {
+        const intro = nextIdx === 1
+          ? `Win-Back synced. Next leak: <b>${nextFlow.name.toLowerCase()}</b>.<br>Most stores lose ~30% of would-be revenue here. Pulled the flow — take a look.`
+          : `${FLOWS[approvedFlowId].name} locked. Last one: <b>${nextFlow.name}</b>.<br>Quick win to round out January.`;
+        t.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${intro}<div class="time">${nowStamp()}</div></div></div>`;
+        thread.scrollTop = thread.scrollHeight;
+        // Reveal the next flow card with a soft fade
+        if (nextCard) {
+          nextCard.style.display = '';
+          nextCard.style.opacity = '0';
+          nextCard.style.transform = 'translateY(8px)';
+          nextCard.style.transition = 'opacity .35s var(--ease-ios), transform .35s var(--ease-ios)';
+          requestAnimationFrame(() => {
+            nextCard.style.opacity = '1';
+            nextCard.style.transform = 'translateY(0)';
+          });
+          // Scroll plan into view
+          setTimeout(() => nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+        }
+      }, 1400);
+    }, 1500);
+  }
+
   // WELCOME MODAL — gates the intro until user dismisses
   let introStarted = false;
   // Browser history → close canvas on back gesture (iOS swipe-back, Android back)
@@ -1969,6 +2113,8 @@
             t2.remove();
             plan.style.display = '';
             thread.scrollTop = thread.scrollHeight;
+            // Apply variant B trimming once plan is in the DOM
+            applyAbToPlan();
           }, 1800);
         }, 700);
       }, 1400);
