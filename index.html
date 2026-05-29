@@ -480,6 +480,9 @@
     .canvas.open-mobile, .app.canvas-shown .canvas { transform: translateX(0); }
     .canvas-back-mobile { display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 250; border-bottom: 1px solid var(--canvas-border); }
     .canvas .canvas-eyebrow .x { display: none; }
+    /* Mobile: sticky Back-to-chat already handles navigation. Hide the redundant breadcrumb + back-to-flow link. */
+    .canvas .crumb { display: none; }
+    .canvas .back-to-flow { display: none; }
   }
 
   /* === DESKTOP split-view tuning === */
@@ -782,7 +785,7 @@
 
     <!-- CANVAS -->
     <section class="canvas">
-      <button class="canvas-back-mobile" onclick="closeCanvas()">Back to chat</button>
+      <button class="canvas-back-mobile" id="canvasBackBtn" onclick="canvasBackHandler()"><span id="canvasBackLabel">Back to chat</span></button>
 
 
       <div id="flowView" class="active">
@@ -1197,8 +1200,24 @@
 
   let currentEmail = 0, currentEdit = null;
 
-  function showFlow() { document.getElementById('flowView').classList.add('active'); document.getElementById('emailView').classList.remove('active'); document.getElementById('mcView').classList.remove('active'); closePop(); }
-  function showEmail(i) { document.getElementById('flowView').classList.remove('active'); document.getElementById('emailView').classList.add('active'); document.getElementById('mcView').classList.remove('active'); renderEmail(i); }
+  function showFlow() { document.getElementById('flowView').classList.add('active'); document.getElementById('emailView').classList.remove('active'); document.getElementById('mcView').classList.remove('active'); closePop(); updateMobileBack(); }
+  function showEmail(i) { document.getElementById('flowView').classList.remove('active'); document.getElementById('emailView').classList.add('active'); document.getElementById('mcView').classList.remove('active'); renderEmail(i); updateMobileBack(); }
+
+  function updateMobileBack() {
+    const label = document.getElementById('canvasBackLabel');
+    if (!label) return;
+    const emailActive = document.getElementById('emailView').classList.contains('active');
+    const flow = FLOWS[currentFlowId];
+    label.textContent = emailActive && flow ? `Back to ${flow.name}` : 'Back to chat';
+  }
+  function canvasBackHandler() {
+    const emailActive = document.getElementById('emailView').classList.contains('active');
+    if (emailActive) {
+      renderFlow(currentFlowId);  // back to flow view
+    } else {
+      closeCanvas();              // back to chat
+    }
+  }
   function showMcView() { document.getElementById('flowView').classList.remove('active'); document.getElementById('emailView').classList.remove('active'); document.getElementById('mcView').classList.add('active'); closePop(); }
 
   const MC_DATA = {
@@ -1368,13 +1387,32 @@
     email.approved = true;
     postUserMessage(`Approve email ${currentEmail + 1} · ${flow.name}`);
     const remaining = flow.emails.filter(e => !e.approved).length;
+    // Find next unapproved email index
+    const nextEmailIdx = flow.emails.findIndex((e, idx) => !e.approved && idx !== currentEmail);
     setTimeout(() => {
       pingAria(remaining === 0
         ? `${flow.name} · all ${flow.emails.length} emails locked. Ready for campaign approval.`
         : `Email ${currentEmail + 1} locked. ${remaining} to go.`);
     }, 700);
-    // Re-render to reflect approved state
-    if (document.getElementById('emailView').classList.contains('active')) renderEmail(currentEmail);
+    // Re-render current email + jump to next unapproved one (or to flow view if all done)
+    if (document.getElementById('emailView').classList.contains('active')) {
+      renderEmail(currentEmail);
+      setTimeout(() => {
+        if (nextEmailIdx >= 0) {
+          renderEmail(nextEmailIdx);
+          // Scroll canvas back to top so user lands on the next email cleanly
+          const canvasEl = document.querySelector('.canvas');
+          if (canvasEl) canvasEl.scrollTop = 0;
+        } else {
+          // All emails approved → return to flow view + roll up to campaign approval
+          renderFlow(currentFlowId);
+          const canvasEl = document.querySelector('.canvas');
+          if (canvasEl) canvasEl.scrollTop = 0;
+          // Auto-roll into campaign approval since every email is locked
+          setTimeout(() => approveCampaignFromCanvas(), 800);
+        }
+      }, 1200);
+    }
     renderFlowApprovalChips();
   }
   function approveAllEmails(flowId) {
