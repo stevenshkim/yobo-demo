@@ -54,6 +54,12 @@ This week's one big lever: __________
 - **2026-05-30 — Set the build direction:** operating layer (not product backend),
   product-led trial motion, 200 as hard commitment, this repo as the single brain. — Per CEO
   decisions. — Result: _pending._
+- **2026-05-30 — Mirrored the OS to Notion** under 🇺🇸 YOBO US Expansion Hub → "🧠 YoboLabs
+  GTM Operating System" (14 child docs). — So the non-technical team can read/reference it;
+  repo stays source of truth. — Result: _pending._
+- **2026-05-30 — Flag raised: pricing inconsistency.** Existing US landing copy in Notion
+  says Starter $97 / Growth $297, which contradicts the $500 floor and the $499/$1,499 tiers.
+  Must reconcile before "200 @ ≥ $500" is real. — Surfaced to Steven.
 - _Next: pick CRM + analytics tool (CAC attribution) — see `os/integrations/map.md`._
 - _Next: confirm $500 pricing floor vs. $499 Core tier — see `os/company/offer-and-positioning.md`._
 
