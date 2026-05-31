@@ -98,7 +98,10 @@ os/
     brand-voice.md            ← the Aria voice; do/don't; copy rules
   funnels/
     00-funnel-model.md        ← the connected 4-funnel math (current → to-be)
-    01..04-*.md               ← one deep playbook per funnel
+    01..04-*.md               ← one deep playbook per funnel (the durable "how")
+  campaigns/                  ← ready-to-ship executions produced from the playbooks
+    wave-1-warm-list-activation.md
+    bofu-pricing-and-conversion.md
   integrations/
     map.md                    ← every tool: current state → to-be state + how they connect
   learning/

@@ -38,26 +38,26 @@ the full "AI growth marketer."
 **Category:** not "an email tool" — **an AI growth marketer you hire.** Frame as a *team
 member*, priced like software.
 
-## Pricing (proposed — still open)
+## Pricing (naming LOCKED — growth-marketer seniority)
 
-Three agency-service tiers. The **price is set; the naming is a choice.** Option B (seniority)
-reinforces the category — *"an AI growth marketer you hire"* — by pricing like the seniority
-of the hire you're replacing. Recommend B (or A/B test the landing page).
+Aria is **the growth-marketing hire you're making**, at the seniority your brand needs —
+priced like software, anchored against the salary. This naming reinforces the category
+("an AI growth marketer you hire") and powers the BOFU salary anchor.
 
-| Price | Option A (stage) | Option B (seniority) | For |
-|---|---|---|---|
-| **$499/mo** | Starter | Mid-level Growth Marketer | Full lifecycle email run by Aria |
-| **$1,499/mo** | Growth | Senior Growth Marketer | Higher volume, more flows/channels, faster cadence |
-| **$2,999/mo** | Scale | Head of Growth | Most volume + channels; priority + sales-assist; multi-store |
+| Tier | Price | The hire it replaces |
+|---|---|---|
+| **Growth Marketer** | **$499/mo** | A mid-level growth marketer running your email |
+| **Senior Growth Marketer** | **$1,499/mo** | A senior running more flows + channels, faster (default/recommended) |
+| **Head of Growth** | **$2,999/mo** | A growth leader across channels + multi-store |
 
-> **Goal is now $100k MRR, not a per-customer floor** — so there's no "$1 under $500" problem.
-> Pricing mix is a *lever*: a higher blended ACV means fewer customers to win in 61 days.
-> The funnel math uses a **~$750 blended ACV** working assumption (see `north-star.md`);
-> update it when real tier-mix data arrives.
+> Goal is **$100k MRR**, not a per-customer floor — pricing mix is a lever (higher blended
+> ACV = fewer logos needed). Funnel math assumes ~$750 blended ACV (`north-star.md`).
+> **How to present + convert this is its own playbook:** `os/campaigns/bofu-pricing-and-conversion.md`
+> (results-first: free audit → trial → proven revenue → price reveal as "keep the teammate").
 >
-> **Open decisions for Steven:** (a) lock the tier names (A vs B); (b) reconcile the existing
-> US landing-page copy in Notion ($97 / $297), which contradicts these tiers; (c) confirm
-> whether there's a self-serve entry point below $499 ("more users spending less" path).
+> **Open decisions for Steven:** (a) reconcile the existing US landing-page copy in Notion
+> ($97 / $297), which contradicts these tiers; (b) confirm whether there's a self-serve entry
+> point below $499 (the "more users spending less" path).
 
 **Trial:** product-led free trial (define length + what's gated in `os/funnels/02-activation.md`).
 

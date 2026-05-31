@@ -64,9 +64,14 @@ This week's one big lever: __________
   count is a function of blended ACV (higher ACV = fewer logos = more feasible). — Effect:
   all OS math now keyed to MRR + a ~$750 blended-ACV working scenario (~134 customers). —
   Result: _pending._
-- **2026-05-31 — Pricing tiers set at $499 / $1,499 / $2,999** (naming TBD: stage
-  [Starter/Growth/Scale] vs seniority [Mid-level/Senior/Head of Growth]; recommend
-  seniority). Self-serve sub-$499 entry point still open. — Per CEO. — Result: _pending._
+- **2026-05-31 — Pricing tiers + naming LOCKED:** Growth Marketer $499 / Senior Growth
+  Marketer $1,499 / Head of Growth $2,999. — Per CEO (chose the seniority naming). — Effect:
+  anchors price against the salary of the hire Aria replaces; powers the BOFU framing. —
+  Result: _pending._ Self-serve sub-$499 entry point still open.
+- **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
+  playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
+  reveal as "keep the teammate." — Result: _pending; needs real result numbers + Legal-cleared
+  guarantee + verified salary ranges before sending._
 - **2026-05-30 — Flag raised: pricing inconsistency.** Existing US landing copy in Notion
   says Starter $97 / Growth $297, which contradicts the $499/$1,499/$2,999 tiers. Must
   reconcile. — Surfaced to Steven.

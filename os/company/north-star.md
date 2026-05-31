@@ -65,9 +65,9 @@ At ~70% margin that means **CAC ceiling ≈ 0.7 × ACV**:
 
 | Tier | Monthly | CAC ceiling (≈0.7×) |
 |---|---|---|
-| Starter $499 | $499 | ~$350 |
-| Growth $1,499 | $1,499 | ~$1,050 |
-| Scale $2,999 | $2,999 | ~$2,100 |
+| Growth Marketer | $499 | ~$350 |
+| Senior Growth Marketer | $1,499 | ~$1,050 |
+| Head of Growth | $2,999 | ~$2,100 |
 
 Higher tiers *justify* higher CAC — which is why sales-assist on Growth/Scale stays
 profitable. Keep **blended CAC ≤ ~$450** (well inside the $60k envelope at ~134 customers);

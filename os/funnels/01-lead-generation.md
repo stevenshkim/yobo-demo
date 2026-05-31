@@ -17,6 +17,8 @@
 - Segment by ICP fit; lead with outcome ("see what we'd do for *your* store, free").
 - **Claude task:** draft the broadcast + sequence (use `cold-outbound-writer` skill, warm
   variant). Log opens/clicks/trials back here.
+- **Shipped:** `os/campaigns/wave-1-warm-list-activation.md` (4 emails + 2 LinkedIn DMs,
+  CTA = free Growth Audit). Conversion framing in `os/campaigns/bofu-pricing-and-conversion.md`.
 
 ### 2. Outbound (cold email + LinkedIn) — *targeted, scalable with the winning sequence*
 - Build the list from the ICP firmographic filter + buying triggers (`icp.md`).
