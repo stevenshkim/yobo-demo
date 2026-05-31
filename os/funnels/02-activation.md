@@ -51,11 +51,31 @@ Trial start
 6. **Remove the paywall surprise.** Make the trial→paid moment feel like keeping a teammate
    who's already producing, not starting a subscription.
 
-## Trial design decisions (lock these — they change the math)
-- **Length:** `[DECIDE]` (e.g., 14 days). Long enough to ship a flow + show results.
-- **What's gated:** `[DECIDE]` — what's free vs. paid (e.g., 1 flow live free, full
-  lifecycle on paid).
-- **Activation requirement for the 3× guarantee:** must connect + approve N flows.
+## Trial design (PROPOSED — confirm with Steven; these change the math)
+
+Designed for the **results-first** motion (`os/campaigns/bofu-pricing-and-conversion.md`):
+the trial must prove revenue before the paywall, and create honest urgency.
+
+- **Length: 14 days from first flow live** (not from signup). Long enough to ship 1–2 flows
+  and capture first revenue (Abandoned Cart / Win-Back produce within days); short enough to
+  drive the BOFU sequence. Counting from *flow-live* protects slow onboarders from burning
+  the clock during setup.
+- **No credit card to start.** The CTA is a *free Growth Audit* — asking for a card upfront
+  kills warm-list claims. Card is requested at "keep Aria running" (conversion), not before.
+- **What's FREE in the trial:**
+  - The full Growth Audit (dollar-gap + plan) from their connected Shopify + Klaviyo.
+  - **One flow built and shipped live to Klaviyo** — so they see *real* revenue, not a mockup.
+- **What's GATED (paid):** the rest of the plan's flows, ongoing iteration/optimization, the
+  weekly revenue recap cadence, additional channels (SMS/WhatsApp), autopilot approval modes,
+  and monthly new-plan generation.
+- **Risk reversal:** the one flow shipped during the trial **stays live in their Klaviyo even
+  if they don't convert** ("keep the flows") — removes the fear of wasted setup.
+- **Activation requirement (= 3× guarantee eligibility):** connect both + approve ≥ 1 flow
+  within the trial. Mirrors `os/company/guarantee-mechanics.md` §6 — the same actions that
+  make a trial succeed make the guarantee valid.
+
+> **Open for Steven:** confirm 14 days · confirm "1 flow free + stays live" gating · set the
+> `N` flows required for guarantee eligibility · confirm no-card-to-start.
 
 ## Assets Claude can generate
 - Onboarding/activation email + in-product nudge sequence (per drop-off step), Aria voice

@@ -31,18 +31,19 @@ Each stage produces the asset the next one sells with. The **audit's dollar gap*
 Frame Aria as **the growth-marketing hire you're making**, at the seniority your brand needs.
 Price like software; anchor against the salary.
 
-| Tier | Price | The hire it replaces | Loaded cost of that hire* |
+| Tier | Price | The hire it replaces | That hire's cost (US base)* |
 |---|---|---|---|
-| **Growth Marketer** | $499/mo | A mid-level growth marketer running your email | ~$6–8k/mo |
-| **Senior Growth Marketer** | $1,499/mo | A senior who runs more flows + channels, faster | ~$10–13k/mo |
-| **Head of Growth** | $2,999/mo | A growth leader across channels + multi-store | ~$15–20k+/mo |
+| **Growth Marketer** | $499/mo | A mid-level growth marketing manager | ~$96–130k/yr (~$8–11k/mo) |
+| **Senior Growth Marketer** | $1,499/mo | A senior growth marketing manager | ~$130–175k/yr (~$11–15k/mo) |
+| **Head of Growth** | $2,999/mo | A growth leader / Head of Growth | ~$180–243k/yr (~$15–20k/mo) + equity |
 
-*\*Loaded cost = salary + benefits + tools + management. Illustrative US market ranges —
-`[verify against current market data before publishing]`. Never present as a guaranteed stat.*
+*\*US base-salary ranges, 2025–26 — **before** benefits, tools, and the time you spend
+managing them (loaded cost typically +25–40%). Sources: Glassdoor, Salary.com, Robert Half,
+job-posting benchmarks. So $499/mo ≈ **1/20th** of the mid-level hire, working today.*
 
 **The anchor line (use on the pricing page + at conversion):**
-> "A growth marketer costs $6–8k a month and you still have to manage them. Aria does the
-> work for $499 — and you've already seen what she ships."
+> "A growth marketer costs $8–11k a month — before benefits, and before the hours you'd
+> spend managing them. Aria does the work for $499, and you've already seen what she ships."
 
 ---
 
@@ -60,7 +61,7 @@ Price like software; anchor against the salary.
    That's a [gap÷18k]× return before she touches a new channel."
 5. **Risk reversal, front and center:**
    - Free audit + trial: *see real results before you pay.*
-   - 3× guarantee (once Legal-cleared — `offer-and-positioning.md`): the mechanics, plainly stated.
+   - 3× guarantee (once Legal-cleared — see `os/company/guarantee-mechanics.md`): stated plainly.
    - "Keep the flows" — even if you cancel, the work she shipped to your Klaviyo is yours.
 6. **One CTA, framed as continuation:** **"Keep Aria running"** — not "Subscribe" / "Buy."
    The mental model is retaining a producing teammate, not starting a bill.
@@ -75,7 +76,7 @@ Don't reveal price until a flow is live and a result is in. Then, in the Aria vo
 > That's live in your Klaviyo right now.
 >
 > To keep me building — Win-Back, Abandoned Cart, Welcome, and the rest of your plan — it's
-> **$499/mo.** A growth marketer doing this costs $6–8k and you'd manage them.
+> **$499/mo.** A growth marketer doing this costs $8–11k a month, and you'd manage them.
 >
 > Your audit found **$[gap]/yr** sitting in your email. Keeping me pays for itself in [X] weeks.
 >
@@ -111,7 +112,7 @@ Fires when the trial window nears its end and a flow has shipped. Aria voice, re
 
 | Objection | Reframe (results-first) |
 |---|---|
-| "It's more than I expected." | "It's 1/15th of the hire doing this work — and you've already seen the revenue. What would a $6k/mo marketer have to make you to be worth it? Aria already did." |
+| "It's more than I expected." | "It's ~1/20th of the hire doing this work — and you've already seen the revenue. What would an $8k/mo marketer have to make you to be worth it? Aria already did." |
 | "Let me think about it." | "Totally fair. Your flows stay live while you decide. Want me to keep one more building this week so you've got more to judge by?" |
 | "Can I start on the cheapest tier?" | "Yes — start as Growth Marketer at $499. Upgrade to Senior when you want SMS or the full plan. You're never locked in." |
 | "How do I know it'll keep working?" | "You've already got week-one revenue and the 3× guarantee. If it doesn't deliver, you don't keep paying." |

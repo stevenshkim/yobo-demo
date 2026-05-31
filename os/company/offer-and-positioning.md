@@ -70,8 +70,10 @@ the mechanics are defined and Legal-cleared:
 - **Remedy if not met** (credit, free months, refund?).
 - **Eligibility** (must approve X flows, connect properly, hit minimum send volume).
 
-> **TODO:** finalize guarantee mechanics + attribution model before using the claim in paid
-> ads or contracts. Until then, use softer proof ("brands see X% lift") with real data only.
+> **Mechanics now drafted for Legal review:** `os/company/guarantee-mechanics.md` (the claim,
+> baseline, attribution, 90-day window, remedy options, eligibility, exclusions). Do not use
+> the "guaranteed" claim until Legal signs off. Until then, use softer real-data proof from
+> `os/company/proof-library.md` ("brands typically see X% lift").
 
 ## Messaging spine (reuse everywhere; keep the voice — see brand-voice.md)
 

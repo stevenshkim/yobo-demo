@@ -96,6 +96,8 @@ os/
     icp.md                    ← ideal customer profile + segments + pains + triggers
     offer-and-positioning.md  ← what we sell, pricing, guarantee, positioning, messaging
     brand-voice.md            ← the Aria voice; do/don't; copy rules
+    guarantee-mechanics.md    ← 3× guarantee mechanics (DRAFT for Legal)
+    proof-library.md          ← real results/testimonials (the only place to cite proof)
   funnels/
     00-funnel-model.md        ← the connected 4-funnel math (current → to-be)
     01..04-*.md               ← one deep playbook per funnel (the durable "how")

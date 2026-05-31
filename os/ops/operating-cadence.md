@@ -70,8 +70,15 @@ This week's one big lever: __________
   Result: _pending._ Self-serve sub-$499 entry point still open.
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
-  reveal as "keep the teammate." — Result: _pending; needs real result numbers + Legal-cleared
-  guarantee + verified salary ranges before sending._
+  reveal as "keep the teammate." — Result: _pending._
+- **2026-05-31 — Closed 3 of 4 open items on the campaigns:**
+  (#2) drafted **3× guarantee mechanics** for Legal (`os/company/guarantee-mechanics.md`);
+  (#3) **verified salary anchor** — mid growth marketer ~$96–130k, Head of Growth ~$180–243k
+  (sources: Glassdoor/Salary.com/Robert Half) → $499 ≈ 1/20th of the hire;
+  (#4) **proposed trial design** — 14 days from first-flow-live, no card to start, 1 flow free
+  and stays live, gate the rest (`os/funnels/02-activation.md`).
+  Still open: (#1) real result numbers — parked in `os/company/proof-library.md` pending
+  Steven's data; (#2) Legal sign-off; confirm trial-design choices.
 - **2026-05-30 — Flag raised: pricing inconsistency.** Existing US landing copy in Notion
   says Starter $97 / Growth $297, which contradicts the $499/$1,499/$2,999 tiers. Must
   reconcile. — Surfaced to Steven.
