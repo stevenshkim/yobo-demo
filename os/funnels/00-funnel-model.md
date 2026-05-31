@@ -13,8 +13,8 @@
   qualified trial starts   trial→paid %            logo + net $ retention   NRR > 100%
         │                      │                        │                       │
    ┌────┴─────────────────────┴────────────────────────┴───────────────────────┴────┐
-   │  200 PAYING = Trials × Trial→Paid %     then  protected by retention,           │
-   │                                               grown by expansion                 │
+   │  $100k MRR = (Trials × Trial→Paid %) × Blended ACV                               │
+   │              then protected by retention, grown by expansion                      │
    └──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -26,41 +26,46 @@ targeting raises trial volume but tanks trial→paid and retention). Always chec
 
 | Stage | Metric | Current | To-be (goal) |
 |---|---|---|---|
-| Lead gen | Qualified trial starts | ~0 | ~667 over 61 days (~11/day) |
+| — | Net-new MRR | $0 | **$100,000** |
+| — | Blended ACV | n/a | ~$750 (working assumption; pricing-mix lever) |
+| Lead gen | Qualified trial starts | ~0 | ~447 over 61 days (~7/day) at ~$750 ACV |
 | Activation | Trial→paid % | unknown (no cohort yet) | ≥ 30% |
 | Activation | Trial activation (connect+plan+approve) | unknown | ≥ 65% |
 | Customer success | Logo retention (first 60d) | n/a | ≥ 90% |
 | Customer success | Gross revenue retention | n/a | ≥ 90% |
 | Expansion | Net revenue retention | n/a | > 100% |
-| Blended | CAC | n/a | ≤ $300 |
+| Blended | CAC | n/a | payback < ~1 mo (≤ ~$450 blended) |
 
 > "Current" is mostly *unknown* by design — instrumenting these (CRM + analytics, see
 > `os/integrations/map.md`) is the first job. **You can't hit 200 if you can't see the leak.**
 
 ## The math, three ways (so you can sanity-check pace)
 
-**Forward (volume → customers):**
-`Visitors × 5% trial-start × 65% activate × ~46% activated→paid = customers`
-(30% blended trial→paid ≈ 65% activate × 46% of activated converting.)
+**Forward (volume → MRR):**
+`Visitors × 5% trial-start × 30% trial→paid × $750 ACV = MRR`
 
-**Backward (customers → volume needed), at 30% trial→paid:**
-`200 paying ← 667 trials ← ~13,300 qualified visitors over 61 days (~220/day)`
+**Backward ($100k MRR → volume needed), at ~$750 ACV and 30% trial→paid:**
+`$100k MRR ← ~134 customers ← ~447 trials ← ~8,900 qualified visitors over 61 days (~146/day)`
+(At a $499-heavy mix this rises toward ~200 customers / ~667 trials; at a $1,000 mix it
+falls toward ~100 / ~333. ACV mix moves all of it.)
 
-**By channel (who supplies the 667 trials):**
-| Channel | Trials | → Paid @ blended | Why |
+**By channel (who supplies the ~447 trials in the working scenario):**
+| Channel | Trials | → Paid @ 30% | Why |
 |---|---|---|---|
-| Warm list | ~120 | ~40 | High intent, converts above blend |
-| Outbound | ~230 | ~70 | Targeted; converts at/above blend |
-| Referral/partner | ~90 | ~30 | Warm intro, high trust |
-| Paid | ~230 | ~60 | Colder; converts below blend, watch CAC |
-| **Total** | **~670** | **~200** | |
+| Warm list | ~90 | ~27 | High intent, converts above blend |
+| Outbound | ~150 | ~45 | Targeted; converts at/above blend |
+| Referral/partner | ~60 | ~18 | Warm intro, high trust |
+| Paid | ~150 | ~44 | Colder; converts below blend, watch CAC |
+| **Total** | **~450** | **~134** | → ~$100k MRR at ~$750 ACV |
 
-## The three levers (and which to pull when off-pace)
+## The four levers (and which to pull when off-pace)
 
 1. **Trial volume** — top of funnel too thin → scale the lowest-CAC channel that's working.
 2. **Trial→paid %** — funnel leaks → fix **activation** (highest leverage; halving the
    needed top-of-funnel is worth more than any ad optimization). See funnel 02.
-3. **CAC** — too expensive → shift budget to warm/referral/outbound; pause losing paid sets.
+3. **Blended ACV** — mix too low → sales-assist trials into Growth/Scale; revisit pricing.
+   (Higher ACV = fewer logos needed for $100k. See funnel 04.)
+4. **CAC** — payback > ~1 month → shift budget to warm/referral/outbound; pause losing paid.
 
 ## Leading indicators (watch weekly, before the lagging "paying customers" number)
 
@@ -70,13 +75,13 @@ targeting raises trial volume but tanks trial→paid and retention). Always chec
 - CAC by channel (efficiency)
 - Week-2 trial→paid cohort conversion (the prediction of the lagging number)
 
-## Pace checkpoints (cumulative paying customers)
+## Pace checkpoints (cumulative net-new MRR)
 
-| Date | Target | If below by 20%+ |
+| Date | MRR target | If below by 20%+ |
 |---|---|---|
-| Jun 15 | 40 | Warm list under-delivering → escalate outbound + open paid early |
-| Jun 30 | 90 | Trial→paid is the likely leak → activation sprint |
-| Jul 15 | 145 | CAC or volume → reallocate budget weekly |
-| Jul 31 | 200 | — |
+| Jun 15 | $20k | Warm list under-delivering → escalate outbound + open paid early |
+| Jun 30 | $45k | Trial→paid is the likely leak → activation sprint |
+| Jul 15 | $72k | CAC, volume, or ACV mix → reallocate budget / push higher tiers |
+| Jul 31 | $100k | — |
 
 Update actuals weekly in `os/ops/operating-cadence.md`.

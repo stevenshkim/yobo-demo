@@ -4,12 +4,16 @@
 
 ## The goal
 
-**200 net-new US paying customers @ ≥ $500/mo, ≤ $300 blended CAC, by July 31 2026.**
+**$100,000 in net-new US MRR by July 31 2026, with CAC payback under ~1 month.**
 
-- Start: 0 paying customers · Window: June 1 – July 31 2026 (61 days)
-- Pricing floor: **$500/mo** (a customer below $500 does not count toward the 200)
-- Motion: **product-led free trial** (self-serve, sales-assist for warm/large)
-- Status: **hard commitment**
+- Start: $0 MRR / 0 paying customers · Window: June 1 – July 31 2026 (61 days)
+- Motion: product-led free trial (self-serve), sales-assist for warm/larger accounts
+- Status: **hard commitment on the $100k MRR number.** The path is ours to optimize.
+
+> **Why MRR, not a customer count.** "200 customers @ $500" was shorthand for $100k MRR. The
+> real target is the revenue. The number of customers depends on **blended ACV** — and a
+> higher ACV means fewer logos to win in 61 days, which is *easier*, not harder. So ACV mix
+> is itself a lever on feasibility.
 
 ## What the goal implies
 
@@ -17,65 +21,84 @@
 |---|---|
 | New MRR at goal | $100,000 |
 | ARR run-rate at goal | $1,200,000 |
-| Max total acquisition spend | $60,000 (200 × $300) |
-| Required pace | ~3.3 new paying logos / day |
-| Gross-profit payback (at ~70% margin) | < 1 month — healthy, scalable if CAC holds |
+| Acquisition budget envelope | ~$60,000 |
+| Gross-profit payback (at ~70% margin) | < 1 month — healthy, scalable |
+
+## Customers needed = $100k ÷ blended ACV (the key sensitivity)
+
+| Blended ACV | Customers for $100k MRR | Trials @ 30% conv. | Trials/day (over 61d) |
+|---|---|---|---|
+| $499 | ~200 | ~667 | ~11 |
+| $750 | ~134 | ~447 | ~7 |
+| $1,000 | ~100 | ~333 | ~5.5 |
+| $1,499 | ~67 | ~223 | ~3.7 |
+
+**Working planning scenario: ~$750 blended ACV → ~134 customers → ~447 trials (~7/day).**
+(A realistic mix: most land on Starter, sales-assist pulls a share into Growth/Scale.)
+Tune this the moment real ACV data arrives — it moves every downstream number.
 
 ## The metrics tree (one number, decomposed)
 
 ```
-200 PAYING CUSTOMERS
-  = Trials started  ×  Trial→Paid conversion %
-        │                     │
-        │                     └── the #1 lever (product-led). See activation playbook.
+$100,000 NEW MRR
+  = Customers  ×  Blended ACV
+        │              │
+        │              └── pricing mix + sales-assist into higher tiers (a real lever)
         │
-  = (Warm-list trials) + (Outbound trials) + (Paid trials) + (Referral trials)
-        │                     │                  │               │
-      ~$0 CAC            labor CAC          highest CAC      ~$0 CAC, compounds
+  = (Trials started × Trial→Paid %) × Blended ACV
+        │                  │
+        │                  └── the #1 conversion lever (product-led). See activation playbook.
+        │
+  = (Warm trials)+(Outbound trials)+(Paid trials)+(Referral trials)
+       ~$0 CAC      labor CAC        highest CAC    ~$0 CAC, compounds
 ```
 
 Then retention & expansion protect and grow the base:
 ```
 Net MRR growth = New MRR − Churned MRR + Expansion MRR
 ```
-(Customer Success funnel keeps churn low; Revenue Expansion pushes NRR > 100%.)
 
-## Working assumptions (tune these as real data arrives)
+## CAC discipline (the durable rule)
 
-| Assumption | Working value | Source / confidence |
+The real constraint isn't a flat dollar — it's **payback under ~1 month of gross profit.**
+At ~70% margin that means **CAC ceiling ≈ 0.7 × ACV**:
+
+| Tier | Monthly | CAC ceiling (≈0.7×) |
 |---|---|---|
-| Trial→paid conversion | 30% | Estimate — **validate in Wave 1, this is the make-or-break number** |
-| Qualified visitor→trial start | 5% | Estimate (connecting Shopify+Klaviyo is real friction) |
-| Trial activation (connect both + first plan + approve flow) | 65% | Estimate — activated trials convert far better than non-activated |
-| Trials needed for 200 @ 30% | ~667 (~11/day) | Derived |
-| Warm-list contribution | 30–50 customers @ ~$0 CAC | Front-loaded in Wave 1 |
-| Blended CAC ceiling | $300 | Hard constraint |
+| Starter $499 | $499 | ~$350 |
+| Growth $1,499 | $1,499 | ~$1,050 |
+| Scale $2,999 | $2,999 | ~$2,100 |
 
-## CAC budget allocation (illustrative, ≤ $60k)
+Higher tiers *justify* higher CAC — which is why sales-assist on Growth/Scale stays
+profitable. Keep **blended CAC ≤ ~$450** (well inside the $60k envelope at ~134 customers);
+self-serve Starter customers should come in near ~$300 and below.
 
-| Channel | Customers | CAC target | Spend | Notes |
-|---|---|---|---|---|
-| Warm list / audience | 40 | ~$0 | ~$2k (tooling) | First, fastest, cheapest |
-| Outbound (email + LinkedIn) | 70 | ~$150 (labor) | ~$10k | Scales with the winning sequence |
-| Referral / partnerships | 30 | ~$50 | ~$1.5k | Compounds off happy Wave-1 customers |
-| Paid (retargeting + intent) | 60 | ≤ $600 | ~$36k | Tolerated high because cheap channels subsidize blend |
-| **Blended** | **200** | **≤ $300** | **~$50k** | Headroom under the $60k ceiling |
+## Working assumptions (tune as real data arrives)
 
-> These are planning numbers, not results. Replace with actuals weekly in
-> `os/ops/operating-cadence.md` and `os/ops/metrics-dashboard.md` (to be created).
+| Assumption | Working value | Confidence |
+|---|---|---|
+| Trial→paid conversion | 30% | Estimate — **validate in Wave 1, make-or-break** |
+| Blended ACV | ~$750 | Planning estimate — depends on tier mix + sales-assist |
+| Qualified visitor→trial start | 5% | Estimate |
+| Trial activation (connect both + first plan + approve flow) | 65% | Estimate |
+| Warm-list contribution | ~30 customers @ ~$0 CAC | Front-loaded in Wave 1 |
 
-## On-pace tracking
+## On-pace tracking — measured in MRR
 
-Each week, state **on-pace / off-pace** with the number, and which of the three levers is
-the binding constraint:
-1. **Trial volume** (not enough top of funnel) → push lead-gen channels
+Each week, state **on-pace / off-pace** with the MRR number, and which lever is binding:
+1. **Trial volume** (thin top of funnel) → push lead-gen channels
 2. **Trial→paid %** (funnel leaks) → fix activation (highest leverage)
-3. **CAC** (too expensive) → reallocate to lowest-CAC channel
+3. **Blended ACV** (mix too low) → sales-assist into Growth/Scale; reprice
+4. **CAC** (payback > 1 month) → reallocate to lowest-CAC channel
 
-Cumulative pace checkpoints (linear; reality front-loads warm list):
-| Date | Cumulative target |
+### Cumulative pace checkpoints (net-new MRR)
+
+| Date | Cumulative MRR target |
 |---|---|
-| June 15 | 40 |
-| June 30 | 90 |
-| July 15 | 145 |
-| July 31 | 200 |
+| June 15 | $20,000 |
+| June 30 | $45,000 |
+| July 15 | $72,000 |
+| July 31 | $100,000 |
+
+> Replace planning numbers with actuals weekly in `os/ops/operating-cadence.md` (and a
+> `metrics-dashboard.md` once the CRM/analytics tool is chosen).

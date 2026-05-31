@@ -1,7 +1,8 @@
 # Funnel 1 — Lead Generation
 
 **Owns:** strangers → qualified trial starts.
-**Primary metric:** qualified trial starts (target ~667 over 61 days, ~11/day).
+**Primary metric:** qualified trial starts (~447 over 61 days, ~7/day, in the working
+~$750-ACV scenario; rises toward ~667 if the mix skews to the $499 tier — see north-star).
 **Load with:** `os/company/icp.md`, `os/company/offer-and-positioning.md`, `brand-voice.md`.
 
 > A "qualified" trial = an ICP-fit brand (US, Shopify, Klaviyo, $1–20M) that starts the

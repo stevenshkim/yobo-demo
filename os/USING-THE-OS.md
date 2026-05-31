@@ -13,7 +13,8 @@ already knows the goal, our ICP, our offer, our voice, and the four funnels *bef
 a word.* That's why everyone's output comes out consistent — the context is shared, not
 stuck in someone's head.
 
-**The goal everything serves:** 200 US paying customers @ ≥ $500/mo, ≤ $300 CAC, by July 31 2026.
+**The goal everything serves:** $100,000 net-new US MRR by July 31 2026, CAC payback < ~1 month
+(~134 customers @ ~$750 blended ACV — the count varies with pricing mix).
 
 ---
 

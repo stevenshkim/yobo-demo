@@ -25,14 +25,15 @@
 
 ```
 Week of: ____
-Cumulative paying customers: ___ / 200   (checkpoint target: ___)  → ON / OFF pace
-New paying this week: ___
+Cumulative net-new MRR: $___ / $100k   (checkpoint target: $___)  → ON / OFF pace
+New MRR this week: $___    (new customers: ___ )
+Blended ACV so far: $___   (Starter __ / Growth __ / Scale __)
 Trials started: ___ (warm __ / outbound __ / referral __ / paid __)
 Trial→paid % (latest cohort): ___%
 Activation rate (connected both + approved flow): ___%
-CAC blended: $___   (warm $__ / outbound $__ / referral $__ / paid $__)
-Churned customers: ___    NRR: ___%
-Binding constraint this week: [volume / conversion / CAC]
+CAC blended: $___ (payback __ mo)   (warm $__ / outbound $__ / referral $__ / paid $__)
+Churned MRR: $___    NRR: ___%
+Binding constraint this week: [volume / conversion / ACV mix / CAC]
 This week's one big lever: __________
 ```
 
@@ -42,7 +43,8 @@ This week's one big lever: __________
 |---|---|---|
 | Volume | trials < target | scale lowest-CAC working channel; escalate outbound; open paid retargeting |
 | Conversion | trials fine, paying low | activation sprint (funnel 02) — fix the biggest drop-off step |
-| CAC | converting but > $300 | shift mix to warm/referral/outbound; pause losing ad sets; tighten targeting |
+| ACV mix | converting but MRR/customer low | sales-assist into Growth/Scale; revisit pricing/packaging (funnel 04) |
+| CAC | converting but payback > ~1 mo | shift mix to warm/referral/outbound; pause losing ad sets; tighten targeting |
 
 ## Decision log (newest first — append, never delete)
 
@@ -57,9 +59,17 @@ This week's one big lever: __________
 - **2026-05-30 — Mirrored the OS to Notion** under 🇺🇸 YOBO US Expansion Hub → "🧠 YoboLabs
   GTM Operating System" (14 child docs). — So the non-technical team can read/reference it;
   repo stays source of truth. — Result: _pending._
+- **2026-05-31 — Reframed the north-star metric: $100k net-new MRR** (was "200 customers @
+  $500"). — Per CEO: 200@$500 was shorthand; the real target is the revenue, and customer
+  count is a function of blended ACV (higher ACV = fewer logos = more feasible). — Effect:
+  all OS math now keyed to MRR + a ~$750 blended-ACV working scenario (~134 customers). —
+  Result: _pending._
+- **2026-05-31 — Pricing tiers set at $499 / $1,499 / $2,999** (naming TBD: stage
+  [Starter/Growth/Scale] vs seniority [Mid-level/Senior/Head of Growth]; recommend
+  seniority). Self-serve sub-$499 entry point still open. — Per CEO. — Result: _pending._
 - **2026-05-30 — Flag raised: pricing inconsistency.** Existing US landing copy in Notion
-  says Starter $97 / Growth $297, which contradicts the $500 floor and the $499/$1,499 tiers.
-  Must reconcile before "200 @ ≥ $500" is real. — Surfaced to Steven.
+  says Starter $97 / Growth $297, which contradicts the $499/$1,499/$2,999 tiers. Must
+  reconcile. — Surfaced to Steven.
 - _Next: pick CRM + analytics tool (CAC attribution) — see `os/integrations/map.md`._
 - _Next: confirm $500 pricing floor vs. $499 Core tier — see `os/company/offer-and-positioning.md`._
 

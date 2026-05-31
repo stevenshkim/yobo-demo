@@ -2,10 +2,10 @@
 
 **Owns:** paid customer → more revenue per customer.
 **Primary metric:** Net Revenue Retention (NRR) > 100% — the base grows even before new logos.
-**Why it matters to the 200:** every dollar of expansion is a dollar you didn't pay CAC for.
-Expansion is the highest-margin growth and the foundation for life after July. (Note: the
-200 target is *net-new logos* at ≥ $500 — expansion doesn't count toward the logo count,
-but it makes the whole model durable and funds CAC.)
+**Why it matters to the $100k MRR goal:** expansion MRR counts toward the $100k just like
+new-logo MRR — and every expansion dollar is one you didn't pay CAC for. It's the
+highest-margin growth and the foundation for life after July. Raising blended ACV (via
+tier upgrades) is also one of the four levers on the goal (see `00-funnel-model.md`).
 
 ## The thesis
 
@@ -15,8 +15,8 @@ Expansion is *earned by results* — you upsell from a position of proven revenu
 
 ## Expansion paths (in rough sequence of readiness)
 
-1. **Tier upgrade** ($499 → $1,499): more flows, higher cadence, more volume. Trigger:
-   customer hitting volume limits or asking for more.
+1. **Tier upgrade** ($499 → $1,499 → $2,999): more flows, higher cadence, more volume.
+   Trigger: customer hitting volume limits or asking for more.
 2. **More channels:** add SMS / WhatsApp to email. Trigger: email working, list engaged.
    (WhatsApp not yet wired — `os/integrations/map.md`.)
 3. **More of the growth job:** retention analytics, upsell/cross-sell flows, then paid

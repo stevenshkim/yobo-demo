@@ -3,7 +3,7 @@
 **Owns:** trial → "aha" moment → paid conversion.
 **Primary metric:** trial→paid conversion % (target ≥ 30%).
 **Why it's #1:** in a product-led motion, raising trial→paid from 20%→40% *halves* the
-top-of-funnel (and CAC) needed for 200. This is where 200 is won or lost.
+top-of-funnel (and CAC) needed for $100k MRR. This is where the goal is won or lost.
 
 ## The activation thesis
 

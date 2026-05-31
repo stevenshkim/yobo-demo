@@ -1,7 +1,8 @@
 # YoboLabs GTM OS — Master Plan
 
 **Owner:** Steven (CEO) · **Created:** 2026-05-30 · **Horizon:** June–July 2026
-**Goal:** 200 net-new US paying customers @ ≥ $500/mo, ≤ $300 blended CAC, by July 31 2026.
+**Goal:** $100,000 net-new US MRR by July 31 2026, CAC payback < ~1 month
+(~134 customers @ ~$750 blended ACV — count varies with pricing mix).
 
 This is the plan for the operating system itself: what it is, why it exists, how to use it,
 the 60-day roadmap, and an honest read on feasibility. Strategy specifics live in the
@@ -90,38 +91,42 @@ customers come first and paid scales only once the funnel converts.
 
 ## 5. Feasibility — the honest CEO read
 
-You set 200 as a **hard commitment**, so we build to maximize it. As CEO you also need the
+$100k MRR is a **hard commitment**, so we build to maximize it. As CEO you also need the
 real math, not optimism:
 
-**The bar is extreme.** 0 → 200 paying B2B customers in 61 days = **~3.3 new paying
-logos every day, every day.** Most $500/mo B2B products take 1–4 weeks per deal. Hitting
-this requires a *product-led* motion (which you have, near-live) **plus** a warm audience
-to convert fast **plus** paid that actually converts at ≤ $300 CAC.
+**The bar is high — but ACV mix changes it a lot.** $0 → $100k MRR in 61 days. The number of
+logos depends on blended ACV: ~200 @ $499 (≈3.3 logos/day) but only **~134 @ $750 (≈2.2/day)**
+or **~100 @ $1,000 (≈1.6/day)**. Pushing blended ACV up — via the Growth/Scale tiers and
+sales-assist — is therefore one of the cheapest ways to make the goal reachable. Hitting it
+still requires a *product-led* motion (which you have, near-live) **plus** a warm audience to
+convert fast **plus** paid/sales-assist that keeps CAC payback under ~1 month.
 
 **Where it's won or lost: activation.** With a product-led trial, the single biggest lever
 is **trial→paid conversion**, because it multiplies the value of every dollar of lead-gen.
 
-| Trial→paid | Trials needed for 200 | Trials/day |
+(Trials needed for the working ~134-customer / ~$750-ACV scenario:)
+
+| Trial→paid | Trials needed | Trials/day |
 |---|---|---|
-| 20% | 1,000 | ~16 |
-| 30% | 667 | ~11 |
-| 40% | 500 | ~8 |
+| 20% | ~670 | ~11 |
+| 30% | ~447 | ~7 |
+| 40% | ~335 | ~5.5 |
 
 The difference between 20% and 40% is *halving* how much top-of-funnel (and CAC) you need.
 **So the first build priority after the warm-list wave is making the trial reliably hit
 its "aha" moment** (connect Shopify+Klaviyo → see a credible plan → approve first flow).
 
-**CAC reality.** $300 blended across 200 = $60k. Warm-list and referral customers come in
-near $0 CAC and subsidize paid. The plan front-loads those so paid CAC has headroom. If
-warm + outbound deliver ~100 customers cheaply, paid only needs to buy the other ~100 and
-can tolerate up to ~$600 CAC there while staying ≤ $300 blended.
+**CAC reality.** The budget envelope is ~$60k against $100k MRR. Warm-list and referral
+customers come in near $0 CAC and subsidize paid. The real discipline is **payback < ~1
+month** (CAC ≈ 0.7 × ACV), so Growth/Scale customers justify higher CAC and keep
+sales-assist profitable. Blended target ≤ ~$450; self-serve Starter near ~$300.
 
 **Base case vs the commitment.** A first-time 0→1 GTM engine in 60 days more commonly lands
-**50–100** paying customers. We treat 200 as the target and drive to it; we report pace
-weekly and, if off-pace, the OS tells you exactly which lever (activation %, trial volume,
-or CAC) is the constraint — so the decision to push, reallocate, or extend is made on data,
-not vibes. **Building the engine is the durable win; it keeps producing customers in
-August and beyond at ever-lower CAC.**
+**$25k–$60k MRR**. We treat $100k as the target and drive to it; we report pace weekly and,
+if off-pace, the OS tells you exactly which lever (activation %, trial volume, ACV mix, or
+CAC) is the constraint — so the decision to push, reallocate, reprice, or extend is made on
+data, not vibes. **Building the engine is the durable win; it keeps producing MRR in August
+and beyond at ever-lower CAC.**
 
 ---
 

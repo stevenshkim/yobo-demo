@@ -31,13 +31,18 @@ When asked to do work, you:
 
 ## 1. The goal (the only number that matters right now)
 
-**200 net-new US paying customers at ≥ $500/mo, by July 31, 2026, at ≤ $300 blended CAC.**
+**$100,000 in net-new US MRR by July 31, 2026 — acquired with CAC payback under ~1 month.**
 
-- Starting point: 0 paying customers.
+- Starting point: $0 MRR / 0 paying customers.
 - Time box: June + July 2026 (~61 days).
-- Implied: $100k new MRR · $1.2M ARR run-rate · ≤ $60k total acquisition spend.
-- Status: **hard commitment.** Treated as fixed. We build the system to maximize the shot
-  and we are honest, weekly, about whether we're on pace (see `os/funnels/00-funnel-model.md`).
+- **The customer count is a function of blended ACV, not the goal itself.** "200 customers
+  at $500" was one way to picture $100k MRR; we can also reach it with fewer customers at
+  higher tiers: ~200 @ $499 · ~134 @ $750 · ~100 @ $1,000 · ~67 @ $1,499.
+- Working planning scenario: **~134 customers at a ~$750 blended ACV.** Acquisition budget
+  envelope ≤ ~$60k.
+- Status: **hard commitment** on the $100k MRR number. The path (customers × ACV) and the
+  pricing mix are ours to optimize. We're honest, weekly, about pace
+  (see `os/funnels/00-funnel-model.md`).
 
 The full metrics tree, unit economics, and base-vs-stretch math live in
 `os/company/north-star.md` and `os/funnels/00-funnel-model.md`. Read them before any
