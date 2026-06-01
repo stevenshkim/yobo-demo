@@ -63,12 +63,13 @@ priced like software, anchored against the salary. This naming reinforces the ca
 
 ## The promise / guarantee
 
-**"3× revenue guaranteed"** (from yobolabs.com positioning). Powerful, but only usable where
-the mechanics are defined and Legal-cleared:
-- **3× of what, over what window, attributed how?** (e.g., 3× the Aria-attributed email
-  revenue vs. prior baseline within 90 days.)
-- **Remedy if not met** (credit, free months, refund?).
-- **Eligibility** (must approve X flows, connect properly, hit minimum send volume).
+**"3× your fees back in revenue — guaranteed."** The model: Aria drives at least **3× the fees
+the customer pays YoboLabs** in attributable email revenue within 90 days, or **they don't pay
+until she does.** Scales by tier (Growth Marketer $499 → $4,491 guaranteed over 90 days; Senior
+→ $13,491; Head of Growth → $26,991).
+- **Metric:** Klaviyo-attributed revenue from Aria's flows, checked monthly.
+- **Remedy:** free until the cumulative 3× is met.
+- **Eligibility:** connect properly, approve N flows, keep them live, meet a minimum list size.
 
 > **Mechanics now drafted for Legal review:** `os/company/guarantee-mechanics.md` (the claim,
 > baseline, attribution, 90-day window, remedy options, eligibility, exclusions). Do not use

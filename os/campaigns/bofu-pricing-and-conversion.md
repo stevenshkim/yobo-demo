@@ -61,7 +61,9 @@ job-posting benchmarks. So $499/mo ≈ **1/20th** of the mid-level hire, working
    That's a [gap÷18k]× return before she touches a new channel."
 5. **Risk reversal, front and center:**
    - Free audit + trial: *see real results before you pay.*
-   - 3× guarantee (once Legal-cleared — see `os/company/guarantee-mechanics.md`): stated plainly.
+   - **3× your fees back or you don't pay** (once Legal-cleared — `os/company/guarantee-mechanics.md`):
+     for every $1 in fees, Aria drives ≥ $3 in attributable email revenue within 90 days, or she
+     works free until she does. (Growth Marketer = $4,491 guaranteed over 90 days.)
    - "Keep the flows" — even if you cancel, the work she shipped to your Klaviyo is yours.
 6. **One CTA, framed as continuation:** **"Keep Aria running"** — not "Subscribe" / "Buy."
    The mental model is retaining a producing teammate, not starting a bill.
@@ -79,6 +81,8 @@ Don't reveal price until a flow is live and a result is in. Then, in the Aria vo
 > **$499/mo.** A growth marketer doing this costs $8–11k a month, and you'd manage them.
 >
 > Your audit found **$[gap]/yr** sitting in your email. Keeping me pays for itself in [X] weeks.
+>
+> And it's guaranteed: **3× your fee back in revenue, or you don't pay.** $499 → $1,497, every month.
 >
 > **[Keep Aria running →]**
 

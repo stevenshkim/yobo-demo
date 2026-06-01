@@ -71,6 +71,11 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — 3× guarantee model DECIDED (CEO):** 3× of **fees paid** (not a revenue
+  baseline). Aria drives ≥ 3× the customer's fees in attributable email revenue within 90 days,
+  or **free until it hits**, checked monthly. Per-tier: $499→$4,491 / $1,499→$13,491 /
+  $2,999→$26,991 over 90 days. Mechanics + billing options in `os/company/guarantee-mechanics.md`.
+  Still needs: Legal sign-off · N-flows + list floor · billing mechanic (defer vs credit).
 - **2026-05-31 — Closed 3 of 4 open items on the campaigns:**
   (#2) drafted **3× guarantee mechanics** for Legal (`os/company/guarantee-mechanics.md`);
   (#3) **verified salary anchor** — mid growth marketer ~$96–130k, Head of Growth ~$180–243k
