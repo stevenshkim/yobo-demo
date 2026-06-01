@@ -71,6 +71,10 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Content engine built** (`os/campaigns/content-engine.md`): two-tier account
+  architecture (Tier-1 safe / Tier-2 AI influencers), the lane network (community × category,
+  6 lanes prioritized), 5 pillars, production line, hook library, **8 ready-to-shoot scripts**,
+  cadence + engagement loop, and brand-safety/FTC guardrails. CTA throughout = free Growth Audit.
 - **2026-06-01 — ICP upgraded to a 9-dimension scorecard (CEO input)** (`os/company/icp.md`):
   founder origin/community · customer community/language · category · revenue/size · purchase
   frequency (6+ ideal, 2+ power) · AOV · reviews (4+/5) · repurchase rate · ad spend. Does two

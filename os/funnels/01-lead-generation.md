@@ -42,6 +42,9 @@
 ### 4. Content & partnerships — *compounding, lower CAC over time*
 - Lightweight: teardown content ("what's wrong with this brand's email"), Shopify/Klaviyo
   communities, founder audiences. Partnerships not yet an asset — build during the 60 days.
+- **Shipped:** the full content engine — two-tier accounts, AI-influencer lane network
+  (community × category), pillars, production line, and starter scripts:
+  `os/campaigns/content-engine.md`.
 
 ## Funnel-stage map
 ```
