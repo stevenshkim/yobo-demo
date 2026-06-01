@@ -40,6 +40,9 @@ stuck in someone's head.
 | `/ad-creative-brief` | Get paid-ad concepts, hooks, and copy for Meta/Google/LinkedIn |
 | `/funnel-metrics-review` | Run the weekly "are we on pace?" review and find the binding constraint |
 | `/ingest-learning` | Turn a YouTube transcript / article / talk into reusable YoboLabs knowledge |
+| `/growth-audit-builder` | Build a free Growth Audit (dollar-gap + plan) from a store's data |
+| `/weekly-recap-writer` | Write a customer's weekly revenue recap (the #1 retention artifact) |
+| `/content-script-writer` | Write content-engine scripts by lane + pillar (teardowns, Reels, etc.) |
 
 More skills get added as we learn (see `os/learning/README.md`).
 

@@ -71,6 +71,11 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Depth pass:** added the **audit landing-page copy** (the conversion destination),
+  **deliverability playbook** (A4 prep), **attribution & CRM spec** (A1 dev spec), **metrics
+  dashboard** template, and **activation onboarding/drop-off nudges**. Plus 3 new skills:
+  `growth-audit-builder`, `weekly-recap-writer`, `content-script-writer`. Fixed funnel-metrics-review
+  skill to the $100k MRR goal.
 - **2026-06-01 — Full picture completed** (pre-holiday sprint): added **paid ads engine**,
   **channel partnerships**, **CS weekly-recap + saves**, **expansion/upsell** templates
   (`os/campaigns/`), plus **`os/DECISIONS-NEEDED.md`** (consolidated unblock list) and

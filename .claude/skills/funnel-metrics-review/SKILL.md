@@ -1,6 +1,6 @@
 ---
 name: funnel-metrics-review
-description: Run the weekly YoboLabs pace review against the 200-customer goal. Use when asked "are we on pace?", to review funnel metrics, diagnose the binding constraint (volume/conversion/CAC), or decide the week's highest-leverage action.
+description: Run the weekly YoboLabs pace review against the $100k MRR goal. Use when asked "are we on pace?", to review funnel metrics, diagnose the binding constraint (volume/conversion/ACV mix/CAC), or decide the week's highest-leverage action.
 ---
 
 # Funnel Metrics Review (weekly pace review)
