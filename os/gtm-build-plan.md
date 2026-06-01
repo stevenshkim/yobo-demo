@@ -34,10 +34,12 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
 ### A1. Attribution / CRM / Analytics layer ⚠️ *the #1 dependency*
 - **Job:** measure **CAC by channel** (the binding constraint) and power the **guarantee math**
   (7-day Shopify-matched revenue). Without it we're blind on the exact numbers we committed to.
-- **Current → to-be:** nothing wired → CRM + analytics + UTM discipline + the 7-day
-  email→Shopify attribution match live.
-- **Build:** pick a CRM (HubSpot / Attio / Close); pick product analytics (PostHog/Mixpanel);
-  enforce UTM conventions on every link; build the Klaviyo-send → Shopify-order 7-day match.
+- **Current → to-be:** **CRM is built (per CEO) but not optimized or connected** → optimize it
+  + connect it to UTM tracking, product analytics, and the 7-day email→Shopify attribution match.
+- **Build:** optimize the existing CRM (pipeline stages, fields, automations); enforce UTM
+  conventions on every link; pick/connect product analytics (PostHog/Mixpanel); build the
+  Klaviyo-send → Shopify-order 7-day match. **Store size is read straight from Shopify on sync**
+  (orders, revenue) — so ICP segmentation + the guarantee floor are automatic, not manual.
 - **Build by:** Tool + Dev. **Owner:** Steven + dev. **KPI:** CAC per channel visible weekly.
 
 ### A2. The Free Growth Audit — *the lynchpin offer* (Steven has a draft)
@@ -52,11 +54,17 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
 - **Job:** convert trials at ≥ 30%, results-first, price revealed as "keep the teammate."
 - **Status:** playbook done (`os/campaigns/bofu-pricing-and-conversion.md`). Needs: real proof
   numbers, trial mechanics confirmed (14d / no-card / 1-flow-free), guarantee live.
-- **Build by:** OS (done) + Dev (trial gating, billing) + Team (sales-assist). **KPI:** trial→paid %.
+- **The trial's first shipped flow = Win-Back** (the universal wedge). **Per CEO, Aria's
+  Win-Back generation should be production-ready across all brand/category types** — so every
+  trial, regardless of vertical, can ship a real revenue-producing flow inside the window.
+- **Build by:** OS (done) + Dev (trial gating, billing, Win-Back generation) + Team (sales-assist).
+  **KPI:** trial→paid %.
 
-### A4. Deliverability & domain infrastructure ⚠️
+### A4. Deliverability & domain infrastructure ⚠️ *net-new — not yet planned (per CEO)*
 - **Job:** keep outreach + lifecycle email landing in inboxes; protect sender reputation as
   volume scales. Gates how fast outbound can grow.
+- **Status:** flagged by CEO as something not yet thought through — **needs a dedicated prep
+  pass** before outbound scales (a real gating dependency for C2).
 - **Build:** secondary sending domains for cold outbound (never the primary), SPF/DKIM/DMARC,
   mailbox warming, volume caps, list hygiene. CAN-SPAM/CASL compliance baked in.
 - **Build by:** Tool + Team. **Owner:** growth/ops. **KPI:** inbox placement, spam-complaint rate.
@@ -129,9 +137,14 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
 - **Job:** compounding, low-CAC demand via high-volume organic content distributed across a
   network of accounts (founder, brand, and topical/niche pages).
 - **Build:**
-  - **Account architecture:** Steven (founder POV), YoboLabs (brand), + a set of topical
-    accounts ("DTC email teardowns," "Shopify growth," etc.) per platform (TikTok, IG Reels,
-    LinkedIn, X, YouTube Shorts).
+  - **Account architecture — two tiers (decided by CEO):**
+    - **Tier 1 — Main company + founder accounts** (YoboLabs brand, Steven founder POV): **play
+      it safe** — educational with *light* promotional. Brand-protective; never risk a ban here.
+    - **Tier 2 — AI educational accounts / AI influencers** (a network we create): **do the
+      heavy promotional lifting** — "what helps businesses grow" content, matched to community +
+      category (see ICP virality lens). These carry the risk and are diversified/expendable.
+    - Run across **LinkedIn, Instagram, TikTok, YouTube, X, Facebook** — all six carry ban risk,
+      which is exactly why Tier 1 stays safe and Tier 2 takes the aggressive promotion.
   - **Content pillars:** (1) email teardowns ("what's wrong with this brand's flows"),
     (2) before/after revenue stories (real, from Proof Library), (3) education/how-to,
     (4) founder POV/build-in-public, (5) social proof.
@@ -140,10 +153,11 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
   - **CTA:** link-in-bio → free Growth Audit (UTM-tagged for CAC).
 - **Build by:** OS (scripts, hooks, repurposing) + Tool (video/image gen, scheduler) + Team (faces/voiceover, QC).
 - **KPI:** pieces/week, reach, audit clicks, CAC (compounds toward ~$0).
-- **⚠️ Risk (flag for Steven):** mass multi-account operation can violate platform ToS
-  (automation, inauthentic behavior) and risks bans. Keep accounts genuinely differentiated and
-  human-supervised; avoid bulk automation that trips platform rules. Stretch the boundary
-  *without* betting the company on a bannable tactic. Needs a deliberate decision.
+- **⚠️ Risk + the mitigation (decided):** mass multi-account operation can violate platform ToS
+  (automation, inauthentic behavior) and risks bans on all six platforms. **Mitigation:** the
+  brand/founder accounts (Tier 1) stay safe and compliant; the AI accounts (Tier 2) take the
+  promotional risk and are diversified so no single ban hurts the company. Keep accounts
+  genuinely differentiated + human-supervised; avoid bulk automation that trips platform rules.
 
 ### C4. Posting & engagement engine
 - **Job:** distribute the content (C3) on cadence and grow the accounts via active engagement.
@@ -222,8 +236,8 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
 1. **Attribution gap (A1)** — can't manage CAC or the guarantee without it. Build first.
 2. **Fulfillment capacity (D1)** — acquiring 134 customers we can't onboard well = churn + guarantee payouts. Scale delivery alongside acquisition.
 3. **Deliverability (A4)** — gates outbound + lifecycle. Warm domains before volume.
-4. **Platform-ToS / ban risk (C3/C4)** — mass multi-account content/engagement can get killed. Decide the appetite; keep it human-supervised.
-5. **Guarantee exposure** — safe only with the store-size floor enforced (off-ICP customers can't hit 3×). Keep targeting tight.
+4. **Platform-ToS / ban risk (C3/C4)** — *addressed:* Tier-1 brand/founder accounts stay safe; Tier-2 AI accounts take the promotional risk and are diversified so a ban doesn't hurt the company.
+5. **Guarantee exposure** — *addressed:* store-size floor ($500K/yr or $42K/mo or 1,000 orders/mo) is read automatically from Shopify on sync, so off-ICP brands are filtered before they qualify.
 
 ## What Claude/the OS can produce right now (no dependency)
 Segment definitions + target-list criteria · all outreach sequences + signal openers · content

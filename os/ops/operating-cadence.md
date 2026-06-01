@@ -71,6 +71,18 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — ICP upgraded to a 9-dimension scorecard (CEO input)** (`os/company/icp.md`):
+  founder origin/community · customer community/language · category · revenue/size · purchase
+  frequency (6+ ideal, 2+ power) · AOV · reviews (4+/5) · repurchase rate · ad spend. Does two
+  jobs — **predicts success/guarantee-safety** (freq/repurchase/reviews/AOV) and **predicts
+  virality** (founder+customer community × category → matched AI-influencer content lanes).
+  Added target-list criteria + priority segments + per-segment message angles.
+- **2026-06-01 — 5 build decisions (CEO):** (1) CRM built, needs optimize + connect; (2) Win-Back
+  generation must be production-ready for all brand types (the universal trial wedge); (3)
+  deliverability not yet planned — needs a prep pass; (4) **content account strategy** — Tier-1
+  brand/founder accounts stay safe (educational + light promo), Tier-2 AI educational accounts /
+  AI influencers do the heavy promotion (diversified vs ban risk across all 6 platforms); (5)
+  store-size filter read automatically from Shopify on sync.
 - **2026-06-01 — Full GTM build plan created** (`os/gtm-build-plan.md`): the acquisition-engine
   inventory — foundation (attribution/CRM, audit, trial, deliverability, creative), targeting
   (ICP segmentation), channels (warm, outreach, content mass-production, posting/engagement,

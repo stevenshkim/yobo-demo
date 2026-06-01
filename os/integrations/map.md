@@ -38,7 +38,7 @@
 | **Canva** | Email/ad creative design | ✅ MCP connected | Generate on-brand email + ad creative from briefs |
 | **Image/Video gen** | Hero images, ad creative, video | ✅ MCP connected | Brand-consistent creative for emails + paid ads |
 | **GitHub** | Version control for the OS + product code | ✅ Connected | OS lives here; product repo separate (dev team) |
-| **CRM** | Pipeline, lead/trial tracking, **CAC attribution** | ❌ **Not connected / TBD** | **Decide the CRM** (HubSpot/Attio/etc.). Without it, CAC-by-channel — the core constraint — is hard to measure |
+| **CRM** | Pipeline, lead/trial tracking, **CAC attribution** | ⚠️ **Built, not optimized/connected** | Optimize (stages, fields, automations) + connect to UTM + analytics + the 7-day attribution match. CAC-by-channel is the core constraint |
 | **WhatsApp** | Multi-channel customer comms + (future) a lifecycle channel | ❌ Not connected | WhatsApp Cloud API; post-V1 channel + expansion path |
 | **Ad platforms** (Meta/Google/etc.) | Paid acquisition + CAC source | ❌ Not connected | Conversion tracking + UTM discipline so CAC is attributable |
 | **Analytics/product** (PostHog/etc.) | Funnel-stage instrumentation | ❌ Not connected | Instrument every funnel stage (the "you can't fix the leak you can't see" tool) |
