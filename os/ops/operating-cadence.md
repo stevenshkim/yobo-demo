@@ -71,6 +71,12 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Full picture completed** (pre-holiday sprint): added **paid ads engine**,
+  **channel partnerships**, **CS weekly-recap + saves**, **expansion/upsell** templates
+  (`os/campaigns/`), plus **`os/DECISIONS-NEEDED.md`** (consolidated unblock list) and
+  **`os/TEAM-KICKOFF.md`** (Tuesday start-here). All 6 acquisition/retention channels now drafted.
+  Everything committed to GitHub + mirrored to Notion. Remaining = decisions/inputs/dev/tools in
+  DECISIONS-NEEDED. (CEO: "get the full picture done before the team's back Tuesday; QC later.")
 - **2026-06-01 — Wave-2 cold outbound built** (`os/campaigns/wave-2-cold-outbound.md`): 4
   segment sequences (community Beauty, F&B/supplements, Apparel high-ad-spend, Kids), each
   4 emails + 2 LinkedIn, signal-based openers, CTA = free Growth Audit. **Gated on deliverability

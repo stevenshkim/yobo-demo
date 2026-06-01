@@ -182,6 +182,7 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
   - Measurement: UTM + CRM + 7-day attribution; CAC by campaign; kill losers weekly.
 - **Build by:** Tool (ad platforms) + Team (media buying) + OS (creative briefs, copy).
 - **KPI:** CAC by campaign (≤ ~$600 on paid, blended ≤ ~$450), trial→paid by campaign.
+- **Playbook shipped:** `os/campaigns/paid-ads-engine.md`.
 - **Gate:** do not scale prospecting until Wave-1 trial→paid ≥ 20% (`os/README.md`).
 
 ### C6. Channel partnerships engine
@@ -195,6 +196,7 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
   - **Referral program** — happy customers + partners; built off Proof Library wins.
 - **Build by:** Team (BD/relationships) + OS (partner one-pagers, outreach, referral copy).
 - **KPI:** partners signed, partner-sourced audits, partner CAC (~$50).
+- **Playbook shipped:** `os/campaigns/channel-partnerships.md`.
 
 ---
 
@@ -205,6 +207,7 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
   drives both retention and proof. Tracks progress toward each customer's 3× guarantee.
 - **Build:** health scoring from Klaviyo/Shopify data; automated weekly recap; at-risk alerts (Slack).
 - **Build by:** Dev (data + automation) + OS (recap copy, save playbooks). **KPI:** logo + GRR ≥ 90%.
+- **Templates shipped:** `os/campaigns/cs-weekly-recap-and-saves.md`.
 - **⚠️ Capacity note:** to onboard ~134 customers in 60 days, onboarding + first-month success
   must scale. Fulfillment capacity is a real constraint, not just acquisition. Plan it.
 
@@ -212,6 +215,7 @@ now · **Tool** = needs a third-party tool/subscription · **Team** = human exec
 - **Job:** NRR > 100%; lift blended ACV (a lever on the goal — fewer logos needed).
 - **Build:** trigger-based upsell offers (volume cap, list growth) → tier upgrades + channels (SMS/WhatsApp).
 - **Build by:** OS (upsell proposals) + Dev (triggers). **KPI:** NRR, expansion MRR, blended ACV.
+- **Templates shipped:** `os/campaigns/expansion-upsell-engine.md`.
 
 ---
 

@@ -91,6 +91,9 @@ ripples to the others — model it there before committing spend.
 CLAUDE.md                     ← you are here (the brain / operating contract)
 os/
   README.md                   ← master plan, 60-day roadmap, feasibility, how the OS works
+  TEAM-KICKOFF.md             ← start here (Tuesday): what's built, roles, first-week actions
+  USING-THE-OS.md             ← 5-minute how-to-use quickstart
+  DECISIONS-NEEDED.md         ← consolidated open decisions/inputs (the unblock list)
   gtm-build-plan.md           ← the full acquisition-engine build inventory (what to build)
   company/
     north-star.md             ← goal, metrics tree, unit economics
@@ -103,8 +106,9 @@ os/
     00-funnel-model.md        ← the connected 4-funnel math (current → to-be)
     01..04-*.md               ← one deep playbook per funnel (the durable "how")
   campaigns/                  ← ready-to-ship executions produced from the playbooks
-    wave-1-warm-list-activation.md
-    bofu-pricing-and-conversion.md
+    wave-1-warm-list-activation.md · wave-2-cold-outbound.md · bofu-pricing-and-conversion.md
+    content-engine.md · paid-ads-engine.md · channel-partnerships.md
+    cs-weekly-recap-and-saves.md · expansion-upsell-engine.md
   integrations/
     map.md                    ← every tool: current state → to-be state + how they connect
   learning/
