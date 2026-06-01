@@ -71,11 +71,17 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
-- **2026-06-01 — 3× guarantee model DECIDED (CEO):** 3× of **fees paid** (not a revenue
-  baseline). Aria drives ≥ 3× the customer's fees in attributable email revenue within 90 days,
-  or **free until it hits**, checked monthly. Per-tier: $499→$4,491 / $1,499→$13,491 /
-  $2,999→$26,991 over 90 days. Mechanics + billing options in `os/company/guarantee-mechanics.md`.
-  Still needs: Legal sign-off · N-flows + list floor · billing mechanic (defer vs credit).
+- **2026-06-01 — Full GTM build plan created** (`os/gtm-build-plan.md`): the acquisition-engine
+  inventory — foundation (attribution/CRM, audit, trial, deliverability, creative), targeting
+  (ICP segmentation), channels (warm, outreach, content mass-production, posting/engagement,
+  paid, partnerships), retention/expansion — with current→to-be, owners, KPIs, risks, and waves.
+- **2026-06-01 — 3× guarantee FULLY SPEC'D (CEO):** 3× of **fees paid** (not a revenue
+  baseline). Per-tier 90-day guarantee: $499→$4,491 / $1,499→$13,491 / $2,999→$26,991.
+  **Attribution:** email-driven Shopify revenue on a **7-day window** (orders within 7 days of
+  send, matched to recipients) — not last-click. **Remedy:** charge-then-auto-credit (free
+  month whenever cumulative 3× isn't met). **Eligibility floor:** ≥ $500K/yr or ≥ $42K/mo or
+  ≥ 1,000 orders/mo. Tiers: all. Open: Legal sign-off (later) · N-flows for eligibility.
+  Full spec: `os/company/guarantee-mechanics.md`.
 - **2026-05-31 — Closed 3 of 4 open items on the campaigns:**
   (#2) drafted **3× guarantee mechanics** for Legal (`os/company/guarantee-mechanics.md`);
   (#3) **verified salary anchor** — mid growth marketer ~$96–130k, Head of Growth ~$180–243k

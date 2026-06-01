@@ -91,6 +91,7 @@ ripples to the others — model it there before committing spend.
 CLAUDE.md                     ← you are here (the brain / operating contract)
 os/
   README.md                   ← master plan, 60-day roadmap, feasibility, how the OS works
+  gtm-build-plan.md           ← the full acquisition-engine build inventory (what to build)
   company/
     north-star.md             ← goal, metrics tree, unit economics
     icp.md                    ← ideal customer profile + segments + pains + triggers

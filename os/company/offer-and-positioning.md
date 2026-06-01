@@ -67,9 +67,11 @@ priced like software, anchored against the salary. This naming reinforces the ca
 the customer pays YoboLabs** in attributable email revenue within 90 days, or **they don't pay
 until she does.** Scales by tier (Growth Marketer $499 → $4,491 guaranteed over 90 days; Senior
 → $13,491; Head of Growth → $26,991).
-- **Metric:** Klaviyo-attributed revenue from Aria's flows, checked monthly.
-- **Remedy:** free until the cumulative 3× is met.
-- **Eligibility:** connect properly, approve N flows, keep them live, meet a minimum list size.
+- **Metric:** email-driven Shopify revenue on a **7-day attribution window** (orders within 7
+  days of an Aria send, matched to recipients) — not platform last-click. Checked monthly.
+- **Remedy:** charge-then-auto-credit — free month whenever the cumulative 3× isn't met.
+- **Eligibility:** connect properly, approve N flows, keep them live, and meet the store-size
+  floor (≥ $500K/yr **or** ≥ $42K/mo **or** ≥ 1,000 orders/mo).
 
 > **Mechanics now drafted for Legal review:** `os/company/guarantee-mechanics.md` (the claim,
 > baseline, attribution, 90-day window, remedy options, eligibility, exclusions). Do not use
