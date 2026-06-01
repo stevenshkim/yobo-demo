@@ -71,6 +71,10 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Wave-2 cold outbound built** (`os/campaigns/wave-2-cold-outbound.md`): 4
+  segment sequences (community Beauty, F&B/supplements, Apparel high-ad-spend, Kids), each
+  4 emails + 2 LinkedIn, signal-based openers, CTA = free Growth Audit. **Gated on deliverability
+  setup (A4) before any cold volume.**
 - **2026-06-01 — Content engine built** (`os/campaigns/content-engine.md`): two-tier account
   architecture (Tier-1 safe / Tier-2 AI influencers), the lane network (community × category,
   6 lanes prioritized), 5 pillars, production line, hook library, **8 ready-to-shoot scripts**,

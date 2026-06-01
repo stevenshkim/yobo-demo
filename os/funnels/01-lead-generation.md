@@ -30,6 +30,8 @@
   cap volume, protect deliverability. (`CLAUDE.md` §8.)
 - **Claude task:** build segmented lists, write per-segment sequences, draft the "specific
   observation" opener from public store signals.
+- **Shipped:** `os/campaigns/wave-2-cold-outbound.md` — 4 segment sequences (Beauty, F&B/supps,
+  Apparel, Kids), email + LinkedIn, signal-based openers. **Gated on deliverability (A4).**
 
 ### 3. Paid (retargeting + high-intent demand capture) — *scale only after trial→paid proven*
 - Start with **retargeting** (warmest, cheapest) + high-intent search/demand capture before
