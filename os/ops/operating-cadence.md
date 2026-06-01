@@ -71,6 +71,9 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Paid ad creative written** (`os/campaigns/paid-ad-creative.md`): ready-to-run
+  Meta copy per segment (hook/primary/headline/visual), Google Search ad copy, LinkedIn copy for
+  the $5–20M segment, an angle matrix, and a kill/scale testing plan. CTA = free Growth Audit.
 - **2026-06-01 — Flow library built** (`os/flows/`): the actual lifecycle emails Aria ships —
   Win-Back (the universal wedge / default trial flow), Abandoned Cart, Welcome Series,
   Replenishment — full copy templates in Aria voice with per-category variants, subject variants,

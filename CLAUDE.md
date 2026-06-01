@@ -110,6 +110,7 @@ os/
     content-engine.md · paid-ads-engine.md · channel-partnerships.md
     cs-weekly-recap-and-saves.md · expansion-upsell-engine.md
     audit-landing-page.md · activation-onboarding-nudges.md · sales-assist-playbook.md
+    paid-ad-creative.md
   flows/                      ← the lifecycle emails Aria ships (Win-Back, Abandoned Cart,
     README.md                   Welcome, Replenishment) — templates + category variants
   integrations/
