@@ -38,11 +38,12 @@ the full "AI growth marketer."
 **Category:** not "an email tool" — **an AI growth marketer you hire.** Frame as a *team
 member*, priced like software.
 
-## Pricing (naming LOCKED — growth-marketer seniority)
+## Pricing (CONFIRMED — canonical)
 
 Aria is **the growth-marketing hire you're making**, at the seniority your brand needs —
 priced like software, anchored against the salary. This naming reinforces the category
 ("an AI growth marketer you hire") and powers the BOFU salary anchor.
+**These three tiers are the single source of truth for YoboLabs pricing.**
 
 | Tier | Price | The hire it replaces |
 |---|---|---|
@@ -55,9 +56,10 @@ priced like software, anchored against the salary. This naming reinforces the ca
 > **How to present + convert this is its own playbook:** `os/campaigns/bofu-pricing-and-conversion.md`
 > (results-first: free audit → trial → proven revenue → price reveal as "keep the teammate").
 >
-> **Open decisions for Steven:** (a) reconcile the existing US landing-page copy in Notion
-> ($97 / $297), which contradicts these tiers; (b) confirm whether there's a self-serve entry
-> point below $499 (the "more users spending less" path).
+> **Confirmed (2026-06-01):** these tiers are canonical. The old US landing-page copy
+> ($97 / $297) is superseded — **update the live page to match.**
+> **Still open:** whether to add a self-serve entry point below $499 (the "more users spending
+> less" path) — does not change these three tiers.
 
 **Trial:** product-led free trial (define length + what's gated in `os/funnels/02-activation.md`).
 

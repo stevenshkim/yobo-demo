@@ -5,8 +5,9 @@
 > Wave 2 (paid/outbound scale) · P2 = optimization. Owner in brackets.
 
 ## A. Decisions only Steven can make
-- **[P0] Reconcile pricing** — live US landing copy says $97/$297; OS tiers are $499/$1,499/$2,999
-  (Growth Marketer / Senior / Head of Growth). Which is real? *(Steven)*
+- **[RESOLVED ✓] Pricing** — tiers are **canonical**: Growth Marketer $499 / Senior $1,499 /
+  Head of Growth $2,999. The old US landing copy ($97/$297) is superseded — **action (team):
+  update the live landing page to match.**
 - **[P1] Self-serve sub-$499 entry point?** — the "more users spending less" path: yes/no. *(Steven)*
 - **[P0] Confirm trial design** — 14 days from first-flow-live · no card to start · 1 flow free
   and stays live · gate the rest (`os/funnels/02-activation.md`). *(Steven)*

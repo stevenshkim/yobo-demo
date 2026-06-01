@@ -34,7 +34,7 @@
 | $1,499 | ~67 | ~223 | ~3.7 |
 
 **Working planning scenario: ~$750 blended ACV → ~134 customers → ~447 trials (~7/day).**
-(A realistic mix: most land on Starter, sales-assist pulls a share into Growth/Scale.)
+(A realistic mix: most land on Growth Marketer, sales-assist pulls a share into Senior/Head of Growth.)
 Tune this the moment real ACV data arrives — it moves every downstream number.
 
 ## The metrics tree (one number, decomposed)
@@ -69,9 +69,9 @@ At ~70% margin that means **CAC ceiling ≈ 0.7 × ACV**:
 | Senior Growth Marketer | $1,499 | ~$1,050 |
 | Head of Growth | $2,999 | ~$2,100 |
 
-Higher tiers *justify* higher CAC — which is why sales-assist on Growth/Scale stays
+Higher tiers *justify* higher CAC — which is why sales-assist on Senior/Head of Growth stays
 profitable. Keep **blended CAC ≤ ~$450** (well inside the $60k envelope at ~134 customers);
-self-serve Starter customers should come in near ~$300 and below.
+self-serve Growth Marketer customers should come in near ~$300 and below.
 
 ## Working assumptions (tune as real data arrives)
 
@@ -88,7 +88,7 @@ self-serve Starter customers should come in near ~$300 and below.
 Each week, state **on-pace / off-pace** with the MRR number, and which lever is binding:
 1. **Trial volume** (thin top of funnel) → push lead-gen channels
 2. **Trial→paid %** (funnel leaks) → fix activation (highest leverage)
-3. **Blended ACV** (mix too low) → sales-assist into Growth/Scale; reprice
+3. **Blended ACV** (mix too low) → sales-assist into Senior/Head of Growth; reprice
 4. **CAC** (payback > 1 month) → reallocate to lowest-CAC channel
 
 ### Cumulative pace checkpoints (net-new MRR)

@@ -27,7 +27,7 @@
 Week of: ____
 Cumulative net-new MRR: $___ / $100k   (checkpoint target: $___)  → ON / OFF pace
 New MRR this week: $___    (new customers: ___ )
-Blended ACV so far: $___   (Starter __ / Growth __ / Scale __)
+Blended ACV so far: $___   (Growth Marketer __ / Senior __ / Head of Growth __)
 Trials started: ___ (warm __ / outbound __ / referral __ / paid __)
 Trial→paid % (latest cohort): ___%
 Activation rate (connected both + approved flow): ___%
@@ -43,7 +43,7 @@ This week's one big lever: __________
 |---|---|---|
 | Volume | trials < target | scale lowest-CAC working channel; escalate outbound; open paid retargeting |
 | Conversion | trials fine, paying low | activation sprint (funnel 02) — fix the biggest drop-off step |
-| ACV mix | converting but MRR/customer low | sales-assist into Growth/Scale; revisit pricing/packaging (funnel 04) |
+| ACV mix | converting but MRR/customer low | sales-assist into Senior/Head of Growth; revisit pricing/packaging (funnel 04) |
 | CAC | converting but payback > ~1 mo | shift mix to warm/referral/outbound; pause losing ad sets; tighten targeting |
 
 ## Decision log (newest first — append, never delete)
@@ -131,11 +131,15 @@ This week's one big lever: __________
   and stays live, gate the rest (`os/funnels/02-activation.md`).
   Still open: (#1) real result numbers — parked in `os/company/proof-library.md` pending
   Steven's data; (#2) Legal sign-off; confirm trial-design choices.
-- **2026-05-30 — Flag raised: pricing inconsistency.** Existing US landing copy in Notion
-  says Starter $97 / Growth $297, which contradicts the $499/$1,499/$2,999 tiers. Must
-  reconcile. — Surfaced to Steven.
+- **2026-06-01 — Review packet created** (`os/REVIEW-INDEX.md`): single index with every doc +
+  GitHub + Notion link, ordered as a guided review for the team before execution. Also swept the
+  OS for stray old-tier names (Starter/Growth/Scale) → all now Growth Marketer/Senior/Head of Growth.
+- **2026-06-01 — Pricing RESOLVED (CEO):** OS tiers are **canonical** — Growth Marketer $499 /
+  Senior Growth Marketer $1,499 / Head of Growth $2,999. The old US landing-page copy
+  ($97 / $297) is superseded — **action: update the live landing page to match these tiers.**
+  (Closes the earlier $97/$297 reconciliation flag and the $500-floor question — the goal is
+  $100k MRR, no per-customer floor.)
 - _Next: pick CRM + analytics tool (CAC attribution) — see `os/integrations/map.md`._
-- _Next: confirm $500 pricing floor vs. $499 Core tier — see `os/company/offer-and-positioning.md`._
 
 ## Learnings log (what made us smarter — append)
 

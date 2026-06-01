@@ -63,7 +63,7 @@ falls toward ~100 / ~333. ACV mix moves all of it.)
 1. **Trial volume** — top of funnel too thin → scale the lowest-CAC channel that's working.
 2. **Trial→paid %** — funnel leaks → fix **activation** (highest leverage; halving the
    needed top-of-funnel is worth more than any ad optimization). See funnel 02.
-3. **Blended ACV** — mix too low → sales-assist trials into Growth/Scale; revisit pricing.
+3. **Blended ACV** — mix too low → sales-assist trials into Senior/Head of Growth; revisit pricing.
    (Higher ACV = fewer logos needed for $100k. See funnel 04.)
 4. **CAC** — payback > ~1 month → shift budget to warm/referral/outbound; pause losing paid.
 

@@ -96,7 +96,7 @@ real math, not optimism:
 
 **The bar is high — but ACV mix changes it a lot.** $0 → $100k MRR in 61 days. The number of
 logos depends on blended ACV: ~200 @ $499 (≈3.3 logos/day) but only **~134 @ $750 (≈2.2/day)**
-or **~100 @ $1,000 (≈1.6/day)**. Pushing blended ACV up — via the Growth/Scale tiers and
+or **~100 @ $1,000 (≈1.6/day)**. Pushing blended ACV up — via the Senior/Head of Growth tiers and
 sales-assist — is therefore one of the cheapest ways to make the goal reachable. Hitting it
 still requires a *product-led* motion (which you have, near-live) **plus** a warm audience to
 convert fast **plus** paid/sales-assist that keeps CAC payback under ~1 month.
@@ -118,8 +118,8 @@ its "aha" moment** (connect Shopify+Klaviyo → see a credible plan → approve 
 
 **CAC reality.** The budget envelope is ~$60k against $100k MRR. Warm-list and referral
 customers come in near $0 CAC and subsidize paid. The real discipline is **payback < ~1
-month** (CAC ≈ 0.7 × ACV), so Growth/Scale customers justify higher CAC and keep
-sales-assist profitable. Blended target ≤ ~$450; self-serve Starter near ~$300.
+month** (CAC ≈ 0.7 × ACV), so Senior/Head of Growth customers justify higher CAC and keep
+sales-assist profitable. Blended target ≤ ~$450; self-serve Growth Marketer near ~$300.
 
 **Base case vs the commitment.** A first-time 0→1 GTM engine in 60 days more commonly lands
 **$25k–$60k MRR**. We treat $100k as the target and drive to it; we report pace weekly and,

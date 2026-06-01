@@ -91,6 +91,7 @@ ripples to the others — model it there before committing spend.
 CLAUDE.md                     ← you are here (the brain / operating contract)
 os/
   README.md                   ← master plan, 60-day roadmap, feasibility, how the OS works
+  REVIEW-INDEX.md             ← 📦 the review packet: every doc + Notion link, ordered for the team
   TEAM-KICKOFF.md             ← start here (Tuesday): what's built, roles, first-week actions
   USING-THE-OS.md             ← 5-minute how-to-use quickstart
   DECISIONS-NEEDED.md         ← consolidated open decisions/inputs (the unblock list)
