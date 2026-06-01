@@ -36,6 +36,8 @@ Steven's inputs (pricing, proof numbers, 5 design partners).
 | **Dev** | attribution match, trial gating + billing, Win-Back-for-all-types, audit auto-gen |
 | **Customer Success** | onboarding, weekly recaps, saves, capturing proof |
 
+> **Day-by-day plan:** `os/ops/execution-calendar.md` sequences the first 2 weeks by workstream.
+
 ## First-week actions (in order)
 1. **Resolve the P0s in `DECISIONS-NEEDED.md`** — pricing, trial design, 5 design partners, proof numbers.
 2. **Dev:** start the attribution match (A1) + trial gating + Win-Back-for-all-types.

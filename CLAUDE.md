@@ -109,7 +109,7 @@ os/
     wave-1-warm-list-activation.md · wave-2-cold-outbound.md · bofu-pricing-and-conversion.md
     content-engine.md · paid-ads-engine.md · channel-partnerships.md
     cs-weekly-recap-and-saves.md · expansion-upsell-engine.md
-    audit-landing-page.md · activation-onboarding-nudges.md
+    audit-landing-page.md · activation-onboarding-nudges.md · sales-assist-playbook.md
   integrations/
     map.md                    ← every tool: current state → to-be state + how they connect
     attribution-and-crm-spec.md ← A1 dev spec: UTM, CRM model, 7-day Shopify match, CAC
@@ -121,6 +121,7 @@ os/
   ops/
     operating-cadence.md      ← daily/weekly/monthly rhythm + decision log
     metrics-dashboard.md      ← weekly tracking: pace vs $100k, channel scoreboard, CAC
+    execution-calendar.md     ← first-2-weeks who-does-what schedule (Tuesday start)
 .claude/skills/               ← reusable Claude skills the whole team invokes for consistent output
 ```
 

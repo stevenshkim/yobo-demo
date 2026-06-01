@@ -71,6 +71,9 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Operational glue added:** **sales-assist playbook** (warm + $5–20M Head-of-Growth
+  accounts) and the **first-2-weeks execution calendar** (who does what, Tuesday start). The OS now
+  spans strategy → channels → conversion → retention → the day-by-day schedule to run it.
 - **2026-06-01 — Depth pass:** added the **audit landing-page copy** (the conversion destination),
   **deliverability playbook** (A4 prep), **attribution & CRM spec** (A1 dev spec), **metrics
   dashboard** template, and **activation onboarding/drop-off nudges**. Plus 3 new skills:
