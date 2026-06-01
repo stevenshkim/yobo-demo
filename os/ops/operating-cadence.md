@@ -71,6 +71,10 @@ This week's one big lever: __________
 - **2026-05-31 — Built Wave-1 warm-list activation sequence + BOFU pricing/conversion
   playbook** (`os/campaigns/`). Motion: free Growth Audit → trial → results-first → price
   reveal as "keep the teammate." — Result: _pending._
+- **2026-06-01 — Flow library built** (`os/flows/`): the actual lifecycle emails Aria ships —
+  Win-Back (the universal wedge / default trial flow), Abandoned Cart, Welcome Series,
+  Replenishment — full copy templates in Aria voice with per-category variants, subject variants,
+  offer discipline, and A/B/log guidance. This is the delivered substance behind the guarantee.
 - **2026-06-01 — Operational glue added:** **sales-assist playbook** (warm + $5–20M Head-of-Growth
   accounts) and the **first-2-weeks execution calendar** (who does what, Tuesday start). The OS now
   spans strategy → channels → conversion → retention → the day-by-day schedule to run it.

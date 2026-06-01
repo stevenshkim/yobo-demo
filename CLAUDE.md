@@ -110,6 +110,8 @@ os/
     content-engine.md · paid-ads-engine.md · channel-partnerships.md
     cs-weekly-recap-and-saves.md · expansion-upsell-engine.md
     audit-landing-page.md · activation-onboarding-nudges.md · sales-assist-playbook.md
+  flows/                      ← the lifecycle emails Aria ships (Win-Back, Abandoned Cart,
+    README.md                   Welcome, Replenishment) — templates + category variants
   integrations/
     map.md                    ← every tool: current state → to-be state + how they connect
     attribution-and-crm-spec.md ← A1 dev spec: UTM, CRM model, 7-day Shopify match, CAC

@@ -42,8 +42,9 @@ Trial start
    data, the higher the conversion. Make connection dead-simple; pre-fill from store data.
 2. **Make the first plan undeniable + on-brand.** It must read like a senior strategist who
    knows *their* store. Use real Shopify/Klaviyo signals. Aria voice (`brand-voice.md`).
-3. **Engineer the first win fast.** Push one high-confidence flow (Abandoned Cart / Win-Back)
-   that produces visible revenue inside the trial window.
+3. **Engineer the first win fast.** Push one high-confidence flow (default **Win-Back** — the
+   universal wedge, ready for all brand types; templates in `os/flows/`) that produces visible
+   revenue inside the trial window.
 4. **Human assist for stalled high-intent trials.** Sales-assist (you/team) reaches out when
    an ICP-fit trial connects but stalls before approving. Cheapest conversion you'll get.
 5. **Onboarding nudges in the Aria voice** at each drop-off step (connect reminder, "your
