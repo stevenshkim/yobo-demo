@@ -508,6 +508,92 @@
     .email-frame { max-width: 100%; }
     .canvas { padding: 16px 20px 24px; padding-top: 60px; }
   }
+
+  /* === Paywall modal === */
+  .paywall-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity .28s var(--ease-ios);
+  }
+  .paywall-backdrop.show { opacity: 1; }
+  .paywall {
+    position: relative;
+    width: 100%; max-width: 440px;
+    background: #16181B;
+    border: 1px solid #2A2D33;
+    border-radius: 18px;
+    padding: 28px 24px 22px;
+    color: #fff;
+    transform: translateY(12px) scale(0.98);
+    transition: transform .32s var(--ease-ios);
+  }
+  .paywall-backdrop.show .paywall { transform: translateY(0) scale(1); }
+  .paywall-close {
+    position: absolute; top: 14px; right: 14px;
+    width: 30px; height: 30px;
+    background: transparent; border: none;
+    color: #6B7079; cursor: pointer;
+    font-size: 22px; line-height: 1;
+    border-radius: 8px;
+  }
+  .paywall-close:hover { background: #1F2226; color: #fff; }
+  .paywall-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6FED45; margin-bottom: 10px;
+  }
+  .paywall-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400; font-size: 24px; line-height: 1.2; letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .paywall-sub {
+    font-size: 14px; line-height: 1.45; color: #A1A6AD; margin-bottom: 18px;
+  }
+  .paywall-roi {
+    background: #0E0F11; border: 1px solid #1F2226; border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 18px;
+  }
+  .roi-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: #A1A6AD; padding: 6px 0;
+  }
+  .roi-row b { color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .roi-row.roi-hi { border-top: 1px solid #1F2226; padding-top: 10px; margin-top: 4px; }
+  .roi-row.roi-hi b { color: #6FED45; font-size: 17px; }
+  .pay-label {
+    display: block; font-size: 11px; font-weight: 500; color: #6B7079;
+    margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .pay-field {
+    background: #0E0F11; border: 1px solid #1F2226; border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 12px;
+  }
+  .pay-field input {
+    width: 100%; background: transparent; border: none; outline: none;
+    font-size: 14px; color: #fff; font-family: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+  .pay-field input::placeholder { color: #6B7079; }
+  .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pay-cta {
+    width: 100%; background: #6FED45; color: #000;
+    font-size: 15px; font-weight: 600; padding: 13px 18px;
+    border-radius: 10px; border: none; cursor: pointer;
+    font-family: inherit; margin-top: 4px;
+    transition: filter .12s;
+  }
+  .pay-cta:hover { filter: brightness(1.08); }
+  .pay-cta:disabled { opacity: .7; cursor: not-allowed; }
+  .pay-note {
+    font-size: 11px; color: #6B7079; text-align: center;
+    margin-top: 12px; line-height: 1.5;
+  }
 </style></head>
 <body>
 
@@ -570,7 +656,7 @@
         <button class="ab-pill" data-ab="A" onclick="setAbVariant('A')">A · Plan all at once</button>
         <button class="ab-pill" data-ab="B" onclick="setAbVariant('B')">B · One flow at a time</button>
       </div>
-      <div class="welcome-tag">Demo · January 2026</div>
+      <div class="welcome-tag">Demo · January 2026 · <a href="/start/" style="color:#6FED45;text-decoration:none">Start from signup ↗</a></div>
     </div>
   </div>
 
@@ -1898,6 +1984,8 @@
       </div></div>`;
       thread.appendChild(msg);
       thread.scrollTop = thread.scrollHeight;
+      // Trial journey: trigger paywall when cumulative crosses $1,500
+      if (isTrialJourney()) setTimeout(() => openPaywall(2140), 2200);
     }, 11000);
 
     // 9. New February chat notification
@@ -1978,6 +2066,83 @@
     btn.textContent = '✓ Connected';
     btn.disabled = true;
     pingAria(`${name} connected. I'll send updates there too.`);
+  }
+
+  // === TRIAL JOURNEY (from /start/ onboarding) ===
+  function isTrialJourney() {
+    const p = new URLSearchParams(location.search).get('journey');
+    if (p === 'trial') return true;
+    try { return localStorage.getItem('aria-journey') === 'trial'; } catch(e) { return false; }
+  }
+
+  function openPaywall(attributed) {
+    if (document.getElementById('paywallBackdrop')) return;
+    const roi = (attributed / 499).toFixed(1);
+    const wrap = document.createElement('div');
+    wrap.id = 'paywallBackdrop';
+    wrap.className = 'paywall-backdrop';
+    wrap.innerHTML = `
+      <div class="paywall">
+        <div class="paywall-head">
+          <div class="paywall-eyebrow">Your trial is paying off</div>
+          <div class="paywall-title">$${attributed.toLocaleString()} attributed in two weeks.</div>
+          <div class="paywall-sub">At the <b>Growth Marketer</b> tier ($499/mo), that's a <b>${roi}× ROI</b> — and Aria's just getting started. Add a card to keep her shipping.</div>
+        </div>
+        <div class="paywall-roi">
+          <div class="roi-row"><span>Tier</span><b>Growth Marketer · $499/mo</b></div>
+          <div class="roi-row"><span>Attributed (last 14 days)</span><b>$${attributed.toLocaleString()}</b></div>
+          <div class="roi-row roi-hi"><span>ROI</span><b>${roi}×</b></div>
+        </div>
+        <form id="payForm" onsubmit="submitPaywall(event)">
+          <label class="pay-label">Card number</label>
+          <div class="pay-field"><input required type="text" placeholder="4242 4242 4242 4242" maxlength="19" /></div>
+          <div class="pay-row">
+            <div><label class="pay-label">Expiry</label><div class="pay-field"><input required type="text" placeholder="MM / YY" maxlength="7" /></div></div>
+            <div><label class="pay-label">CVC</label><div class="pay-field"><input required type="text" placeholder="123" maxlength="4" /></div></div>
+          </div>
+          <button type="submit" class="pay-cta" id="paySubmit">Subscribe — $499/mo</button>
+        </form>
+        <div class="pay-note">Cancel anytime. 3× revenue guarantee: if Aria doesn't 3× your fee in 90 days, the next month is free.</div>
+        <button class="paywall-close" onclick="closePaywall()" aria-label="Close">×</button>
+      </div>`;
+    document.body.appendChild(wrap);
+    requestAnimationFrame(() => wrap.classList.add('show'));
+  }
+
+  function closePaywall() {
+    const w = document.getElementById('paywallBackdrop');
+    if (!w) return;
+    w.classList.remove('show');
+    setTimeout(() => w.remove(), 280);
+  }
+
+  function submitPaywall(e) {
+    e.preventDefault();
+    const btn = document.getElementById('paySubmit');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+    setTimeout(() => {
+      btn.textContent = '✓ Subscribed';
+      try { localStorage.removeItem('aria-journey'); } catch(_) {}
+      // Remove ?journey from URL so reloads don't re-trigger
+      const u = new URL(location.href); u.searchParams.delete('journey'); history.replaceState(history.state, '', u);
+      setTimeout(() => {
+        closePaywall();
+        if (typeof confetti === 'function') confetti('big');
+        const thread = document.getElementById('thread');
+        if (thread) {
+          const msg = document.createElement('div');
+          msg.className = 'msg';
+          msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">
+            <span class="prefix">You're in.</span>
+            Welcome to Growth Marketer. I'll have February's plan in your thread Monday morning — three flows, fresh creative, real numbers.
+            <div class="time">Just now</div>
+          </div></div>`;
+          thread.appendChild(msg);
+          thread.scrollTop = thread.scrollHeight;
+        }
+      }, 700);
+    }, 1600);
   }
 
   // === A/B VARIANT TOGGLE ===
