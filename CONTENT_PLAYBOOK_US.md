@@ -6,11 +6,38 @@
 
 ---
 
-## 0. The one-line content hypothesis
+## 0. Positioning & content hypothesis
 
-> **"We'll be different and more valuable because we show US Shopify founders the exact Klaviyo flows, emails, and numbers that an AI growth team ships — in public, with real revenue, every week."**
+**What YoboLabs is:** an **AI-native growth team for consumer brands** — the alternative to both the traditional agency (slow, expensive, opaque) and the expensive in-house hire (risky, $120K–$180K/yr, takes months to ramp). Lifecycle email/SMS is the wedge; the promise is a full growth team that works 24/7.
 
-If a piece of content doesn't make a Shopify operator think *"that's literally my store / my problem,"* we don't make it. (Kallaway's rule: no differentiated hypothesis = no reason to follow.)
+**The one-line content hypothesis:**
+
+> **"We'll be different and more valuable because we show US consumer-brand founders the real growth work, real flows, and real revenue an AI growth team ships — in public, every week — so they can see for themselves it beats their agency or their next hire."**
+
+If a piece of content doesn't make a Shopify founder think *"that's literally my store / my problem / my agency,"* we don't make it. (Kallaway's rule: no differentiated hypothesis = no reason to follow.)
+
+---
+
+## 0.5 The strategic spine — 3 jobs every piece of content must do
+
+Everything in this playbook serves one of these three. Tag every asset with which one it's carrying.
+
+### 🥇 Job 1 — Establish *immediate* authority
+A new brand has no track record cushion. We earn credibility in the first 5 seconds or lose the founder.
+- **Founder-led + operator proof.** Steven on camera, named brands, real Klaviyo dashboards, specific dollar outcomes. Show we've *done* it, not just that we *sell* it.
+- **Strong, specific POV.** Contrarian takes that only a real operator would have (Kallaway: perceived quality + a clear point of view is what makes a small channel feel big).
+- **Borrow bigger audiences fast.** Guest spots on US ecom podcasts/channels, teardowns of recognizable brands, collabs with Shopify/Klaviyo ecosystem voices.
+- **Win the package.** Title + thumbnail must read as "this person knows exactly what they're talking about" at phone size.
+
+### 🔍 Job 2 — Leverage transparency (our unfair advantage vs. agencies)
+Agencies are a black box. Our entire wedge is that we are **glass-box.** Transparency isn't a vibe — it's the product demo.
+- **Build-in-public, real numbers.** Show Aria's actual work, actual sends, actual revenue — wins *and* misses. The `/start` demo + Klaviyo dashboards already in the product are the raw material.
+- **Show the machine working.** "Watch Aria build a flow in 4 minutes." The work being visible *is* the trust.
+- **Open the books on the model.** Pricing, the 3× guarantee math, what we do vs. what an agency charges — say it out loud while competitors stay vague.
+
+### 🎯 Job 3 — Target US Shopify founder pain (precisely)
+Speak to the exact, named pain — not "grow your brand."
+- See the pain map in §1. Every how-to / teardown / contrarian piece must name a specific pain in the hook.
 
 ---
 
@@ -20,9 +47,21 @@ If a piece of content doesn't make a Shopify operator think *"that's literally m
 |---|---|---|
 | **Who** | US DTC Shopify founder / owner-operator | In-house marketer / "head of growth" at a Shopify brand |
 | **Revenue** | $500K–$10M/yr | $50K–$500K (future buyers, nurture now) |
-| **Pain** | Email/SMS is "set and forget," leaving 20–40% of revenue on the table; agencies are slow, expensive, and opaque | Drowning in Klaviyo, no time to build flows, can't justify a $5K/mo agency |
 | **Where they are** | YouTube (searching how-to), LinkedIn, X, founder communities, podcasts | Instagram, TikTok, Shopify/Klaviyo ecosystem |
 | **What they buy on** | Trust + proof + speed. They buy *outcomes* (revenue), not *email design* |
+
+### The pain map (hook every piece on one of these)
+
+| Pain | How they say it | Content angle that lands |
+|---|---|---|
+| **Money left on the table** | "I know email could do more but it just… sits there" | "Your email is leaving 20–40% on the table" + the exact missing flow |
+| **The agency is a black box** | "I pay $5K/mo and have no idea what they actually do" | Transparency teardown: here's what a good agency *should* be shipping |
+| **Agencies are slow** | "It takes 3 weeks to get one email changed" | "Watch Aria do in 4 minutes what your agency does in 4 weeks" |
+| **A hire is expensive + risky** | "A senior growth person is $150K and I might hire wrong" | The agency-vs-hire-vs-AI-team math, in dollars |
+| **No time / wearing every hat** | "I'm the founder, I don't have time to live in Klaviyo" | Done-for-you proof: 90 days of hands-off, here's the revenue |
+| **Burned before** | "Last agency overpromised and underdelivered" | The 3× guarantee + real, transparent results (incl. misses) |
+
+> **The core competitive frame:** every founder is implicitly choosing between **(a) keep limping with DIY**, **(b) hire an agency**, **(c) hire in-house**, or **(d) YoboLabs.** A recurring content job is to make (d) obviously win on speed, cost, and transparency.
 
 **US-specific notes**
 - Lead with **dollars, not percentages** — "$11,400 from one win-back flow" beats "3× lift."
@@ -58,15 +97,16 @@ This is the Wes McDowell / Charlie Morgan fork, and we are deliberately on the *
 
 ## 4. Content pillars (the idea machine)
 
-Five repeatable pillars so we never create from a blank page (Modern Millie's topic→idea→calendar system):
+Six repeatable pillars so we never create from a blank page (Modern Millie's topic→idea→calendar system). Each maps to a strategic job (§0.5):
 
-1. **Teardowns** — Roast/rebuild a real (or anonymized) Shopify brand's flows. *"I audited a $2M skincare brand's Klaviyo — here's the $40K they're missing."*
-2. **Build-in-public** — Aria shipped X this week, here's the revenue. Transparent dashboards, real numbers. (This is our Charlie Morgan "build in public" engine.)
-3. **How-to / templates** — The exact flow, the exact subject lines, the exact segment. Give the recipe away. (Wes McDowell: be genuinely, boringly helpful.)
-4. **Contrarian POV** — *"Stop A/B testing button colors,"* *"Your welcome series is too long,"* *"Why we fired the 'spray and pray' agency model."* Earns the click + the share.
-5. **Proof / case studies** — Brand went from $X to $Y. Named when possible, anonymized + screenshot when not. Dollars front and center.
+1. **Teardowns** *(→ Authority)* — Roast/rebuild a real (or anonymized) Shopify brand's flows. *"I audited a $2M skincare brand's Klaviyo — here's the $40K they're missing."*
+2. **Build-in-public** *(→ Transparency)* — Aria shipped X this week, here's the revenue. Transparent dashboards, real numbers, wins *and* misses. (Our Charlie Morgan "build in public" engine — and our glass-box edge over agencies.)
+3. **How-to / templates** *(→ Pain + Authority)* — The exact flow, subject lines, segment. Give the recipe away. (Wes McDowell: be genuinely, boringly helpful.)
+4. **Contrarian POV** *(→ Authority)* — *"Stop A/B testing button colors,"* *"Your welcome series is too long,"* *"Why the agency model is broken."* Earns the click + the share.
+5. **Proof / case studies** *(→ Authority + Transparency)* — Brand went from $X to $Y. Named when possible, anonymized + screenshot when not. Dollars front and center.
+6. **Agency-vs-hire-vs-AI** *(→ Pain + Transparency)* — Head-to-head on cost, speed, and visibility. The frame that makes "choose YoboLabs" obvious. *"$5K/mo agency vs. $150K hire vs. an AI growth team — the real math."*
 
-**Mix per 10 pieces:** 3 teardowns · 2 build-in-public · 3 how-to · 1 contrarian · 1 proof.
+**Mix per 10 pieces:** 2 teardowns · 2 build-in-public · 3 how-to · 1 contrarian · 1 proof · 1 agency-vs-hire.
 
 ---
 
@@ -131,7 +171,7 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 
 ---
 
-## 8. 20 launch-ready content ideas (packaged)
+## 8. 24 launch-ready content ideas (packaged)
 
 | # | Title | Pillar | Thumbnail concept |
 |---|---|---|---|
@@ -155,6 +195,10 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 | 18 | I Reviewed 10 Shopify Brands' Welcome Emails | Teardown | Grid of 10 emails, graded |
 | 19 | The TCPA-Safe Way to Grow Your SMS List | How-to | Phone + green "compliant" check |
 | 20 | What 90 Days of AI-Run Email Looks Like | Build-in-public | 90-day dashboard |
+| 21 | $5K/mo Agency vs. $150K Hire vs. an AI Growth Team | Agency-vs-hire | 3-column cost/speed scoreboard |
+| 22 | What Your Email Agency Won't Show You | Agency-vs-hire | Black box cracked open |
+| 23 | We Made Aria's Mistakes Public. Here's What We Fixed. | Build-in-public | "What went wrong" + corrected dashboard |
+| 24 | I Asked 5 Shopify Founders What They Pay Their Agency | Agency-vs-hire | Founder faces + price tags |
 
 ---
 
@@ -182,9 +226,11 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 
 ## TL;DR
 
-1. **Helpful + boring > viral.** We sell to founders, not to the algorithm.
-2. **Package first** — title + thumbnail before we film; dollars, not percentages.
-3. **Sharp hypothesis:** we show real Klaviyo flows + real revenue, in public, for US Shopify brands.
-4. **One funnel:** every asset → free 2-week Aria trial → demo → close.
-5. **Win YouTube + LinkedIn**, repurpose everywhere else.
-6. **Scoreboard = qualified demos booked**, reviewed weekly, doubled down monthly.
+1. **Positioning:** AI-native growth team for consumer brands — the alternative to slow/opaque agencies and expensive/risky hires.
+2. **Three jobs every asset carries:** establish *immediate authority*, leverage *transparency* (our glass-box edge), target *specific US founder pain*.
+3. **Helpful + boring > viral.** We sell to founders, not to the algorithm.
+4. **Package first** — title + thumbnail before we film; dollars, not percentages.
+5. **Transparency is the demo:** show Aria's real work, real revenue, real misses — agencies can't.
+6. **One funnel:** every asset → free 2-week Aria trial → demo → close.
+7. **Win YouTube + LinkedIn**, repurpose everywhere else.
+8. **Scoreboard = qualified demos booked**, reviewed weekly, doubled down monthly.
