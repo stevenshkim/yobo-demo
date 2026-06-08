@@ -8,13 +8,18 @@
 
 ## 0. Positioning & content hypothesis
 
-**What YoboLabs is:** an **AI-native growth team for consumer brands** — the alternative to both the traditional agency (slow, expensive, opaque) and the expensive in-house hire (risky, $120K–$180K/yr, takes months to ramp). Lifecycle email/SMS is the wedge; the promise is a full growth team that works 24/7.
+**What YoboLabs is:** the **growth marketing team for US consumer brands** — and the **central hub** where all of a brand's growth lives, runs, and scales. Instead of a fragmented stack (an email agency here, a paid freelancer there, a retention consultant, five dashboards no one checks), the brand gets one place — Aria, the AI-native growth team — that owns the work end-to-end and makes it visible. We're the alternative to both the traditional agency (slow, opaque) and the expensive in-house hire (risky, $120K–$180K/yr), *and* the consolidation play that replaces the duct-taped tool/freelancer stack.
 
 **The one-line content hypothesis:**
 
-> **"We'll be different and more valuable because we show US consumer-brand founders the real growth work, real flows, and real revenue an AI growth team ships — in public, every week — so they can see for themselves it beats their agency or their next hire."**
+> **"We'll be different and more valuable because we show US consumer-brand founders what it looks like when all their growth runs from one hub — real work, real flows, real revenue, in public, every week — instead of scattered across agencies, freelancers, and dashboards they never open."**
 
-If a piece of content doesn't make a Shopify founder think *"that's literally my store / my problem / my agency,"* we don't make it. (Kallaway's rule: no differentiated hypothesis = no reason to follow.)
+If a piece of content doesn't make a founder think *"that's my chaos / my store / my fragmented stack,"* we don't make it. (Kallaway's rule: no differentiated hypothesis = no reason to follow.)
+
+**The central-hub narrative (recurring spine across all content):**
+- **Before:** growth is scattered — agency does email, a freelancer does ads, retention is a spreadsheet, nobody owns the whole picture.
+- **After:** one hub. Aria runs lifecycle, sees everything, ships continuously, and the founder watches it all happen in one chat. Visibility + ownership + speed in a single place.
+- Lifecycle email/SMS is the **wedge** we lead with; "your central growth hub" is the **destination** we're selling toward.
 
 ---
 
@@ -60,8 +65,9 @@ Speak to the exact, named pain — not "grow your brand."
 | **A hire is expensive + risky** | "A senior growth person is $150K and I might hire wrong" | The agency-vs-hire-vs-AI-team math, in dollars |
 | **No time / wearing every hat** | "I'm the founder, I don't have time to live in Klaviyo" | Done-for-you proof: 90 days of hands-off, here's the revenue |
 | **Burned before** | "Last agency overpromised and underdelivered" | The 3× guarantee + real, transparent results (incl. misses) |
+| **Fragmented stack** | "Email's with one agency, ads with a freelancer, retention's a spreadsheet — nobody owns the whole thing" | The central-hub story: consolidate growth into one place that actually sees everything |
 
-> **The core competitive frame:** every founder is implicitly choosing between **(a) keep limping with DIY**, **(b) hire an agency**, **(c) hire in-house**, or **(d) YoboLabs.** A recurring content job is to make (d) obviously win on speed, cost, and transparency.
+> **The core competitive frame:** every founder is implicitly choosing between **(a) keep limping with a fragmented DIY stack**, **(b) hire an agency**, **(c) hire in-house**, or **(d) make YoboLabs their central growth hub.** A recurring content job is to make (d) obviously win on speed, cost, transparency, *and* consolidation — one hub instead of five vendors.
 
 **US-specific notes**
 - Lead with **dollars, not percentages** — "$11,400 from one win-back flow" beats "3× lift."
@@ -171,7 +177,7 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 
 ---
 
-## 8. 24 launch-ready content ideas (packaged)
+## 8. 26 launch-ready content ideas (packaged)
 
 | # | Title | Pillar | Thumbnail concept |
 |---|---|---|---|
@@ -199,6 +205,8 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 | 22 | What Your Email Agency Won't Show You | Agency-vs-hire | Black box cracked open |
 | 23 | We Made Aria's Mistakes Public. Here's What We Fixed. | Build-in-public | "What went wrong" + corrected dashboard |
 | 24 | I Asked 5 Shopify Founders What They Pay Their Agency | Agency-vs-hire | Founder faces + price tags |
+| 25 | Your Growth Is Scattered Across 6 Tools. Here's the Fix. | Central-hub | Tangled tool logos → one clean hub |
+| 26 | One Hub vs. 5 Vendors: How Consumer Brands Actually Scale | Central-hub | "5 → 1" consolidation visual |
 
 ---
 
@@ -226,7 +234,7 @@ Sustainable beats heroic (Modern Millie). Volume + iteration is how the break-ou
 
 ## TL;DR
 
-1. **Positioning:** AI-native growth team for consumer brands — the alternative to slow/opaque agencies and expensive/risky hires.
+1. **Positioning:** the growth marketing team — and **central hub** — for US consumer brands. One place that owns and scales all growth, replacing fragmented agencies, freelancers, and disconnected tools.
 2. **Three jobs every asset carries:** establish *immediate authority*, leverage *transparency* (our glass-box edge), target *specific US founder pain*.
 3. **Helpful + boring > viral.** We sell to founders, not to the algorithm.
 4. **Package first** — title + thumbnail before we film; dollars, not percentages.
