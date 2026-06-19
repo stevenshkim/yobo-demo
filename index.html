@@ -594,6 +594,57 @@
     font-size: 11px; color: #6B7079; text-align: center;
     margin-top: 12px; line-height: 1.5;
   }
+
+  /* === IN-CHAT ONBOARDING (signup journey) === */
+  /* Inline form fields inside an Aria bubble */
+  .ob-field { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 10px; padding: 11px 13px; display: flex; align-items: center; gap: 9px; margin-top: 10px; }
+  .ob-field input { flex: 1; background: transparent; border: none; outline: none; font-size: 15px; color: var(--text); font-family: inherit; }
+  .ob-field input::placeholder { color: var(--text-faint); }
+  .ob-field .prefix { font-weight: 400; color: var(--text-faint); }
+  .ob-tabs { display: flex; gap: 6px; margin-top: 10px; }
+  .ob-tab { background: var(--surface); border: 1px solid var(--border); padding: 7px 13px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--text-dim); cursor: pointer; font-family: inherit; }
+  .ob-tab.active { background: var(--surface-elevated); border-color: var(--border-strong); color: var(--text); }
+  .ob-cta { width: 100%; background: var(--green); color: #000; font-size: 15px; font-weight: 600; padding: 11px 18px; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; margin-top: 12px; transition: filter .12s; }
+  .ob-cta:hover { filter: brightness(1.08); }
+  .ob-cta:disabled { opacity: .55; cursor: not-allowed; }
+  .ob-hint { font-size: 12px; color: var(--text-faint); margin-top: 10px; line-height: 1.5; }
+
+  /* Scan lines (reading site / store) */
+  .ob-scan { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .ob-scan-line { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--text-dim); padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; opacity: 0; transform: translateY(4px); transition: opacity .35s var(--ease-ios), transform .35s var(--ease-ios); }
+  .ob-scan-line.show { opacity: 1; transform: translateY(0); }
+  .ob-scan-line.done { color: var(--text); }
+  .ob-scan-line .ic { color: var(--green); width: 16px; display: inline-flex; flex-shrink: 0; }
+  .ob-spin { width: 12px; height: 12px; border: 2px solid var(--border-strong); border-top-color: var(--green); border-radius: 50%; animation: obspin .8s linear infinite; flex-shrink: 0; }
+  @keyframes obspin { to { transform: rotate(360deg); } }
+
+  /* Brand DNA grid */
+  .ob-dna { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .ob-dna-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .ob-dna-card .k { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+  .ob-dna-card .v { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .ob-dna-card.palette .v { display: flex; gap: 6px; }
+  .ob-swatch { width: 24px; height: 24px; border-radius: 7px; }
+
+  /* Shopify connect card */
+  .ob-shopify { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; margin-top: 12px; }
+  .ob-shopify-logo { width: 44px; height: 44px; border-radius: 12px; background: #95BF47; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .ob-shopify h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .ob-shopify p { font-size: 12px; color: var(--text-dim); margin-bottom: 14px; line-height: 1.45; }
+
+  /* Audit + teaser */
+  .ob-audit { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .ob-audit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 13px; font-variant-numeric: tabular-nums; }
+  .ob-audit-card .k { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+  .ob-audit-card .v { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.15; }
+  .ob-audit-card .sub { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+  .ob-audit-card.hero { grid-column: 1 / -1; border-color: var(--green-line); background: var(--green-tint); }
+  .ob-audit-card.hero .v { color: var(--green); }
+  .ob-teaser { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+  .ob-teaser-row { display: flex; align-items: center; gap: 9px; padding: 11px 13px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; }
+  .ob-teaser-row .nm { font-size: 14px; font-weight: 500; color: var(--text); flex: 1; }
+  .ob-teaser-row .est { font-size: 12px; color: var(--text-faint); font-style: italic; }
+  @media (max-width: 480px) { .ob-dna, .ob-audit { grid-template-columns: 1fr; } }
 </style></head>
 <body>
 
@@ -656,7 +707,7 @@
         <button class="ab-pill" data-ab="A" onclick="setAbVariant('A')">A · Plan all at once</button>
         <button class="ab-pill" data-ab="B" onclick="setAbVariant('B')">B · One flow at a time</button>
       </div>
-      <div class="welcome-tag">Demo · January 2026 · <a href="/start/" style="color:#6FED45;text-decoration:none">Start from signup ↗</a></div>
+      <div class="welcome-tag">Demo · January 2026 · <a href="?journey=signup" style="color:#6FED45;text-decoration:none">Start from signup →</a></div>
     </div>
   </div>
 
@@ -2075,6 +2126,202 @@
     try { return localStorage.getItem('aria-journey') === 'trial'; } catch(e) { return false; }
   }
 
+  // === IN-CHAT SIGNUP JOURNEY ===
+  // The whole onboarding (signup → brand DNA → audit) happens as one Aria conversation,
+  // so the surface you sign up in is the surface you're retained in. Two transactional
+  // trust-gates (Shopify OAuth, and later the card paywall) render as inline cards.
+  function obBubble(innerHtml) {
+    const thread = document.getElementById('thread');
+    const msg = document.createElement('div'); msg.className = 'msg';
+    msg.innerHTML = `<div class="av">A</div><div class="body"><div class="bubble">${innerHtml}<div class="time">${nowStamp()}</div></div></div>`;
+    thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
+    return msg.querySelector('.bubble');
+  }
+  function obUserBubble(text) {
+    const thread = document.getElementById('thread');
+    const msg = document.createElement('div'); msg.className = 'msg user';
+    msg.innerHTML = `<div class="av user">S</div><div class="body"><div class="bubble user">${text}<div class="time">${nowStamp()}</div></div></div>`;
+    thread.appendChild(msg); thread.scrollTop = thread.scrollHeight;
+  }
+  function obTyping() {
+    const thread = document.getElementById('thread');
+    const t = document.createElement('div'); t.className = 'msg ob-typing';
+    t.innerHTML = '<div class="av">A</div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div>';
+    thread.appendChild(t); thread.scrollTop = thread.scrollHeight;
+    return t;
+  }
+  function obSay(innerHtml, delay, after) {
+    const t = obTyping();
+    setTimeout(() => { t.remove(); const b = obBubble(innerHtml); if (after) after(b); }, delay || 1200);
+  }
+  // Lock an interactive card once the user has acted on it, so the thread reads like history
+  function obLock(bubble) {
+    bubble.querySelectorAll('.ob-cta').forEach(el => { if (!el.disabled) el.remove(); });
+    bubble.querySelectorAll('.ob-hint').forEach(el => el.remove());
+    bubble.querySelectorAll('input').forEach(el => { el.disabled = true; });
+    bubble.querySelectorAll('.ob-tab').forEach(el => el.style.pointerEvents = 'none');
+  }
+  function obRunScan(scanEl, perLine, onDone) {
+    const lines = scanEl.querySelectorAll('.ob-scan-line');
+    const thread = document.getElementById('thread');
+    let i = 0;
+    (function next() {
+      if (i >= lines.length) { onDone && onDone(); return; }
+      const line = lines[i];
+      line.classList.add('show'); thread.scrollTop = thread.scrollHeight;
+      setTimeout(() => {
+        const sp = line.querySelector('.ob-spin');
+        if (sp) sp.replaceWith(Object.assign(document.createElement('span'), { className: 'ic', textContent: '✓' }));
+        line.classList.add('done'); i++; next();
+      }, perLine);
+    })();
+  }
+
+  function obStep1Signup() {
+    obSay(`<span class="prefix">Hi, I'm Aria 👋</span> I'm the growth manager for your store. I'll scan it, find where revenue is leaking, and show you the fix — before you commit to anything.<br><br>What's your email? I'll spin up your workspace.
+      <div class="ob-field"><span class="prefix">✉</span><input id="obEmail" type="email" placeholder="founder@yourstore.com" autocomplete="email"></div>
+      <button class="ob-cta" id="obEmailBtn">Start my audit →</button>
+      <div class="ob-hint">No credit card. No commitment. Just the audit.</div>`, 1000, (b) => {
+        const inp = b.querySelector('#obEmail'); const btn = b.querySelector('#obEmailBtn');
+        setTimeout(() => inp.focus(), 200);
+        btn.onclick = () => {
+          const val = (inp.value || '').trim() || 'founder@yourstore.com';
+          obLock(b); obUserBubble(val); obStep2Discovery();
+        };
+        inp.addEventListener('keydown', e => { if (e.key === 'Enter') btn.click(); });
+      });
+  }
+
+  function obStep2Discovery() {
+    obSay(`Got it — workspace is up. Now, what's your store? Drop your site or Instagram and I'll study your voice, palette, and product mix.
+      <div class="ob-tabs"><button class="ob-tab active" data-t="web">Website</button><button class="ob-tab" data-t="ig">Instagram</button></div>
+      <div class="ob-field" data-f="web"><span class="prefix">🌐</span><input id="obWeb" type="url" placeholder="https://yourstore.com"></div>
+      <div class="ob-field" data-f="ig" style="display:none"><span class="prefix">@</span><input id="obIg" type="text" placeholder="yourstore"></div>
+      <button class="ob-cta" id="obSiteBtn">Analyze →</button>`, 1300, (b) => {
+        let tab = 'web';
+        b.querySelectorAll('.ob-tab').forEach(t => t.onclick = () => {
+          tab = t.dataset.t;
+          b.querySelectorAll('.ob-tab').forEach(x => x.classList.toggle('active', x === t));
+          b.querySelector('[data-f="web"]').style.display = tab === 'web' ? '' : 'none';
+          b.querySelector('[data-f="ig"]').style.display = tab === 'ig' ? '' : 'none';
+        });
+        b.querySelector('#obSiteBtn').onclick = () => {
+          const web = (b.querySelector('#obWeb').value || '').trim();
+          const ig = (b.querySelector('#obIg').value || '').trim();
+          const shown = tab === 'web' ? (web || 'glowbotanica.com') : ('@' + (ig || 'glowbotanica'));
+          obLock(b); obUserBubble(shown); obStep3DnaScan();
+        };
+      });
+  }
+
+  function obStep3DnaScan() {
+    obSay(`On it — reading your site now.
+      <div class="ob-scan">
+        <div class="ob-scan-line"><span class="ob-spin"></span>Pulling homepage + product pages</div>
+        <div class="ob-scan-line"><span class="ob-spin"></span>Reading 137 customer reviews</div>
+        <div class="ob-scan-line"><span class="ob-spin"></span>Inferring brand voice + archetype</div>
+      </div>`, 900, (b) => {
+        obRunScan(b.querySelector('.ob-scan'), 850, () => setTimeout(obStep3DnaResult, 600));
+      });
+  }
+  function obStep3DnaResult() {
+    obSay(`Here's how I read you. Make sure this lands before we plan anything.
+      <div class="ob-dna">
+        <div class="ob-dna-card"><div class="k">Voice</div><div class="v">Warm · operator-led · technical but approachable</div></div>
+        <div class="ob-dna-card"><div class="k">Archetype</div><div class="v">The Caregiver — products that help customers care for themselves</div></div>
+        <div class="ob-dna-card palette"><div class="k">Palette</div><div class="v"><span class="ob-swatch" style="background:#d4b89e"></span><span class="ob-swatch" style="background:#b88e6e"></span><span class="ob-swatch" style="background:#8a5e3e"></span></div></div>
+        <div class="ob-dna-card"><div class="k">Top categories</div><div class="v">Skincare · Wellness · Self-care</div></div>
+      </div>
+      <button class="ob-cta" id="obDnaBtn">Looks right →</button>
+      <div class="ob-hint">You can edit any of this later from Brand DNA in settings.</div>`, 1200, (b) => {
+        b.querySelector('#obDnaBtn').onclick = () => { obLock(b); obUserBubble('Looks right 👍'); obStep4Teaser(); };
+      });
+  }
+
+  function obStep4Teaser() {
+    obSay(`Love it. Based on your brand, three flows would lift you fastest:
+      <div class="ob-teaser">
+        <div class="ob-teaser-row"><span class="nm">Win-Back</span><span class="est">revenue locked</span></div>
+        <div class="ob-teaser-row"><span class="nm">Abandoned Cart</span><span class="est">revenue locked</span></div>
+        <div class="ob-teaser-row"><span class="nm">Welcome Series</span><span class="est">revenue locked</span></div>
+      </div>
+      <div class="ob-hint">🔒 I can't put real numbers on these until I see your store. Connect Shopify and I'll size every one.</div>
+      <button class="ob-cta" id="obTeaserBtn">Connect Shopify →</button>`, 1400, (b) => {
+        b.querySelector('#obTeaserBtn').onclick = () => { obLock(b); obStep5Shopify(); };
+      });
+  }
+
+  function obStep5Shopify() {
+    obSay(`One click, read-only. I need 90 days of customers, orders, and products. I can't push, charge, or change anything — and you can revoke any time.
+      <div class="ob-shopify">
+        <div class="ob-shopify-logo">S</div>
+        <h4>Connect demo-shop-6</h4>
+        <p>OAuth via Shopify Admin API · read_customers, read_orders, read_products</p>
+        <button class="ob-cta" id="obShopBtn" style="margin-top:0">Connect Shopify</button>
+      </div>
+      <div class="ob-hint">No data leaves YoboLabs. Encrypted at rest. Revoke anytime in Shopify admin.</div>`, 1300, (b) => {
+        const btn = b.querySelector('#obShopBtn');
+        btn.onclick = () => {
+          btn.textContent = 'Connecting…'; btn.disabled = true;
+          setTimeout(() => {
+            btn.textContent = '✓ Connected to demo-shop-6';
+            setTimeout(() => { obLock(b); obUserBubble('Connected Shopify ✓'); obStep6Audit(); }, 700);
+          }, 1500);
+        };
+      });
+  }
+
+  function obStep6Audit() {
+    obSay(`Perfect — I'm in. Scanning your store now.
+      <div class="ob-scan">
+        <div class="ob-scan-line"><span class="ob-spin"></span>Reading 8,425 customers (last 90 days)</div>
+        <div class="ob-scan-line"><span class="ob-spin"></span>Reading 12,420 orders</div>
+        <div class="ob-scan-line"><span class="ob-spin"></span>Building cohorts + lifecycle map</div>
+        <div class="ob-scan-line"><span class="ob-spin"></span>Sizing recoverable revenue</div>
+      </div>`, 900, (b) => {
+        obRunScan(b.querySelector('.ob-scan'), 800, () => setTimeout(obStep6AuditResult, 600));
+      });
+  }
+  function obStep6AuditResult() {
+    obSay(`Here's what I found — three measurable leaks, all recoverable.
+      <div class="ob-audit">
+        <div class="ob-audit-card"><div class="k">Lapsed buyers</div><div class="v">1,847</div><div class="sub">Cold 60+ days</div></div>
+        <div class="ob-audit-card"><div class="k">Cart abandonment</div><div class="v">47%</div><div class="sub">No flow live</div></div>
+        <div class="ob-audit-card"><div class="k">Q4 first-timers</div><div class="v">612</div><div class="sub">Never returned</div></div>
+        <div class="ob-audit-card"><div class="k">Active base</div><div class="v">8,425</div><div class="sub">Last 90 days</div></div>
+        <div class="ob-audit-card hero"><div class="k">Recoverable this month</div><div class="v">$6,253</div><div class="sub" style="color:var(--text-dim)">If we ship the plan and it hits projection.</div></div>
+      </div>
+      <button class="ob-cta" id="obAuditBtn">Show me the plan →</button>
+      <div class="ob-hint">Free 14-day trial — no card until you decide to ship.</div>`, 1300, (b) => {
+        b.querySelector('#obAuditBtn').onclick = () => { obLock(b); obFinishJourney(); };
+      });
+  }
+
+  function obFinishJourney() {
+    // Mark trial so the Week 2 recap later fires the paywall (same flag the old /start/ set)
+    try { localStorage.setItem('aria-journey', 'trial'); } catch(e) {}
+    // Hand into the existing January plan: move the (hidden) insights + plan to the end
+    // of the thread, then reveal them via the standard intro sequence.
+    const thread = document.getElementById('thread');
+    const ins = document.getElementById('introInsights');
+    const plan = document.getElementById('introPlan');
+    if (ins) thread.appendChild(ins);
+    if (plan) thread.appendChild(plan);
+    setTimeout(runIntro, 500);
+  }
+
+  function startSignupJourney() {
+    const modal = document.getElementById('welcomeModal');
+    if (modal) modal.classList.add('hidden');
+    introStarted = true; // block the default "Good morning" intro path
+    const thread = document.getElementById('thread');
+    // Strip the returning-user artifacts; keep the (hidden) intro nodes for the handoff
+    Array.from(thread.children).forEach(c => {
+      if (c.id !== 'introInsights' && c.id !== 'introPlan') c.remove();
+    });
+    setTimeout(obStep1Signup, 500);
+  }
+
   function openPaywall(attributed) {
     if (document.getElementById('paywallBackdrop')) return;
     const roi = (attributed / 499).toFixed(1);
@@ -2339,5 +2586,11 @@
     }, 800);
   }
   // runIntro is triggered by dismissWelcome — see above
+
+  // BOOT: if arriving via ?journey=signup, run the in-chat onboarding instead of the
+  // returning-user "Good morning" intro. Everything else boots unchanged.
+  (function bootJourney() {
+    if (new URLSearchParams(location.search).get('journey') === 'signup') startSignupJourney();
+  })();
 </script>
 </body></html>
