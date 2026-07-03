@@ -26,6 +26,8 @@ This is the master framework and operating playbook that every product, engineer
 | [`04-playbook.md`](04-playbook.md) | Daily/weekly operating loops, onboarding, session design, parent engagement, stage transitions, satisfaction-recovery protocol | Product & operations |
 | [`05-measurement.md`](05-measurement.md) | The 90% satisfaction instrument by age, wellbeing & capability metrics, tier progression criteria, anti-gaming rules | Data & leadership |
 | [`06-safety-ethics.md`](06-safety-ethics.md) | Child safety, privacy (COPPA/GDPR-K), dependency prevention, crisis escalation, red lines | Everyone — mandatory |
+| [`07-phase1-product-spec.md`](07-phase1-product-spec.md) | Buildable spec for Phase 1 (Parent Co-pilot + Child Model core): features F1–F8, data spec, quality bars, acceptance tests, 12-week build plan | Engineers starting Phase 1 |
+| [`08-persona-pressure-tests.md`](08-persona-pressure-tests.md) | Five families walked through the framework end-to-end; validated mechanisms and the gap register (G1–G6) | Product — before each phase gate |
 
 ## The one-paragraph summary
 
