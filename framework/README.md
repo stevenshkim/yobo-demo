@@ -28,6 +28,11 @@ This is the master framework and operating playbook that every product, engineer
 | [`06-safety-ethics.md`](06-safety-ethics.md) | Child safety, privacy (COPPA/GDPR-K), dependency prevention, crisis escalation, red lines | Everyone — mandatory |
 | [`07-phase1-product-spec.md`](07-phase1-product-spec.md) | Buildable spec for Phase 1 (Parent Co-pilot + Child Model core): features F1–F8, data spec, quality bars, acceptance tests, 12-week build plan | Engineers starting Phase 1 |
 | [`08-persona-pressure-tests.md`](08-persona-pressure-tests.md) | Five families walked through the framework end-to-end; validated mechanisms and the gap register (G1–G6) | Product — before each phase gate |
+| [`09-launch-readiness-review.md`](09-launch-readiness-review.md) | What the framework missed: prioritized gaps across product, legal, clinical, technical, business, and research workstreams; the P0 beta gate; gap register G1–G13 | Leadership — before committing the build |
+
+## UX prototype
+
+[`../prototype/index.html`](../prototype/index.html) — a clickable, no-logic prototype of the Phase 1 Parent Co-pilot chat (open in any browser, fully self-contained). Six scripted moments from one family's first month — onboarding & charter, the first win, the 2am voice moment, the weekly digest, V·E·A·R pushback, and the monthly pulse — with a **Spec annotations** toggle that overlays which framework section each moment implements.
 
 ## The one-paragraph summary
 
