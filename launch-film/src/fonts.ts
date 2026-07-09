@@ -2,17 +2,23 @@
 //
 // Satoshi is not a Google Font; it ships as a private asset
 // (public/fonts/Satoshi-Variable.woff2). We load it with the browser FontFace API
-// wrapped in delayRender/continueRender so the render blocks only until the font
-// resolves. Crucially, a MISSING file must NOT fail the render — so we
-// continueRender() on error and fall back to the system stack in brand.ts.
+// and add it to the document when it resolves.
 //
-// (This is why we don't use @remotion/fonts `loadFont` here: it calls
-// cancelRender() internally when the file 404s, which can't be caught.)
+// Deliberately FIRE-AND-FORGET (no delayRender): the file is optional, and a
+// missing/slow 404 must never block or fail a render. Under concurrent rendering
+// a stalled 404 fetch would otherwise trip Remotion's delayRender timeout and
+// abort the whole job. The trade-off — a few early frames on the fallback stack
+// before the real font settles — is invisible for a system-sans lookalike, and
+// moot while the file is absent. If you drop Satoshi in AND need frame-perfect
+// metrics from frame 0, switch to a delayRender()/continueRender() pattern.
 //
-// Called at the module top of Root.tsx so the font is requested before the first
-// frame is painted.
+// (We also avoid @remotion/fonts `loadFont` here: it calls cancelRender()
+// internally when the file 404s, which can't be caught.)
+//
+// Called at the module top of Root.tsx so the font is requested as early as
+// possible.
 
-import { continueRender, delayRender, staticFile } from "remotion";
+import { staticFile } from "remotion";
 
 const SATOSHI_FILE = "fonts/Satoshi-Variable.woff2";
 
@@ -21,8 +27,6 @@ let requested = false;
 export const loadSatoshi = () => {
   if (requested || typeof document === "undefined") return;
   requested = true;
-
-  const handle = delayRender("Loading Satoshi");
 
   const font = new FontFace(
     "Satoshi",
@@ -42,6 +46,5 @@ export const loadSatoshi = () => {
           SATOSHI_FILE +
           " — falling back to system sans. Drop the .woff2 in to match brand.",
       );
-    })
-    .finally(() => continueRender(handle));
+    });
 };
